@@ -1,0 +1,39 @@
+body {
+    margin: 0px !important;
+    display: flex;
+    flex-direction: column; 
+}
+
+/*main site containers*/
+.top-container {
+    height: 10vh;
+    background-color: darkslateblue;
+}
+
+.main-container {
+    height: 80vh;
+}
+
+.bottom-container {
+    height: 10vh;
+    background-color: darkslateblue;
+}
+
+/*image and ui containers*/
+.main-inner {
+    display: flex;
+    flex-direction: column; 
+}
+
+.images-container {
+    height: 65vh;
+}
+
+.image-container {
+    background-color: black;
+    width: 50vw;
+}
+
+.ui-container {
+    height: 15vh;
+}
