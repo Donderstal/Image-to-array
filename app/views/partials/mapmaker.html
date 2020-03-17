@@ -1,0 +1,80 @@
+<div>
+    <div>
+        <div class="mapmaker-container">
+            <div class="image-container"> 
+                <canvas id="map-canvas"></canvas>
+            </div>
+            <div class="ui-container">
+                <div class="ui-bottom">
+                    <label>How many rows do you want?</label> <br />
+                    <input id="rowInput" >
+                </div>    
+                <div class="ui-bottom">
+                    <label>How many columns do you want?</label> <br />
+                    <input id="colInput" >
+                </div>    
+                <div class="ui-bottom">
+                    <button id="help-button" onclick="helpInfo()" class="send-button">How does this work?</button>
+                </div>
+                <div class="ui-bottom">
+                    <button onclick="drawGridFromInput()" class="send-button">Generate grid...</button>
+                </div>
+                <div class="ui-bottom">
+                    <button onclick="finishGrid()" class="send-button">Finish output array</button>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="ui-right">
+                    <div class="image-container"> 
+                            <canvas id="tilesheet-canvas"></canvas>
+                        </div>
+                <p>
+                    <label for="sheet-file" style="cursor: pointer;">Upload Tilesheet</label>
+                    <input id="sheet-input" type="file" name="sheet-filename" accept="image/gif, image/jpeg, image/png" onchange="getImage(event)">                    
+                </p>
+                <p id="sheet-paragraph">
+                                        
+                </p>
+            </div>
+            <canvas id="hidden-canvas">
+
+            </canvas>
+        </div>   
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h4>Welcome to the Neckbeard mapmaker tool.</h4>
+              <p>To get started, upload a tilesheet with the button at the right.Then, fill in how many columns and rows you want you map to have, and click the 'Generate grid' button.
+              </p>
+              <p>Now you are ready to begin making a map!
+              </p>
+              <p>Click on a tile in the tilesheet, and then click on a tile in the grid on the left top copy it the map. Shift-click a tile in the map to remove it. 
+              </p>
+              <p>When you are happy with your map, click the 'Finish output array' button. This will copy a large string of code to your clipboard. Send it to Daan so he can include your map in the game ASAP!!
+              </p><br />
+              <p>After finishing a map, or when you want to discard your current one, refresh the page before starting over.
+              </p><br />
+              <h3>IMPORTANT</h3>
+              <ol>
+                  <li>
+                    The mapmaker can only work with one tilesheet at a time!
+                  </li>
+                  <li>
+                     Don't mix tilesheets
+                   </li>
+              </ol>
+            </div>
+          
+          </div>     
+    </div>
+
+    <div class="mapmaker-bottom-container">
+        <div class="output-div">
+            <h3>Output array</h3>
+            <textarea id="output-element"></textarea>
+        </div>
+    </div>
+</div>
