@@ -1,0 +1,19 @@
+h3 {
+    margin: 0rem auto;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+body {
+    overflow: hidden;
+}
+
+.list-container {
+    height: 85vh;
+    overflow-y: scroll;
+}
+
+.btn-danger {
+    margin-top: .5rem;
+    float: right;
+}
