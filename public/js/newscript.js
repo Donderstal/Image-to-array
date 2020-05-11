@@ -10,6 +10,37 @@ tilesheetCtx.fillText("Upload your tilesheet here", 10, 50);
 
 let hiddenCtx;
 let hiddenCanvas;
+
+const tile_size = 64
+
+const state = {
+    mapUploaded: false,
+    mapCol: 0,
+    mapRow: 0,
+    sheetUploaded: false,
+    sheetCol: 0,
+    sheetRow: 0,
+    mapMaking: false,
+    sheetState: [],
+    tileXyInCanvas: false,
+    mapMakerArray: [],
+    chosenTile: null,
+    returnJSON: {
+        "rows": 0,
+        "columns": 0,
+        "grid": [],
+        "tilesheet": ""
+    }
+}
+
+const yPos1 = 0;
+const yPos2 = tile_size;
+const yPos3 = tile_size * 2;
+const yPos4 = tile_size * 3;
+
+let mapArray = [];
+let oldArray;
+
 if ( document.getElementById('hidden-canvas') ) {
     hiddenCtx = document.getElementById('hidden-canvas').getContext('2d')
     hiddenCanvas = document.getElementById('hidden-canvas')
@@ -39,37 +70,14 @@ if ( document.getElementById('hidden-canvas') ) {
     }
 }
 
-const state = {
-    mapUploaded: false,
-    mapCol: 0,
-    mapRow: 0,
-    sheetUploaded: false,
-    sheetCol: 0,
-    sheetRow: 0,
-    mapMaking: false,
-    sheetState: [],
-    tileXyInCanvas: false,
-    mapMakerArray: [],
-    chosenTile: null,
-    returnJSON: {
-        "rows": 0,
-        "columns": 0,
-        "grid": [],
-        "tilesheet": ""
-    }
+if (window.location.href.indexOf("map") > -1) {
+    document.addEventListener('click', printMousePos, true); 
+    window.requestAnimationFrame(updateOutputElement)
 }
-
-let mapArray = [];
-let oldArray;
 
 function updateOutputElement() {
     document.getElementById("output-element").innerText = JSON.stringify(state.returnJSON)
 
-    window.requestAnimationFrame(updateOutputElement)
-}
-
-if (window.location.href.indexOf("map") > -1) {
-    document.addEventListener('click', printMousePos, true); 
     window.requestAnimationFrame(updateOutputElement)
 }
 
@@ -98,8 +106,8 @@ function getImage( event ) {
         if ( idPrefix === "sheet" ) {
             state.tileSheetImage = image
             state.sheetUploaded = true
-            state.sheetCol = (image.width / 37) - 1
-            state.sheetRow = (image.height / 37) - 1
+            state.sheetCol = (image.width / tile_size) - 1
+            state.sheetRow = (image.height / tile_size) - 1
             tilesheetCanvas.width = image.width
             tilesheetCanvas.height = image.height
 
@@ -111,8 +119,8 @@ function getImage( event ) {
         }
         else {
             state.mapUploaded = true
-            state.mapCol = (image.width / 37) - 1
-            state.mapRow = (image.height / 37) - 1
+            state.mapCol = (image.width / tile_size) - 1
+            state.mapRow = (image.height / tile_size) - 1
             mapCanvas.width = image.width
             mapCanvas.height = image.height
         }
@@ -134,14 +142,14 @@ function drawNumbersOverTilesheet() {
     var tilesheetTileNumber = 0
     for ( var i = 0; i <= state.sheetRow; i++ ) {
         x = 0
-        y = i * 37
+        y = i * tile_size
         for ( var j = 0; j <= state.sheetCol; j++ ) {
             state.sheetState.push ( {'id': tilesheetTileNumber, 'x': x, 'y': y} )
-            tilesheetCtx.rect( x, y, 37, 37 ) ;
+            tilesheetCtx.rect( x, y, tile_size, tile_size ) ;
             tilesheetCtx.stroke();
 
             tilesheetTileNumber += 1
-            x += 37  
+            x += tile_size  
         }
     }
 }
@@ -171,7 +179,7 @@ function startIteratingOverCanvases() {
 
         for ( var colIndex = 0; colIndex <= state.sheetCol; colIndex++ ) {
             const tileId = rowIndex * 4 + colIndex
-            const tileToFind = tilesheetCtx.getImageData( colIndex * 37, rowIndex * 37, 37, 37 );
+            const tileToFind = tilesheetCtx.getImageData( colIndex * tile_size, rowIndex * tile_size, tile_size, tile_size );
             findSheetTileInMap(tileToFind, tileId)
             lastTile = tileId
         }
@@ -195,7 +203,7 @@ function findSheetTileInMap(tileToFind, tileId) {
     for ( var rowIndex = 0; rowIndex <= state.mapRow; rowIndex++ ) {
         
         for ( var colIndex = 0; colIndex <= state.mapCol; colIndex++ ) {
-            const tileToCompare = mapCtx.getImageData( colIndex * 37, rowIndex * 37, 37, 37 );
+            const tileToCompare = mapCtx.getImageData( colIndex * tile_size, rowIndex * tile_size, tile_size, tile_size );
 
             if ( isMatch(tileToFind.data, tileToCompare.data) ) {
 
@@ -231,11 +239,6 @@ function copyArrayToClipboard() {
     document.body.removeChild(el);
 }
 
-const yPos1 = 0;
-const yPos2 = 37;
-const yPos3 = 74;
-const yPos4 = 111;
-
 function generateXYPositions() {
     const inputVal = document.getElementById("tileNumInput").value
     let tilesheetXyArray = [];
@@ -247,7 +250,7 @@ function generateXYPositions() {
 }
 
 function generateRowXY( rowIndex ) {
-    const xValue = rowIndex * 37
+    const xValue = rowIndex * tile_size
 
     const returnValue = [ 
         { "y": xValue, "x": yPos1 },
@@ -282,8 +285,8 @@ function drawGridFromInput(cells = null) {
             return
         }
 
-        const ctxHeight = rows * 37
-        const ctxWidth = cols * 37
+        const ctxHeight = rows * tile_size
+        const ctxWidth = cols * tile_size
 
         mapCanvas.width = ctxWidth
         mapCanvas.height = ctxHeight        
@@ -300,18 +303,18 @@ function drawGridFromInput(cells = null) {
         state.mapMakerArray.push([])
         state.returnJSON.grid.push([])
         x = 0
-        y = i * 37
+        y = i * tile_size
         for ( var j = 0; j <= ( cols - 1 ) ; j++ ) {
             state.returnJSON.grid[i].push( 'E' )
             state.mapMakerArray[i].push( { id: 'E', 'x': x, 'y': y} )
             gridCtx.beginPath();
             gridCtx.lineWidth = "1";
             gridCtx.moveTo( x, y );
-            gridCtx.lineTo( x, y + 37 )
+            gridCtx.lineTo( x, y + tile_size )
             gridCtx.moveTo( x, y );
-            gridCtx.lineTo( x + 37, y )
+            gridCtx.lineTo( x + tile_size, y )
             gridCtx.stroke()
-            x += 37  
+            x += tile_size  
         }
     }
     state.returnJSON.grid
@@ -326,8 +329,8 @@ function grabTileFromSheet( mouseXY ) {
 
     if ( mouseXY.x > mapRect.left && mouseXY.x < mapRect.right && mouseXY.y > mapRect.top ) {
         clickTile = { 
-            x : ( Math.floor( ( mouseXY.x - mapRect.left ) / 37) * 37 ) , 
-            y : ( Math.floor( ( mouseXY.y - ( mapRect.y - documentRect.y ) ) / 37 ) * 37 )
+            x : ( Math.floor( ( mouseXY.x - mapRect.left ) / tile_size) * tile_size ) , 
+            y : ( Math.floor( ( mouseXY.y - ( mapRect.y - documentRect.y ) ) / tile_size ) * tile_size )
         }
 
         state.mapMakerArray.forEach( (e) => {
@@ -342,20 +345,20 @@ function grabTileFromSheet( mouseXY ) {
         mapCtx.drawImage( 
             hiddenCanvas, 
             state.tileXyInCanvas.x, state.tileXyInCanvas.y, 
-            37, 37, 
+            tile_size, tile_size, 
             clickTile.x, clickTile.y, 
-            37, 37 
+            tile_size, tile_size 
         )        
 
     } 
 
     if ( mouseXY.x > tilesheetRect.left && mouseXY.x < tilesheetRect.right /* && mouseXY.y > tilesheetRect.top *//*  && mouseXY.y < tilesheetRect.bottom  */) {
         state.sheetState.forEach( (e) => {
-            if ( ( Math.floor( ( mouseXY.x - tilesheetRect.left ) / 37 ) * 37 ) == e.x && ( Math.floor( ( mouseXY.y - ( tilesheetRect.y - documentRect.y ) ) / 37 ) * 37 ) == e.y ) {
+            if ( ( Math.floor( ( mouseXY.x - tilesheetRect.left ) / tile_size ) * tile_size ) == e.x && ( Math.floor( ( mouseXY.y - ( tilesheetRect.y - documentRect.y ) ) / tile_size ) * tile_size ) == e.y ) {
                 state.tileXyInCanvas = { 
                     id : e.id, 
-                    x : ( Math.floor( ( mouseXY.x - tilesheetRect.left ) / 37 ) * 37 ) , 
-                    y : ( Math.floor( ( mouseXY.y - ( tilesheetRect.y - documentRect.y ) ) / 37 ) * 37 ) 
+                    x : ( Math.floor( ( mouseXY.x - tilesheetRect.left ) / tile_size ) * tile_size ) , 
+                    y : ( Math.floor( ( mouseXY.y - ( tilesheetRect.y - documentRect.y ) ) / tile_size ) * tile_size ) 
                 }
             }
         } )
@@ -368,8 +371,8 @@ function removeTileFromMap( mouseXY ) {
 
     if ( mouseXY.x > mapRect.left && mouseXY.x < mapRect.right && mouseXY.y > mapRect.top ) {
         clickTile = { 
-            x : ( Math.floor( ( mouseXY.x - mapRect.left ) / 37) * 37 ) , 
-            y : ( Math.floor( ( mouseXY.y - ( mapRect.y - documentRect.y ) ) / 37 ) * 37 )
+            x : ( Math.floor( ( mouseXY.x - mapRect.left ) / tile_size) * tile_size ) , 
+            y : ( Math.floor( ( mouseXY.y - ( mapRect.y - documentRect.y ) ) / tile_size ) * tile_size )
         }
         state.mapMakerArray.forEach( (e) => {
             e.forEach( (a) => {
@@ -380,13 +383,13 @@ function removeTileFromMap( mouseXY ) {
 
         } )
 
-        mapCtx.clearRect( clickTile.x, clickTile.y, 37, 37 )
+        mapCtx.clearRect( clickTile.x, clickTile.y, tile_size, tile_size )
         mapCtx.beginPath();
         mapCtx.lineWidth = "1";
         mapCtx.moveTo( x, y );
-        mapCtx.lineTo( x, y + 37 )
+        mapCtx.lineTo( x, y + tile_size )
         mapCtx.moveTo( x, y );
-        mapCtx.lineTo( x + 37, y )
+        mapCtx.lineTo( x + tile_size, y )
         mapCtx.stroke()
     } 
 }

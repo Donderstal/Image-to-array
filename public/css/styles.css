@@ -48,7 +48,7 @@ body {
     width: 17vw;
     display: inline-block;
     position: absolute;
-    right: 5rem;
+    right: 0;
 }
 
 textarea {
@@ -95,8 +95,8 @@ textarea {
 .mapmaker-container {
     height: 80vh;
     width: 76vw;
-    padding-left: 5vw;
-    padding-top: 5vh;
+    padding-left: .5vw;
+    padding-top: .5vh;
     display: inline-block;
     position: fixed;
 }
