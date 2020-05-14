@@ -51,13 +51,6 @@ body {
     right: 0;
 }
 
-textarea {
-    resize: none;
-    overflow: hidden;
-    min-height: 50px;
-    max-height: 100px;
-}
-
 .map-maker-canvas {
     display: flex;
     flex-direction: column;
@@ -77,6 +70,7 @@ textarea {
 
 #tilesheet-canvas {
     float: right;
+    width: 128px;
 }
 
 .output-div {
@@ -90,10 +84,11 @@ textarea {
 
 #output-element {
     width: 33vw;
+    height: 400px;
 }
 
 .mapmaker-container {
-    height: 80vh;
+    height: 600px;
     width: 76vw;
     padding-left: .5vw;
     padding-top: .5vh;
@@ -124,7 +119,7 @@ textarea {
 }
 
 .ui-container {
-    height: 15vh;
+    display: inline-block
 }
 
 .ui-left {
@@ -157,13 +152,12 @@ p {
     display: block
 }
 
-.mapmaker-bottom-container {
-    position: fixed;
-    bottom: 0;
-}
-
 #hidden-canvas {
     visibility: hidden;
     z-index: -10;
     float: right;
+}
+
+.main-container {
+    height: 600px;
 }

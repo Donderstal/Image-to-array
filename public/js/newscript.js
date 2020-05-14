@@ -11,7 +11,7 @@ tilesheetCtx.fillText("Upload your tilesheet here", 10, 50);
 let hiddenCtx;
 let hiddenCanvas;
 
-const tile_size = 64
+const tile_size = 32
 
 const state = {
     mapUploaded: false,
@@ -76,7 +76,7 @@ if (window.location.href.indexOf("map") > -1) {
 }
 
 function updateOutputElement() {
-    document.getElementById("output-element").innerText = JSON.stringify(state.returnJSON)
+    document.getElementById("output-element").textContent = JSON.stringify(state.returnJSON)
 
     window.requestAnimationFrame(updateOutputElement)
 }
@@ -103,18 +103,21 @@ function getImage( event ) {
     
     image.src = src
     image.onload = ( ) => {       
+        const sheetWidthInApp = image.width / 2 
+        const sheetHeightInApp = image.height / 2
+
         if ( idPrefix === "sheet" ) {
             state.tileSheetImage = image
             state.sheetUploaded = true
-            state.sheetCol = (image.width / tile_size) - 1
-            state.sheetRow = (image.height / tile_size) - 1
-            tilesheetCanvas.width = image.width
-            tilesheetCanvas.height = image.height
+            state.sheetCol = (sheetWidthInApp / tile_size) - 1
+            state.sheetRow = ( sheetHeightInApp / tile_size) - 1
+            tilesheetCanvas.width = sheetWidthInApp
+            tilesheetCanvas.height =  sheetHeightInApp
 
             if ( document.getElementById('hidden-canvas') ) {
-            document.getElementById('hidden-canvas').width = image.width
-            document.getElementById('hidden-canvas').height = image.height
-            hiddenCtx.drawImage( image, 0, 0, image.width, image.height )
+            document.getElementById('hidden-canvas').width = sheetWidthInApp
+            document.getElementById('hidden-canvas').height = sheetHeightInApp
+            hiddenCtx.drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
             }
         }
         else {
@@ -124,13 +127,12 @@ function getImage( event ) {
             mapCanvas.width = image.width
             mapCanvas.height = image.height
         }
-
-        ctx.drawImage( image, 0, 0, image.width, image.height )
+        ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
         if ( idPrefix === "sheet" && document.getElementById('output-element')) {
             drawNumbersOverTilesheet()
         }
 
-        document.getElementById(idPrefix + '-paragraph').innerText = 'Width is ' + image.width + 'px, height is ' + image.height + 'px'
+        document.getElementById(idPrefix + '-paragraph').textContent = 'Width is ' + image.width + 'px, height is ' + image.height + 'px'
 
         ctx.image = image
     }
@@ -406,7 +408,7 @@ function finishGrid ( ) {
             jsonRow[j] = tile.id
         }
     }
-    document.getElementById('output-element').innerText = JSON.stringify(state.returnJSON)
+    document.getElementById('output-element').textContent = JSON.stringify(state.returnJSON)
     document.getElementById('output-element').select();
     document.execCommand('copy');
 }

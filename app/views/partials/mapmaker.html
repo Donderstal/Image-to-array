@@ -1,17 +1,25 @@
 <div>
-    <div>
+    <div class="main-container">
         <div class="mapmaker-container">
             <div class="image-container"> 
                 <canvas id="map-canvas"></canvas>
             </div>
             <div class="ui-container">
                 <div class="ui-bottom">
-                    <label>How many rows do you want?</label> <br />
-                    <input id="rowInput" >
+                    <div>
+                        <label>How many rows do you want?</label> <br />
+                    </div>
+                    <div>
+                        <input id="rowInput" >                        
+                    </div>
                 </div>    
                 <div class="ui-bottom">
-                    <label>How many columns do you want?</label> <br />
-                    <input id="colInput" >
+                    <div>
+                        <label>How many columns do you want?</label> <br />
+                    </div>
+                    <div>
+                        <input id="colInput" >
+                    </div>            
                 </div>    
                 <div class="ui-bottom">
                     <button id="help-button" onclick="helpInfo()" class="send-button">How does this work?</button>
@@ -74,7 +82,7 @@
     <div class="mapmaker-bottom-container">
         <div class="output-div">
             <h3>Output array</h3>
-            <textarea id="output-element"></textarea>
+            <p id="output-element"></p>
         </div>
     </div>
 </div>
