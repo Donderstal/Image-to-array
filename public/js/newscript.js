@@ -147,7 +147,9 @@ function drawNumbersOverTilesheet() {
         y = i * tile_size
         for ( var j = 0; j <= state.sheetCol; j++ ) {
             state.sheetState.push ( {'id': tilesheetTileNumber, 'x': x, 'y': y} )
-            tilesheetCtx.rect( x, y, tile_size, tile_size ) ;
+            tilesheetCtx.rect( x, y, tile_size, tile_size) ;
+            tilesheetCtx.font = "16px Georgia";
+            tilesheetCtx.fillText(tilesheetTileNumber, x + 4, y + 16);
             tilesheetCtx.stroke();
 
             tilesheetTileNumber += 1
@@ -311,6 +313,7 @@ function drawGridFromInput(cells = null) {
             state.mapMakerArray[i].push( { id: 'E', 'x': x, 'y': y} )
             gridCtx.beginPath();
             gridCtx.lineWidth = "1";
+            gridCtx.fillText( i, x, y)
             gridCtx.moveTo( x, y );
             gridCtx.lineTo( x, y + tile_size )
             gridCtx.moveTo( x, y );
@@ -408,7 +411,7 @@ function finishGrid ( ) {
             jsonRow[j] = tile.id
         }
     }
-    document.getElementById('output-element').textContent = JSON.stringify(state.returnJSON)
+    document.getElementById('output-element').innerText = JSON.stringify(state.returnJSON)
     document.getElementById('output-element').select();
     document.execCommand('copy');
 }
