@@ -23,7 +23,7 @@ h3 {
     padding-bottom: 1vh;
 }
 
-#tilesheet-button {
+.center-in-div {
     margin: 1vh auto;
     display: block;
 }

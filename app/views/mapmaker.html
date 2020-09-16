@@ -30,7 +30,7 @@
             <div id="gegevenselementen-wrapper" class="col-sm-3 border border-info">
                 <h3 class="border-bottom border-info">Sheet</h3>      
                 <div>
-                    <button id="tilesheet-button" class="btn btn-info" data-toggle="modal" data-target="#tilesheetModal">Select tilesheet</button>                       
+                    <button class="btn btn-info center-in-div" data-toggle="modal" data-target="#tilesheetModal">Select tilesheet</button>                       
                 </div>
                 <div id="tilesheet-div" class="list-container">
                     <canvas id="tilesheet-canvas" class="border border-info visible-canvas"></canvas>
@@ -39,50 +39,3 @@
         </div>       
     </div>
 </div>
-
-<div class="modal fade" id="tilesheetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Select the tilesheet you want to use</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div>
-                <checkbox></checkbox>
-                <label>Bedroom</label>
-            </div>
-            <div>
-                <checkbox></checkbox>
-                <label>Starting neighbourhood</label>
-            </div>
-            <div>
-                <checkbox></checkbox>
-                <label>Downtown</label>
-            </div>
-            <div>
-                <checkbox></checkbox>
-                <p>Generic set A</label>
-            </div>
-            <div>
-                <checkbox></checkbox>
-                <label>Generic set B</label>
-            </div>
-            <div>
-                <checkbox></checkbox>
-                <label>Generic set C</label>
-            </div>
-            <div>
-                <checkbox></checkbox>
-                <label>Yum mart</label>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Confirm</button>
-        </div>
-      </div>
-    </div>
-  </div>
