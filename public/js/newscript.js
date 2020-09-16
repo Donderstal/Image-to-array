@@ -1,12 +1,10 @@
 const mapCanvas = document.getElementById('map-canvas')
 const mapCtx = mapCanvas.getContext('2d')
 mapCtx.font = "20px Arial";
-mapCtx.fillText("Upload your map here", 10, 50);
 
 const tilesheetCanvas = document.getElementById('tilesheet-canvas')
 const tilesheetCtx = tilesheetCanvas.getContext('2d')
 tilesheetCtx.font = "20px Arial";
-tilesheetCtx.fillText("Upload your tilesheet here", 10, 50);
 
 let hiddenCtx;
 let hiddenCanvas;
@@ -297,10 +295,14 @@ function drawGridFromInput(cells = null) {
         gridCtx = mapCtx
         state.mapMaking = true
     }
-    else {
+    else {   
         rows =  cells.rows
         cols =  cells.cols  
-        gridCtx = tilesheetCtx
+        const ctxHeight = rows * tile_size
+        const ctxWidth = cols * tile_size
+        mapCanvas.width = ctxWidth
+        mapCanvas.height = ctxHeight   
+        gridCtx = mapCtx
     }
 
     for ( var i = 0; i <= ( rows - 1 ); i++ ) {
@@ -415,3 +417,11 @@ function finishGrid ( ) {
     document.getElementById('output-element').select();
     document.execCommand('copy');
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const cells = {
+        'rows': 16,
+        'cols': 24
+    }
+    drawGridFromInput(cells)
+});
