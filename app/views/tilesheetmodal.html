@@ -1,0 +1,37 @@
+
+<div class="modal fade" id="tilesheetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select the tilesheet you want to use</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <select id='tilesheet-select' class='center-in-div' onchange="showTilesheetPreview()">
+                <option value="Bedroom"> 
+                    Bedroom </option>
+                <option value="Starting neighbourhood">
+                    Starting neighbourhood </option>
+                <option value="Downtown"> 
+                    Downtown </option>
+                <option value="Generic set A"> 
+                    Generic set A </option>
+                <option value="Generic set B"> 
+                    Generic set B </option>
+                <option value="Generic set C"> 
+                    Generic set C </option>
+                <option value="Yum mart"> 
+                    Yum mart </option>
+            </select>
+
+            <button onclick="confirmTilesheetChoice()" class="btn btn-info center-in-div"> Confirm choice </button>
+
+            <div>
+                <img id="sheet-preview" class='center-in-div' src="/png-files/tilesheets/Bed_Room.png">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

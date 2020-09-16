@@ -27,3 +27,22 @@ h3 {
     margin: 1vh auto;
     display: block;
 }
+
+#hidden-canvas {
+    display: none;
+    visibility: hidden;
+    float: left;
+    z-index: -10;
+}
+
+#map-canvas {
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#map-canvas-div {
+    min-height: 512px;
+}

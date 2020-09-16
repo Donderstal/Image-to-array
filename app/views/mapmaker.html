@@ -15,19 +15,19 @@
     </div>
     <div class="container-fluid"> 
         <div class="row">
-            <div id="standaarden-wrapper" class="col-sm-3 border border-info">
+            <div class="col-sm-3 border border-info fixed-div">
                 <h3 class="border-bottom border-info">Options</h3>        
                 <div id="options-div" class="list-container">
                 
                 </div>
             </div>
-            <div id="regelinformatie-wrapper" class="col-sm-6 border border-info">
+            <div class="col-sm-6 border border-info fixed-div">
                 <h3 class="border-bottom border-info">Map</h3>      
                 <div id="map-canvas-div" class="list-container">
                     <canvas id="map-canvas" class="border border-info visible-canvas"></canvas>
                 </div>  
             </div> 
-            <div id="gegevenselementen-wrapper" class="col-sm-3 border border-info">
+            <div class="col-sm-3 border border-info">
                 <h3 class="border-bottom border-info">Sheet</h3>      
                 <div>
                     <button class="btn btn-info center-in-div" data-toggle="modal" data-target="#tilesheetModal">Select tilesheet</button>                       
@@ -39,3 +39,6 @@
         </div>       
     </div>
 </div>
+<canvas id= "hidden-canvas">
+
+</canvas>
