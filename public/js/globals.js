@@ -1,4 +1,6 @@
 const TILESHEET_SELECT = document.getElementById('tilesheet-select');
+const TILESHEET_FOLDER = '/png-files/tilesheets/'
+const TILESHEET_PREVIEW = document.getElementById( 'sheet-preview' );
 
 const SHEET_CANVAS = document.getElementById('tilesheet-canvas');
 const HIDDEN_CANVAS = document.getElementById('hidden-canvas');
