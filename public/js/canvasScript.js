@@ -7,42 +7,35 @@ const setTilesheet = ( src ) => {
     image.onload = ( ) => {       
         const sheetWidthInApp = image.width / 2 
         const sheetHeightInApp = image.height / 2
-        const hiddenCanvas = document.getElementById('hidden-canvas')
-        const tilesheetCanvas = document.getElementById('tilesheet-canvas')
 
-        tilesheetCanvas.width = sheetWidthInApp
-        tilesheetCanvas.height =  sheetHeightInApp
+        SHEET_CANVAS.width = sheetWidthInApp
+        SHEET_CANVAS.height =  sheetHeightInApp
 
-        hiddenCanvas.width = sheetWidthInApp
-        hiddenCanvas.height = sheetHeightInApp
+        HIDDEN_CANVAS.width = sheetWidthInApp
+        HIDDEN_CANVAS.height = sheetHeightInApp
 
-        hiddenCanvas.getContext("2d").drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
-        tilesheetCanvas.getContext("2d").drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
+        HIDDEN_CTX.drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
+        SHEET_CTX.drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
 
-        tilesheetCanvas.image = image
+        SHEET_CANVAS.image = image
     }
 }
 
 const drawGrid = ( cells ) => {
-    const rows =  cells.rows
-    const cols =  cells.cols  
-    document.getElementById('map-canvas').width = rows * tile_size
-    document.getElementById('map-canvas').height = rows * tile_size  
-    gridCtx = document.getElementById('map-canvas').getContext('2d')
+    MAP_CANVAS.width = cells.cols * TILE_SIZE
+    MAP_CANVAS.height = cells.rows * TILE_SIZE
 
-    for ( var i = 0; i <= ( rows - 1 ); i++ ) {
+    for ( var i = 0; i <= ( cells.rows - 1 ); i++ ) {
         x = 0
-        y = i * tile_size
-        for ( var j = 0; j <= ( cols - 1 ) ; j++ ) {
-            gridCtx.beginPath();
-            gridCtx.lineWidth = "1";
-            gridCtx.fillText( i, x, y)
-            gridCtx.moveTo( x, y );
-            gridCtx.lineTo( x, y + tile_size )
-            gridCtx.moveTo( x, y );
-            gridCtx.lineTo( x + tile_size, y )
-            gridCtx.stroke()
-            x += tile_size  
+        y = i * TILE_SIZE
+        for ( var j = 0; j <= ( cells.cols - 1 ) ; j++ ) {
+            MAP_CTX.beginPath();
+            MAP_CTX.moveTo( x, y );
+            MAP_CTX.lineTo( x, y + TILE_SIZE )
+            MAP_CTX.moveTo( x, y );
+            MAP_CTX.lineTo( x + TILE_SIZE, y )
+            MAP_CTX.stroke()
+            x += TILE_SIZE 
         }
     }
 }
@@ -52,5 +45,5 @@ document.addEventListener("DOMContentLoaded", function() {
         'rows': 16,
         'cols': 24
     }
-    drawGrid(cells)
+    drawGrid({ rows: MAX_ROWS, cols: MAX_COLS })
 });

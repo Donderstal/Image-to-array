@@ -12,6 +12,9 @@ const MAP_CTX = MAP_CANVAS.getContext("2d");
 
 const TILE_SIZE = 32;
 
+const MAX_ROWS = 16;
+const MAX_COLS =24;
+
 const SHEET_COL_1_Y_POS = 0;
 const SHEET_COL_2_Y_POS = TILE_SIZE;
 const SHEET_COL_3_Y_POS = TILE_SIZE * 2;
