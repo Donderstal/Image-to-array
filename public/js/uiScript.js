@@ -35,3 +35,22 @@ const confirmTilesheetChoice = ( ) => {
     const src = TILESHEET_PREVIEW.getAttribute("src");
     setTilesheet( src )
 }
+
+const determineMousePosition = ( event ) => { 
+    const sheetRect = SHEET_CANVAS.getBoundingClientRect( );
+    const mapRect = MAP_CANVAS.getBoundingClientRect( );
+
+    const isInMap = event.pageX > mapRect.left && event.pageX < mapRect.right && event.pageY > mapRect.top && event.pageY < mapRect.bottom;
+    const isInSheet = event.pageX > sheetRect.left && event.pageX < sheetRect.right && event.pageY > sheetRect.top && event.pageY < sheetRect.bottom;
+
+    if ( isInMap ) {
+        console.log('clicked in map!')
+    }
+    if ( isInSheet ) {
+        console.log('clicked in sheet!')
+    }
+ 
+    console.log( event.pageX, event.pageY )
+}
+
+document.addEventListener('click', determineMousePosition, true); 
