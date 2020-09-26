@@ -41,6 +41,18 @@ const drawGrid = ( cells ) => {
     }
 }
 
+const getTileFromSheetOnClick = ( clickX, clickY ) => {
+    console.log(getTileFromSheetOnClick.name)
+}
+
+const putTileInMapOnClick = ( clickX, clickY ) => {
+    console.log(putTileInMapOnClick.name)
+}
+
+const removeTileFromMapOnClick = ( clickX, clickY ) => {
+    console.log(removeTileFromMapOnClick.name)
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     drawGrid({ rows: MAX_ROWS, cols: MAX_COLS })
 });

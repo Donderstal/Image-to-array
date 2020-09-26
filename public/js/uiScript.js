@@ -44,13 +44,17 @@ const determineMousePosition = ( event ) => {
     const isInSheet = event.pageX > sheetRect.left && event.pageX < sheetRect.right && event.pageY > sheetRect.top && event.pageY < sheetRect.bottom;
 
     if ( isInMap ) {
-        console.log('clicked in map!')
+        if ( event.shiftKey ) {
+            removeTileFromMapOnClick( event.pageX, event.pageY );
+        }
+        else {
+            putTileInMapOnClick( event.pageX, event.pageY );            
+        }
     }
     if ( isInSheet ) {
-        console.log('clicked in sheet!')
+        getTileFromSheetOnClick( event.pageX, event.pageY );
     }
- 
-    console.log( event.pageX, event.pageY )
+
 }
 
 document.addEventListener('click', determineMousePosition, true); 
