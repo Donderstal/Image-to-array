@@ -44,17 +44,29 @@ const determineMousePosition = ( event ) => {
     const isInSheet = event.pageX > sheetRect.left && event.pageX < sheetRect.right && event.pageY > sheetRect.top && event.pageY < sheetRect.bottom;
 
     if ( isInMap ) {
-        if ( event.shiftKey ) {
-            removeTileFromMapOnClick( event.pageX, event.pageY );
-        }
-        else {
-            putTileInMapOnClick( event.pageX, event.pageY );            
-        }
+        passClickXyInMap( event, mapRect )
     }
     if ( isInSheet ) {
-        getTileFromSheetOnClick( event.pageX, event.pageY );
+        passClickXyInSheet( event, sheetRect )
     }
+}
 
+const passClickXyInSheet = ( event, sheetRect ) => {
+    const xInSheet = event.pageX - sheetRect.left;
+    const yInSheet = event.pageY - sheetRect.top;
+    getTileFromSheetOnClick( xInSheet, yInSheet );
+}
+
+const passClickXyInMap = ( event, mapRect ) => {
+    const xInMap = event.pageX - mapRect.left;
+    const yInMap = event.pageY - mapRect.top;
+
+    if ( event.shiftKey ) {
+        removeTileFromMapOnClick( xInMap, yInMap );
+    }
+    else {
+        putTileInMapOnClick( xInMap, yInMap );            
+    }
 }
 
 document.addEventListener('click', determineMousePosition, true); 
