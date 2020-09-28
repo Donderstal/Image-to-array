@@ -36,25 +36,16 @@ const confirmTilesheetChoice = ( ) => {
     setTilesheet( src )
 }
 
-const determineMousePosition = ( event ) => { 
-    const sheetRect = SHEET_CANVAS.getBoundingClientRect( );
-    const mapRect = MAP_CANVAS.getBoundingClientRect( );
-
-    const isInMap = event.pageX > mapRect.left && event.pageX < mapRect.right && event.pageY > mapRect.top && event.pageY < mapRect.bottom;
-    const isInSheet = event.pageX > sheetRect.left && event.pageX < sheetRect.right && event.pageY > sheetRect.top && event.pageY < sheetRect.bottom;
-
-    if ( isInMap ) {
-        if ( event.shiftKey ) {
-            removeTileFromMapOnClick( event.pageX, event.pageY );
-        }
-        else {
-            putTileInMapOnClick( event.pageX, event.pageY );            
-        }
-    }
-    if ( isInSheet ) {
-        getTileFromSheetOnClick( event.pageX, event.pageY );
-    }
-
+const captureSheetClick = ( event ) => {
+    console.log('in sheet!')
+    console.log(event.offsetX, event.offsetY)
 }
 
-document.addEventListener('click', determineMousePosition, true); 
+const captureMapClick = ( event ) => {
+    console.log('in map!')
+    console.log(event.offsetX, event.offsetY)
+}
+
+SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
+
+MAP_CANVAS.addEventListener( 'click', captureMapClick, true )

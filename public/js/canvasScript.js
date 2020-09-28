@@ -4,7 +4,7 @@ const initializeCanvas = ( name, width, height, image ) => {
 
     canvas.width = width;
     canvas.height = height;
-    ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, sheetWidthInApp, sheetHeightInApp )
+    ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, width, height )
 
     canvas.image = image
 }
@@ -19,40 +19,36 @@ const setTilesheet = ( src ) => {
 
         initializeCanvas( "SHEET", sheetWidthInApp, sheetHeightInApp, image );
         initializeCanvas( "HIDDEN", sheetWidthInApp, sheetHeightInApp, image );
+
+        drawGrid( "SHEET", sheetHeightInApp / TILE_SIZE, 4 )
     }
 }
 
-const drawGrid = ( cells ) => {
+const initMapCanvas = ( cells ) => {
     MAP_CANVAS.width = cells.cols * TILE_SIZE
     MAP_CANVAS.height = cells.rows * TILE_SIZE
 
-    for ( var i = 0; i <= ( cells.rows - 1 ); i++ ) {
+    drawGrid( "MAP", cells.rows, cells.cols )
+}
+
+const drawGrid = ( canvas, rows, cols ) => {
+    const ctx = canvas == "MAP" ? MAP_CTX : SHEET_CTX;
+
+    for ( var i = 0; i <= ( rows - 1 ); i++ ) {
         x = 0
         y = i * TILE_SIZE
-        for ( var j = 0; j <= ( cells.cols - 1 ) ; j++ ) {
-            MAP_CTX.beginPath();
-            MAP_CTX.moveTo( x, y );
-            MAP_CTX.lineTo( x, y + TILE_SIZE )
-            MAP_CTX.moveTo( x, y );
-            MAP_CTX.lineTo( x + TILE_SIZE, y )
-            MAP_CTX.stroke()
+        for ( var j = 0; j <= ( cols - 1 ) ; j++ ) {
+            ctx.beginPath();
+            ctx.moveTo( x, y );
+            ctx.lineTo( x, y + TILE_SIZE )
+            ctx.moveTo( x, y );
+            ctx.lineTo( x + TILE_SIZE, y )
+            ctx.stroke()
             x += TILE_SIZE 
         }
     }
 }
 
-const getTileFromSheetOnClick = ( clickX, clickY ) => {
-    console.log(getTileFromSheetOnClick.name)
-}
-
-const putTileInMapOnClick = ( clickX, clickY ) => {
-    console.log(putTileInMapOnClick.name)
-}
-
-const removeTileFromMapOnClick = ( clickX, clickY ) => {
-    console.log(removeTileFromMapOnClick.name)
-}
-
 document.addEventListener("DOMContentLoaded", function() {
-    drawGrid({ rows: MAX_ROWS, cols: MAX_COLS })
+    initMapCanvas({ rows: MAX_ROWS, cols: MAX_COLS })
 });

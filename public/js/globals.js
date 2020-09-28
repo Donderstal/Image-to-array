@@ -10,12 +10,10 @@ const SHEET_CTX = SHEET_CANVAS.getContext("2d");
 const HIDDEN_CTX = HIDDEN_CANVAS.getContext("2d");
 const MAP_CTX = MAP_CANVAS.getContext("2d");
 
-const PAGE_RECT = document.getElementsByTagName('html')[0].getBoundingClientRect( );
-
 const TILE_SIZE = 32;
 
 const MAX_ROWS = 16;
-const MAX_COLS =24;
+const MAX_COLS = 24;
 
 const SHEET_COL_1_Y_POS = 0;
 const SHEET_COL_2_Y_POS = TILE_SIZE;
