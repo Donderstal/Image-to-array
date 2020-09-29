@@ -26,6 +26,10 @@ class Grid {
             }
         };
     };
+
+    clearGrid( ) {
+        this.grid = [];
+    }
 }
 
 class Tile {
@@ -33,9 +37,21 @@ class Tile {
         this.x = x;
         this.y = y;
         this.index = index;
+        this.isMap = isMap
 
-        isMap ? this.clearTileID( ) : this.setTileID( index );
+        this.isMap ? this.clearTileID( ) : this.setTileID( index );
+        this.drawTileBorders( );
     };
+
+    drawTileBorders( ) {
+        const ctx = this.isMap ? MAP_CTX : SHEET_CTX;
+        ctx.beginPath();
+        ctx.moveTo( this.x, this.y );
+        ctx.lineTo( this.x, this.y + TILE_SIZE );
+        ctx.moveTo( this.x, this.y );
+        ctx.lineTo( this.x + TILE_SIZE, this.y );
+        ctx.stroke( );
+    }
 
     setTileID( ID ) {
         this.ID = ID;
