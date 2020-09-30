@@ -30,6 +30,15 @@ class Grid {
     clearGrid( ) {
         this.grid = [];
     }
+
+    getTileAtXY( x, y ) {
+        const column = Math.floor(event.offsetX / TILE_SIZE);
+        const row = Math.floor(event.offsetY / TILE_SIZE);
+
+        const tileIndex = (row * this.cols) + column;
+
+        return this.array[tileIndex]
+    }
 }
 
 class Tile {
@@ -46,6 +55,7 @@ class Tile {
     drawTileBorders( ) {
         const ctx = this.isMap ? MAP_CTX : SHEET_CTX;
         ctx.beginPath();
+        ctx.lineWidth = .5
         ctx.moveTo( this.x, this.y );
         ctx.lineTo( this.x, this.y + TILE_SIZE );
         ctx.moveTo( this.x, this.y );

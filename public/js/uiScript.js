@@ -34,18 +34,16 @@ const showTilesheetPreview = ( ) => {
 const confirmTilesheetChoice = ( ) => {
     const src = TILESHEET_PREVIEW.getAttribute("src");
     setTilesheet( src )
-    SHEET_CANVAS.classList.remove('invisible-canvas')
-    SHEET_CANVAS.classList.add('visible-canvas')
+    SHEET_CANVAS.classList.remove('invisible-canvas');
+    SHEET_CANVAS.classList.add('visible-canvas');
 }
 
 const captureSheetClick = ( event ) => {
-    console.log('in sheet!')
-    console.log(event.offsetX, event.offsetY)
+    SHEET.getTileAtXY(event.offsetX, event.offsetY);
 }
 
 const captureMapClick = ( event ) => {
-    console.log('in map!')
-    console.log(event.offsetX, event.offsetY)
+    MAP.getTileAtXY(event.offsetX, event.offsetY);
 }
 
 const setMapGrid = ( ) => {

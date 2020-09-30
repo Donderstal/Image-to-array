@@ -17,6 +17,10 @@ class CanvasWithGrid {
     clearGrid( ) {
         this.grid.clearGrid( );
     };
+
+    getTileAtXY( x, y ) {
+        return this.grid.getTileAtXY( x, y );
+    };
 };
 
 class Sheet extends CanvasWithGrid {
@@ -29,6 +33,11 @@ class Sheet extends CanvasWithGrid {
     setSheet( sheetName ) {
         this.sheetName = sheetName;
     };
+
+    getTileAtXY( x, y ) {
+        const tile = super.getTileAtXY( x, y );
+        SELECTED_TILE_CTX.drawImage( SHEET_CANVAS, tile.x, tile.y, TILE_SIZE, TILE_SIZE, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
+    }
 }
 
 class Map extends CanvasWithGrid {

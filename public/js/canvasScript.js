@@ -7,11 +7,11 @@ const initializeSheetCanvas = ( width, height, image ) => {
 }
 
 const initializeSelectedTileCanvas = ( ) => {
-    SELECTED_TILE_CANVAS.width = TILE_SIZE;
-    SELECTED_TILE_CANVAS.height = TILE_SIZE;
+    SELECTED_TILE_CANVAS.width = TILE_SIZE * 2;
+    SELECTED_TILE_CANVAS.height = TILE_SIZE * 2;
     
     SELECTED_TILE_CTX.fillStyle = "white";
-    SELECTED_TILE_CTX.fillRect( 0, 0, TILE_SIZE, TILE_SIZE );
+    SELECTED_TILE_CTX.fillRect( 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );
 }
 
 const setTilesheet = ( src ) => {
