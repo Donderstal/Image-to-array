@@ -34,6 +34,8 @@ const showTilesheetPreview = ( ) => {
 const confirmTilesheetChoice = ( ) => {
     const src = TILESHEET_PREVIEW.getAttribute("src");
     setTilesheet( src )
+    SHEET_CANVAS.classList.remove('invisible-canvas')
+    SHEET_CANVAS.classList.add('visible-canvas')
 }
 
 const captureSheetClick = ( event ) => {
@@ -48,14 +50,31 @@ const captureMapClick = ( event ) => {
 
 const setMapGrid = ( ) => {
     const rows = document.getElementById('rows-input').value;
-    const cols = document.getElementById('columns-input').value;
+    const columns = document.getElementById('columns-input').value;
 
-    if ( rows > 16 || cols > 24 ) {
+    if ( rows > 16 || columns > 24 ) {
         alert( 'Your input is not valid. A map can have no more than 16 rows and 24 columns.' )
         return;
     }
 
-    initMapCanvas( rows, cols );
+    MAP_CANVAS.classList.remove('invisible-canvas');
+    MAP_CANVAS.classList.add('visible-canvas')
+
+    document.getElementById('rows-input').value = null;
+    document.getElementById('columns-input').value = null;
+
+    document.getElementById("rows-span").textContent = rows;
+    document.getElementById("columns-span").textContent = columns;
+
+    initMapCanvas( rows, columns );
+}
+
+const setMapInformation = ( ) => {
+    const mapName = document.getElementById("mapname-label").value;
+    const neighbourhood = document.getElementById("neighbourhood-label").value;
+    
+    document.getElementById("mapname-span").textContent = mapName;
+    document.getElementById("neighbourhood-span").textContent = neighbourhood;
 }
 
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
@@ -63,3 +82,4 @@ SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
 MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
 
 document.getElementById('map-grid-button').addEventListener( 'click', setMapGrid, true )
+document.getElementById('map-info-button').addEventListener( 'click', setMapInformation, true )

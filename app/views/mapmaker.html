@@ -36,13 +36,13 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="mapname_label">Mapname: </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Name this map" aria-label="mapname" aria-describedby="mapname_label">                        
+                        <input id="mapname-label" type="text" class="form-control" placeholder="Name this map" aria-label="mapname" aria-describedby="mapname_label">                        
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="neighbourhood_label">Neighbourhood: </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Select a neighbourhood for this map" aria-label="neighbourhood" aria-describedby="neighbourhood_label">                        
+                        <input id="neighbourhood-label" type="text" class="form-control" placeholder="Select a neighbourhood for this map" aria-label="neighbourhood" aria-describedby="neighbourhood_label">                        
                     </div>
                     <div>
                         <button id="map-info-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Confirm map name and neighbourhood</button>
@@ -75,19 +75,21 @@
         <div class="row">
             <!-- Current map data -->
             <div class="col-sm-2 border border-info">   
-                <div>
-                    <h2>Current map data</h2>
-                    <hr/>
-                </div>
-                <div>
-                    <h3>Information:</h3>
-                    <p>Mapname: <span> null </span> </p>             
-                    <p>Neighbourhood: <span> null </span> </p>                     
-                </div>
-                <div>
-                    <h3>Dimensions:</h3>
-                    <p>Rows: <span> null </span> </p>             
-                    <p>Columns: <span> null </span> </p>                     
+                <div style="position: fixed;">
+                    <div>
+                        <h2>Current map data</h2>
+                        <hr/>
+                    </div>
+                    <div>
+                        <h3>Information:</h3>
+                        <p>Mapname: <span id="mapname-span"> null </span> </p>             
+                        <p>Neighbourhood: <span id="neighbourhood-span"> null </span> </p>                     
+                    </div>
+                    <div>
+                        <h3>Dimensions:</h3>
+                        <p>Rows: <span id="rows-span"> null </span> </p>             
+                        <p>Columns: <span id="columns-span"> null </span> </p>                     
+                    </div>                    
                 </div>
             </div>
             <!-- Current map grid -->
