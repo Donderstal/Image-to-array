@@ -89,6 +89,13 @@
                         <h3>Dimensions:</h3>
                         <p>Rows: <span id="rows-span"> null </span> </p>             
                         <p>Columns: <span id="columns-span"> null </span> </p>                     
+                    </div>
+                    <div>
+                        <h3>Selected tile:</h3>
+                        <!-- hidden canvas for copy/pasting tiles -->
+                        <canvas id="selected-tile-canvas" class="visible-canvas">
+
+                        </canvas>
                     </div>                    
                 </div>
             </div>
@@ -110,8 +117,3 @@
         </div>       
     </div>
 </div>
-
-<!-- hidden canvas for copy/pasting tiles -->
-<canvas id= "hidden-canvas" class="invisible-canvas">
-
-</canvas>

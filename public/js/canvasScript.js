@@ -1,12 +1,17 @@
-const initializeCanvas = ( name, width, height, image ) => {
-    const canvas = name == "SHEET" ? SHEET_CANVAS : HIDDEN_CANVAS;
-    const ctx = name == "SHEET" ? SHEET_CTX : HIDDEN_CTX;
+const initializeSheetCanvas = ( width, height, image ) => {
+    SHEET_CANVAS.width = width;
+    SHEET_CANVAS.height = height;
+    SHEET_CTX.drawImage( image, 0, 0, image.width, image.height, 0, 0, width, height );
+    SHEET_CANVAS.image = image;  
+    SHEET.initGrid( height / TILE_SIZE, 4 );
+}
 
-    canvas.width = width;
-    canvas.height = height;
-    ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, width, height );
-
-    canvas.image = image;
+const initializeSelectedTileCanvas = ( ) => {
+    SELECTED_TILE_CANVAS.width = TILE_SIZE;
+    SELECTED_TILE_CANVAS.height = TILE_SIZE;
+    
+    SELECTED_TILE_CTX.fillStyle = "white";
+    SELECTED_TILE_CTX.fillRect( 0, 0, TILE_SIZE, TILE_SIZE );
 }
 
 const setTilesheet = ( src ) => {
@@ -17,10 +22,8 @@ const setTilesheet = ( src ) => {
         const sheetWidthInApp = image.width / 2;
         const sheetHeightInApp = image.height / 2;
 
-        initializeCanvas( "SHEET", sheetWidthInApp, sheetHeightInApp, image );
-        initializeCanvas( "HIDDEN", sheetWidthInApp, sheetHeightInApp, image );
-
-        SHEET.initGrid( sheetHeightInApp / TILE_SIZE, 4 );
+        initializeSheetCanvas( sheetWidthInApp, sheetHeightInApp, image );
+        initializeSelectedTileCanvas( );
     }
 }
 

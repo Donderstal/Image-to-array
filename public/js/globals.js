@@ -3,11 +3,11 @@ const TILESHEET_FOLDER = '/png-files/tilesheets/'
 const TILESHEET_PREVIEW = document.getElementById( 'sheet-preview' );
 
 const SHEET_CANVAS = document.getElementById('tilesheet-canvas');
-const HIDDEN_CANVAS = document.getElementById('hidden-canvas');
+const SELECTED_TILE_CANVAS = document.getElementById('selected-tile-canvas');
 const MAP_CANVAS = document.getElementById('map-canvas');
 
 const SHEET_CTX = SHEET_CANVAS.getContext("2d");
-const HIDDEN_CTX = HIDDEN_CANVAS.getContext("2d");
+const SELECTED_TILE_CTX = SELECTED_TILE_CANVAS.getContext("2d");
 const MAP_CTX = MAP_CANVAS.getContext("2d");
 
 let SHEET;
