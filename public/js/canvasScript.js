@@ -24,11 +24,11 @@ const setTilesheet = ( src ) => {
     }
 }
 
-const initMapCanvas = ( cell ) => {
-    MAP_CANVAS.width = cell.cols * TILE_SIZE
-    MAP_CANVAS.height = cell.rows * TILE_SIZE
+const initMapCanvas = ( rows, cols ) => {
+    MAP_CANVAS.width = cols * TILE_SIZE
+    MAP_CANVAS.height = rows * TILE_SIZE
 
-    MAP.initGrid( cell.rows, cell.cols )
+    MAP.initGrid( rows, cols )
 }
 
 document.addEventListener("DOMContentLoaded", function() {

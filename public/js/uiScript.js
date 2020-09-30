@@ -46,6 +46,20 @@ const captureMapClick = ( event ) => {
     console.log(event.offsetX, event.offsetY)
 }
 
+const setMapGrid = ( ) => {
+    const rows = document.getElementById('rows-input').value;
+    const cols = document.getElementById('columns-input').value;
+
+    if ( rows > 16 || cols > 24 ) {
+        alert( 'Your input is not valid. A map can have no more than 16 rows and 24 columns.' )
+        return;
+    }
+
+    initMapCanvas( rows, cols );
+}
+
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
 
 MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
+
+document.getElementById('map-grid-button').addEventListener( 'click', setMapGrid, true )
