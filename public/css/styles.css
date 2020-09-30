@@ -9,13 +9,8 @@
 }
 
 h1 {
-    display: inline;
-    margin: 2vh 10vw;
-}
-
-h3 {
     display: block;
-    margin: 1vh auto;
+    margin: 0 auto;
     text-align: center;
 }
 
@@ -29,10 +24,13 @@ h3 {
 }
 
 #hidden-canvas {
-    display: none;
-    visibility: hidden;
     float: left;
     z-index: -10;
+}
+
+.invisible-canvas {
+    display: none;
+    visibility: hidden;
 }
 
 #map-canvas {
