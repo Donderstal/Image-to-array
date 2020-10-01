@@ -75,14 +75,22 @@ const setMapGrid = ( ) => {
 const setMapInformation = ( ) => {
     const mapName = document.getElementById("mapname-label").value;
     const neighbourhood = document.getElementById("neighbourhood-label").value;
+
+    MAP.setNeighbourhood( neighbourhood );
+    MAP.setMapName( mapName )
     
     document.getElementById("mapname-span").textContent = mapName;
     document.getElementById("neighbourhood-span").textContent = neighbourhood;
 }
 
-SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
+const exportMapData = ( ) => {
+    console.log(MAP.exportMapData( ));
+}
 
+SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
 MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
 
 document.getElementById('map-grid-button').addEventListener( 'click', setMapGrid, true )
 document.getElementById('map-info-button').addEventListener( 'click', setMapInformation, true )
+
+document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )

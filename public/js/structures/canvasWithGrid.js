@@ -52,9 +52,35 @@ class Map extends CanvasWithGrid {
         this.mapName = mapName;
     }
 
+    setNeighbourhood( neighbourhood ) {
+        this.neighbourhood = neighbourhood
+    }
+
     getTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( SHEET.activeTile.index )
         MAP_CTX.drawImage( SHEET_CANVAS, SHEET.activeTile.x, SHEET.activeTile.y, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+    }
+
+    exportMapData( ) {
+        let exportArray = [];
+        this.grid.array.forEach( ( e ) => {
+            exportArray.push(e.ID)
+        })
+
+        return {
+            'mapName' : this.mapName + '/' + this.neighbourhood,
+            'tileSet' : SHEET.sheetName,
+            'outdoors' : null,
+            'music' : null,
+            'neighbours' : { },
+            'rows' : this.grid.rows - 1,
+            'cols' : this.grid.cols - 1,
+            'grid' : this.grid.array,
+            'mapObjects' : [],            
+            'characters' : [],
+            'actions' : [],
+            'doors' : []
+         };
     }
 };

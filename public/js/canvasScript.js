@@ -3,6 +3,7 @@ const initializeSheetCanvas = ( width, height, image ) => {
     SHEET_CANVAS.height = height;
     SHEET_CTX.drawImage( image, 0, 0, image.width, image.height, 0, 0, width, height );
     SHEET_CANVAS.image = image;  
+    SHEET.setSheet( image.src )
     SHEET.initGrid( height / TILE_SIZE, 4 );
 }
 
