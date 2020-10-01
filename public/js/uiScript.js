@@ -84,7 +84,7 @@ const setMapInformation = ( ) => {
 }
 
 const exportMapData = ( ) => {
-    console.log(MAP.exportMapData( ));
+    alert(JSON.stringify(MAP.exportMapData( )));
 }
 
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )

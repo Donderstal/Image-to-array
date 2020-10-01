@@ -76,7 +76,7 @@ class Map extends CanvasWithGrid {
             'neighbours' : { },
             'rows' : this.grid.rows - 1,
             'cols' : this.grid.cols - 1,
-            'grid' : this.grid.array,
+            'grid' : exportArray,
             'mapObjects' : [],            
             'characters' : [],
             'actions' : [],
