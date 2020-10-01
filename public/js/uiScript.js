@@ -43,7 +43,12 @@ const captureSheetClick = ( event ) => {
 }
 
 const captureMapClick = ( event ) => {
-    MAP.getTileAtXY(event.offsetX, event.offsetY);
+    if ( event.shiftKey ) {
+        
+    }
+    else {
+        MAP.getTileAtXY(event.offsetX, event.offsetY);        
+    }
 }
 
 const setMapGrid = ( ) => {
