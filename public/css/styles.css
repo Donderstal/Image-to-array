@@ -57,3 +57,7 @@ html, body {
 .full-width {
     width: 100vw;
 }
+
+.mapmaker-column {
+    height: 100vh;
+}

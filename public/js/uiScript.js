@@ -45,8 +45,14 @@ const switchView = ( event ) => {
             nextScreen = "mapmaker-new-map-div";
             break;
         case "start-new-map-button" : 
-            nextScreen = "mapmaker-div";
-            break;
+            if ( mapMakerDataIsSet( ) ) {
+                prepareMapmaker( );
+                nextScreen = "mapmaker-div";
+                break;
+            }
+            else {
+                return;
+            }
         default :
             alert( 'Navigation error. Tell Daan right away!!' );
             break;
@@ -57,9 +63,32 @@ const switchView = ( event ) => {
    document.getElementById(nextScreen).className = nextScreen == "mapmaker-div" ? "" : "row window window-active";
 }
 
+const mapMakerDataIsSet = ( ) => {
+    const rows = document.getElementById('rows-input').value;
+    const columns = document.getElementById('columns-input').value;
+
+    if ( rows > 16 || columns > 24 ) {
+        alert( 'Your input is not valid. A map can have no more than 16 rows and 24 columns.' )
+        return false;
+    }
+    else if ( rows == "" || columns == "" ) {
+        alert( 'Please input a number of rows and columns');
+        return false;
+    }
+    else if ( document.getElementById('tilesheet-selection-input').value ==  "" ) {
+        alert( 'Please select a tilesheet before beginning');
+        return false;
+    }
+
+    return true;
+}
+
 const confirmTilesheetChoice = ( ) => {
     const src = TILESHEET_PREVIEW.getAttribute("src");
     setTilesheet( src )
+    document.getElementById('tilesheet-selection-input').readOnly = false;
+    document.getElementById('tilesheet-selection-input').value = src;
+    document.getElementById('tilesheet-selection-input').readOnly = true;
     SHEET_CANVAS.classList.remove('invisible-canvas');
     SHEET_CANVAS.classList.add('visible-canvas');
 }
@@ -75,6 +104,11 @@ const captureMapClick = ( event ) => {
     else {
         MAP.getTileAtXY(event.offsetX, event.offsetY);        
     }
+}
+
+const prepareMapmaker = ( ) => {
+    setMapInformation( );    
+    setMapGrid( );
 }
 
 const setMapGrid = ( ) => {
@@ -116,10 +150,7 @@ const exportMapData = ( ) => {
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
 MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
 
-document.getElementById('map-grid-button').addEventListener( 'click', setMapGrid, true )
-document.getElementById('map-info-button').addEventListener( 'click', setMapInformation, true )
-
-//document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )
+document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )
 
 Array.from(document.getElementsByClassName('navigation-button')).forEach( ( e ) => {
     e.addEventListener( 'click', switchView, true )
