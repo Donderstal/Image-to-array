@@ -1,63 +1,82 @@
 <!-- Controls row -->
 <div id="mapmaker-new-map-div" class="row window window-inactive">
-    <!-- Set map size -->
-    <div class="col-sm-4 fixed-div">
-        <div id="options-div" class="list-container">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="rows_label">Rows</span>
+    <div class="row full-width">
+        <!-- Set map size -->        
+        <div class="col-sm-4 offset-sm-4 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="rows_label">Rows</span>
+                    </div>
+                    <input id="rows-input" type="number" class="form-control" placeholder="16 rows max. A standard outdoor map has 12 rows." aria-label="Rows" aria-describedby="rows_label">                        
                 </div>
-                <input id="rows-input" type="number" class="form-control" placeholder="16 rows max. A standard outdoor map has 12 rows." aria-label="Rows" aria-describedby="rows_label">                        
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="columns_label">Columns</span>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="columns_label">Columns</span>
+                    </div>
+                    <input id="columns-input" type="number" class="form-control" placeholder="24 columns max. A standard outdoor map has 24 columns." aria-label="columns" aria-describedby="columns_label">                        
                 </div>
-                <input id="columns-input" type="number" class="form-control" placeholder="24 columns max. A standard outdoor map has 24 columns." aria-label="columns" aria-describedby="columns_label">                        
-            </div>
-            <div>
-                <button id="map-grid-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Set map grid size</button>
+                <div>
+                    <button id="map-grid-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Set map grid size</button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Name map -->
-    <div class="col-sm-4 fixed-div">
-        <div id="options-div" class="list-container">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="mapname_label">Mapname: </span>
+    <div class="row full-width">
+        <!-- Name map -->
+        <div class="col-sm-4 offset-sm-4 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="mapname_label">Mapname: </span>
+                    </div>
+                    <input id="mapname-label" type="text" class="form-control" placeholder="Name this map" aria-label="mapname" aria-describedby="mapname_label">                        
                 </div>
-                <input id="mapname-label" type="text" class="form-control" placeholder="Name this map" aria-label="mapname" aria-describedby="mapname_label">                        
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="neighbourhood_label">Neighbourhood: </span>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="neighbourhood_label">Neighbourhood: </span>
+                    </div>
+                    <input id="neighbourhood-label" type="text" class="form-control" placeholder="Select a neighbourhood for this map" aria-label="neighbourhood" aria-describedby="neighbourhood_label">                        
                 </div>
-                <input id="neighbourhood-label" type="text" class="form-control" placeholder="Select a neighbourhood for this map" aria-label="neighbourhood" aria-describedby="neighbourhood_label">                        
-            </div>
-            <div>
-                <button id="map-info-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Confirm map name and neighbourhood</button>
+                <div>
+                    <button id="map-info-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Confirm map name and neighbourhood</button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Save & load -->
-    <div class="col-sm-4 fixed-div">
-        <div id="options-div" class="list-container">
-            <div class="mb-2">
-                <button type="button" class="btn btn-outline-success btn-lg btn-block">
-                    Load map
-                </button>                      
+    <div class="row full-width">
+        <div class="col-sm-4 offset-sm-4">
+            <div class="list-container">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="tilesheet-selection">Tilesheet: </span>
+                    </div>
+                    <input id="tilesheet-selection-label" type="text" class="form-control" placeholder="Select a tilesheet with the button below" aria-label="tilesheet-selection" aria-describedby="tilesheet-selection" readonly>                        
+                </div>
+                <button class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#tilesheetModal">Select tilesheet</button>
             </div>
-            <div class="mb-2">
-                <button type="button" class="btn btn-outline-success btn-lg btn-block">
-                    Save map
-                </button>                    
+                                               
+        </div>  
+    </div>
+    <div class="row full-width">
+        <!-- Save & load -->
+        <div class="col-sm-4 offset-sm-1 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-success btn-lg btn-block">
+                        Clear inputs
+                    </button>                      
+                </div>
             </div>
-            <div class="mb-2">
-                <button id="export-map-button" type="button" class="btn btn-outline-success btn-lg btn-block">
-                    Export map data
-                </button>                    
+        </div>   
+        <div class="col-sm-4 offset-sm-2 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="mb-2">
+                    <button id="start-new-map-button" type="button" class="btn btn-outline-success btn-lg btn-block navigation-button">
+                        New map
+                    </button>                      
+                </div>
             </div>
-        </div>
-    </div>            
+        </div>  
+    </div>
 </div>
