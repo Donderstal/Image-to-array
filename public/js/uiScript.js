@@ -31,6 +31,32 @@ const showTilesheetPreview = ( ) => {
     TILESHEET_PREVIEW.setAttribute( 'src', TILESHEET_FOLDER + filename );
 }
 
+const switchView = ( event ) => {
+   let nextScreen;
+
+   switch ( event.target.id ) {
+        case "log-in-button" : 
+            nextScreen = "welcome-div";
+            break;
+        case "mapmaker-button" : 
+            nextScreen = "mapmaker-menu-div";
+            break;
+        case "new-map-button" : 
+            nextScreen = "mapmaker-new-map-div";
+            break;
+        case "start-new-map-button" : 
+            nextScreen = "mapmaker-div";
+            break;
+        default :
+            alert( 'Navigation error. Tell Daan right away!!' );
+            break;
+   }
+
+   document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
+
+   document.getElementById(nextScreen).className = nextScreen == "mapmaker-div" ? "" : "row window window-active";
+}
+
 const confirmTilesheetChoice = ( ) => {
     const src = TILESHEET_PREVIEW.getAttribute("src");
     setTilesheet( src )
@@ -93,4 +119,8 @@ MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
 document.getElementById('map-grid-button').addEventListener( 'click', setMapGrid, true )
 document.getElementById('map-info-button').addEventListener( 'click', setMapInformation, true )
 
-document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )
+//document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )
+
+Array.from(document.getElementsByClassName('navigation-button')).forEach( ( e ) => {
+    e.addEventListener( 'click', switchView, true )
+} )
