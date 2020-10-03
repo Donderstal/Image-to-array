@@ -1,119 +1,110 @@
-<div>
-    <div class="header border-bottom border-info">
-        <div class="header-inner container">
-            <h1>
-                RPG Mapmaker
-            </h1>
-        </div>
-    </div>
-    <div class="container-fluid"> 
-        <!-- Controls row -->
-        <div class="row">
-            <!-- Set map size -->
-            <div class="col-sm-4 fixed-div">
-                <div id="options-div" class="list-container">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="rows_label">Rows</span>
-                        </div>
-                        <input id="rows-input" type="number" class="form-control" placeholder="16 rows max. A standard outdoor map has 12 rows." aria-label="Rows" aria-describedby="rows_label">                        
+<div class="window window-inactive"> 
+    <!-- Controls row -->
+    <div class="row">
+        <!-- Set map size -->
+        <div class="col-sm-4 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="rows_label">Rows</span>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="columns_label">Columns</span>
-                        </div>
-                        <input id="columns-input" type="number" class="form-control" placeholder="24 columns max. A standard outdoor map has 24 columns." aria-label="columns" aria-describedby="columns_label">                        
-                    </div>
-                    <div>
-                        <button id="map-grid-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Set map grid size</button>
-                    </div>
+                    <input id="rows-input" type="number" class="form-control" placeholder="16 rows max. A standard outdoor map has 12 rows." aria-label="Rows" aria-describedby="rows_label">                        
                 </div>
-            </div>
-            <!-- Name map -->
-            <div class="col-sm-4 fixed-div">
-                <div id="options-div" class="list-container">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="mapname_label">Mapname: </span>
-                        </div>
-                        <input id="mapname-label" type="text" class="form-control" placeholder="Name this map" aria-label="mapname" aria-describedby="mapname_label">                        
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="columns_label">Columns</span>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="neighbourhood_label">Neighbourhood: </span>
-                        </div>
-                        <input id="neighbourhood-label" type="text" class="form-control" placeholder="Select a neighbourhood for this map" aria-label="neighbourhood" aria-describedby="neighbourhood_label">                        
-                    </div>
-                    <div>
-                        <button id="map-info-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Confirm map name and neighbourhood</button>
-                    </div>
+                    <input id="columns-input" type="number" class="form-control" placeholder="24 columns max. A standard outdoor map has 24 columns." aria-label="columns" aria-describedby="columns_label">                        
                 </div>
-            </div>
-            <!-- Save & load -->
-            <div class="col-sm-4 fixed-div">
-                <div id="options-div" class="list-container">
-                    <div class="mb-2">
-                        <button type="button" class="btn btn-outline-success btn-lg btn-block">
-                            Load map
-                        </button>                      
-                    </div>
-                    <div class="mb-2">
-                        <button type="button" class="btn btn-outline-success btn-lg btn-block">
-                            Save map
-                        </button>                    
-                    </div>
-                    <div class="mb-2">
-                        <button id="export-map-button" type="button" class="btn btn-outline-success btn-lg btn-block">
-                            Export map data
-                        </button>                    
-                    </div>
-                </div>
-            </div>            
-        </div>
-
-        <!-- Map row -->
-        <div class="row">
-            <!-- Current map data -->
-            <div class="col-sm-2 border border-info">   
-                <div style="position: fixed;">
-                    <div>
-                        <h2>Current map data</h2>
-                        <hr/>
-                    </div>
-                    <div>
-                        <h3>Information:</h3>
-                        <p>Mapname: <span id="mapname-span"> null </span> </p>             
-                        <p>Neighbourhood: <span id="neighbourhood-span"> null </span> </p>                     
-                    </div>
-                    <div>
-                        <h3>Dimensions:</h3>
-                        <p>Rows: <span id="rows-span"> null </span> </p>             
-                        <p>Columns: <span id="columns-span"> null </span> </p>                     
-                    </div>
-                    <div>
-                        <h3>Selected tile:</h3>
-                        <!-- hidden canvas for copy/pasting tiles -->
-                        <canvas id="selected-tile-canvas" class="visible-canvas">
-
-                        </canvas>
-                    </div>                    
-                </div>
-            </div>
-            <!-- Current map grid -->
-            <div class="col-sm-8 border border-info fixed-div">
-                <div id="map-canvas-div" class="list-container">
-                    <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
-                </div>  
-            </div> 
-            <!-- Active map idea -->
-            <div class="col-sm-2 border border-info">   
                 <div>
-                    <button class="btn btn-info center-in-div" data-toggle="modal" data-target="#tilesheetModal">Select tilesheet</button>                       
+                    <button id="map-grid-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Set map grid size</button>
                 </div>
-                <div id="tilesheet-div" class="list-container">
-                    <canvas id="tilesheet-canvas" class="border border-info invisible-canvas"></canvas>
-                </div>  
-            </div> 
-        </div>       
+            </div>
+        </div>
+        <!-- Name map -->
+        <div class="col-sm-4 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="mapname_label">Mapname: </span>
+                    </div>
+                    <input id="mapname-label" type="text" class="form-control" placeholder="Name this map" aria-label="mapname" aria-describedby="mapname_label">                        
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="neighbourhood_label">Neighbourhood: </span>
+                    </div>
+                    <input id="neighbourhood-label" type="text" class="form-control" placeholder="Select a neighbourhood for this map" aria-label="neighbourhood" aria-describedby="neighbourhood_label">                        
+                </div>
+                <div>
+                    <button id="map-info-button" type="button" class="btn btn-outline-primary btn-lg btn-block">Confirm map name and neighbourhood</button>
+                </div>
+            </div>
+        </div>
+        <!-- Save & load -->
+        <div class="col-sm-4 fixed-div">
+            <div id="options-div" class="list-container">
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-success btn-lg btn-block">
+                        Load map
+                    </button>                      
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-success btn-lg btn-block">
+                        Save map
+                    </button>                    
+                </div>
+                <div class="mb-2">
+                    <button id="export-map-button" type="button" class="btn btn-outline-success btn-lg btn-block">
+                        Export map data
+                    </button>                    
+                </div>
+            </div>
+        </div>            
     </div>
+
+    <!-- Map row -->
+    <div class="row">
+        <!-- Current map data -->
+        <div class="col-sm-2 border border-info">   
+            <div style="position: fixed;">
+                <div>
+                    <h2>Current map data</h2>
+                    <hr/>
+                </div>
+                <div>
+                    <h3>Information:</h3>
+                    <p>Mapname: <span id="mapname-span"> null </span> </p>             
+                    <p>Neighbourhood: <span id="neighbourhood-span"> null </span> </p>                     
+                </div>
+                <div>
+                    <h3>Dimensions:</h3>
+                    <p>Rows: <span id="rows-span"> null </span> </p>             
+                    <p>Columns: <span id="columns-span"> null </span> </p>                     
+                </div>
+                <div>
+                    <h3>Selected tile:</h3>
+                    <!-- hidden canvas for copy/pasting tiles -->
+                    <canvas id="selected-tile-canvas" class="visible-canvas">
+
+                    </canvas>
+                </div>                    
+            </div>
+        </div>
+        <!-- Current map grid -->
+        <div class="col-sm-8 border border-info fixed-div">
+            <div id="map-canvas-div" class="list-container">
+                <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
+            </div>  
+        </div> 
+        <!-- Active map idea -->
+        <div class="col-sm-2 border border-info">   
+            <div>
+                <button class="btn btn-info center-in-div" data-toggle="modal" data-target="#tilesheetModal">Select tilesheet</button>                       
+            </div>
+            <div id="tilesheet-div" class="list-container">
+                <canvas id="tilesheet-canvas" class="border border-info invisible-canvas"></canvas>
+            </div>  
+        </div> 
+    </div>       
 </div>
