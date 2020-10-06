@@ -35,6 +35,10 @@ const initMapCanvas = ( rows, cols ) => {
     MAP.initGrid( rows, cols )
 }
 
+const clearMapGrid = ( ) => {
+    MAP.clearGrid( )
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const sheetX = SHEET_CANVAS.getBoundingClientRect( ).x;
     const sheetY = SHEET_CANVAS.getBoundingClientRect( ).y;

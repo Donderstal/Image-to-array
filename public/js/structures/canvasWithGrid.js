@@ -34,6 +34,12 @@ class Sheet extends CanvasWithGrid {
         this.sheetName = sheetName;
     };
 
+    clearGrid( ) {
+        super.clearGrid( );
+        SHEET_CTX.clearRect( 0, 0, SHEET_CANVAS.WIDTH, SHEET_CANVAS.HEIGHT );
+        this.grid.initializeGrid( );
+    }
+
     getTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         this.activeTile = tile;
@@ -50,6 +56,12 @@ class Map extends CanvasWithGrid {
 
     setMapName( mapName ) {
         this.mapName = mapName;
+    }
+
+    clearGrid( ) {
+        super.clearGrid( );
+        MAP_CTX.clearRect( 0, 0, MAP_CANVAS.width, MAP_CANVAS.height )
+        this.grid.initializeGrid( );
     }
 
     setNeighbourhood( neighbourhood ) {

@@ -53,6 +53,10 @@ const switchView = ( event ) => {
             else {
                 return;
             }
+        case "back-to-map-menu-button" :
+            unsetMapMaker( );
+            nextScreen = "mapmaker-new-map-div";
+            break;
         default :
             alert( 'Navigation error. Tell Daan right away!!' );
             break;
@@ -60,7 +64,7 @@ const switchView = ( event ) => {
 
    document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
 
-   document.getElementById(nextScreen).className = nextScreen == "mapmaker-div" ? "" : "row window window-active";
+   document.getElementById(nextScreen).className = nextScreen == "mapmaker-div" ? "window-active" : "row window window-active";
 }
 
 const mapMakerDataIsSet = ( ) => {
@@ -111,6 +115,38 @@ const prepareMapmaker = ( ) => {
     setMapGrid( );
 }
 
+const unsetMapMaker = ( ) => {
+    unsetMapInformation( );
+    unsetMapGrid( );
+    unselectTileSheet( );
+}
+
+const unsetMapInformation = ( ) => {
+    document.getElementById("mapname-span").textContent = null;
+    document.getElementById("neighbourhood-span").textContent = null;
+
+    MAP.setNeighbourhood( null );
+    MAP.setMapName( null )
+}
+
+const unsetMapGrid = ( ) => {
+    document.getElementById("rows-span").textContent = null;
+    document.getElementById("columns-span").textContent = null;
+
+    MAP_CANVAS.classList.remove('visible-canvas');
+    MAP_CANVAS.classList.add('invisible-canvas');
+
+    MAP.clearGrid( );
+}
+
+const unselectTileSheet = ( ) =>{
+    SHEET_CANVAS.classList.remove('visible-canvas');
+    SHEET_CANVAS.classList.add('invisible-canvas');
+    document.getElementById('tilesheet-selection-input').readOnly = false;
+    document.getElementById('tilesheet-selection-input').value = "";
+    document.getElementById('tilesheet-selection-input').readOnly = true;
+}
+
 const setMapGrid = ( ) => {
     const rows = document.getElementById('rows-input').value;
     const columns = document.getElementById('columns-input').value;
@@ -155,3 +191,5 @@ document.getElementById('export-map-button').addEventListener( 'click', exportMa
 Array.from(document.getElementsByClassName('navigation-button')).forEach( ( e ) => {
     e.addEventListener( 'click', switchView, true )
 } )
+
+document.getElementById('clear-grid-button').addEventListener( 'click', clearMapGrid, true )
