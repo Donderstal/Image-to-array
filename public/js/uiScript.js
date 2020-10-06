@@ -193,3 +193,9 @@ Array.from(document.getElementsByClassName('navigation-button')).forEach( ( e ) 
 } )
 
 document.getElementById('clear-grid-button').addEventListener( 'click', clearMapGrid, true )
+
+document.getElementById('clear-inputs-button').addEventListener( 'click', ( ) => {
+    Array.from(document.getElementsByClassName('new-map-input')).forEach( ( e ) => {
+        e.value = ""
+    } )
+})
