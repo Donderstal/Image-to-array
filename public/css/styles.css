@@ -34,7 +34,6 @@ h1 {
 }
 
 .window-active {
-    display: flex;
     visibility: visible;
 }
 
@@ -50,8 +49,8 @@ h1 {
     min-height: 512px;
 }
 
-html, body {
-    overflow: hidden;
+::-webkit-scrollbar {
+    display:none;
 }
 
 .full-width {
