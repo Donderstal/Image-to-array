@@ -12,5 +12,6 @@
     require __DIR__ . '/app/views/mapmakermenu.html';
     require __DIR__ . '/app/views/newmap.html';
     require __DIR__ . '/app/views/tilesheetmodal.html';    
+    require __DIR__ . '/app/views/loginmodal.html';    
     require __DIR__ . '/app/views/foot.phtml';
 ?>

@@ -1,0 +1,56 @@
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-muted" id="exampleModalLabel">Please login or register</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>                
+        </div>
+        
+        <div class="modal-body">
+            <div class="custom-control custom-switch mb-3">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label text-muted" for="customSwitch1">Toggle register / login</label>
+            </div>
+
+            <form method="post" action="catch_http_request.php" >
+                <div class="input-group mb-3">
+                    <h5 class="text-muted" style="margin: 0 auto;">Register</h5>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="register-username-label">Username: </span>
+                    </div>
+                    <input id="register-username-input" type="text" class="form-control" placeholder="Please fill in a username" aria-label="register-username" name="register_username">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="register-email-label">Username: </span>
+                    </div>
+                    <input id="register-email-input" type="text" class="form-control" placeholder="Please fill in an email adress" aria-label="register-username" name="register_email">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="register-username-label">Password: </span>
+                    </div>
+                    <input id="register-password-input" type="text" class="form-control" placeholder="Please prevent Russian hackers from breaking in" aria-label="register-password" name="register_password">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="register-username-label">Password confirm: </span>
+                    </div>
+                    <input id="register-password-confirmation" type="text" class="form-control" placeholder="Please prevent Russian hackers from breaking in" aria-label="register-password-confirmation">                        
+                </div>
+
+                <button type="submit" class="btn btn-info center-in-div"> Register! </button>
+            </form>            
+        </div>
+
+      </div>
+    </div>
+  </div>
