@@ -1,4 +1,8 @@
 <?php
+    require_once "database_config.php";
+
+    StartConnection( );
+
     /* Catch requested route */
     $request = $_SERVER['REQUEST_URI'];
     require __DIR__ . '/app/views/head.phtml';
