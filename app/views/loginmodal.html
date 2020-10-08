@@ -10,11 +10,11 @@
         
         <div class="modal-body">
             <div class="custom-control custom-switch mb-3">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                <label class="custom-control-label text-muted" for="customSwitch1">Toggle register / login</label>
+                <input type="checkbox" class="custom-control-input" id="toggle-register-login">
+                <label class="custom-control-label text-muted" for="toggle-register-login">Toggle register / login</label>
             </div>
 
-            <form method="post" action="catch_http_request.php" >
+            <form method="post" action="catch_http_request.php" class="account-form active-form">
                 <div class="input-group mb-3">
                     <h5 class="text-muted" style="margin: 0 auto;">Register</h5>
                 </div>
@@ -28,7 +28,7 @@
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="register-email-label">Username: </span>
+                        <span class="input-group-text" id="register-email-label">Email: </span>
                     </div>
                     <input id="register-email-input" type="text" class="form-control" placeholder="Please fill in an email adress" aria-label="register-username" name="register_email">                        
                 </div>
@@ -37,18 +37,40 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="register-username-label">Password: </span>
                     </div>
-                    <input id="register-password-input" type="text" class="form-control" placeholder="Please prevent Russian hackers from breaking in" aria-label="register-password" name="register_password">                        
+                    <input id="register-password-input" type="text" class="form-control" placeholder="Please get a decent password" aria-label="register-password" name="register_password">                        
                 </div>
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="register-username-label">Password confirm: </span>
                     </div>
-                    <input id="register-password-confirmation" type="text" class="form-control" placeholder="Please prevent Russian hackers from breaking in" aria-label="register-password-confirmation">                        
+                    <input id="register-password-confirmation" type="text" class="form-control" placeholder="Please repeat your password" aria-label="register-password-confirmation">                        
                 </div>
 
                 <button type="submit" class="btn btn-info center-in-div"> Register! </button>
-            </form>            
+            </form>
+            
+            <form method="post" action="catch_http_request.php" class="account-form inactive-form">
+                <div class="input-group mb-3">
+                    <h5 class="text-muted" style="margin: 0 auto;">Login</h5>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="login-username-label">Username: </span>
+                    </div>
+                    <input id="login-username-input" type="text" class="form-control" placeholder="Please fill in a username" aria-label="login-username" name="login_username">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="login-username-label">Password: </span>
+                    </div>
+                    <input id="login-password-input" type="text" class="form-control" placeholder="Please get a decent password" aria-label="login-password" name="login_password">                        
+                </div>
+
+                <button type="submit" class="btn btn-info center-in-div"> Login! </button>
+            </form>
         </div>
 
       </div>

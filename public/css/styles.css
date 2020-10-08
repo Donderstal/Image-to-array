@@ -28,7 +28,7 @@ h1 {
     z-index: -10;
 }
 
-.invisible-canvas, .window-inactive {
+.invisible-canvas, .window-inactive, .inactive-form  {
     display: none;
     visibility: hidden;
 }

@@ -199,3 +199,14 @@ document.getElementById('clear-inputs-button').addEventListener( 'click', ( ) =>
         e.value = ""
     } )
 })
+
+document.getElementById("toggle-register-login").addEventListener( 'click', ( ) => {
+    Array.from(document.getElementsByClassName('account-form')).forEach( ( e ) => {
+        if ( e.className == "account-form inactive-form") {
+            e.className = "account-form active-form"
+        }
+        else {
+            e.className = "account-form inactive-form"
+        }
+    } )
+})
