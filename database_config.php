@@ -22,4 +22,27 @@
             die( $e->getMessage( ) );
         }
     }
+
+    function GetUserIfUsernameExists( $username ) {
+        $USER = null;
+
+        try {
+            $GET_USER_STMT = $DATABASE->prepare( "SELECT * FROM users WHERE username=?" );
+            $GET_USER_STMT->execute( $username );
+            $USER = $GET_USER_STMT->fetch( );
+        } catch ( PDOException $e ) {
+            die( $e->getMessage( ) );
+        }
+
+        return $USER;
+    }
+
+    function CreateUser( $username, $password ) {
+        try {
+            $CREATE_USER_STMT = $DATABASE->prepare( "INSERT INTO users (username, password) VALUES (?,?)" );
+            $CREATE_USER_STMT->execute( $username, password_hash( $password, PASSWORD_DEFAULT ) );
+        } catch ( PDOException $e ) {
+            die( $e->getMessage( ) );
+        }
+    }
 ?>
