@@ -14,7 +14,7 @@
                 <label class="custom-control-label text-muted" for="toggle-register-login">Toggle register / login</label>
             </div>
 
-            <form method="post" action="catch_http_request.php" class="account-form active-form">
+            <form id="registration-form" class="account-form active-form">
                 <div class="input-group mb-3">
                     <h5 class="text-muted" style="margin: 0 auto;">Register</h5>
                 </div>
@@ -47,10 +47,10 @@
                     <input id="register-password-confirmation" type="text" class="form-control" placeholder="Please repeat your password" aria-label="register-password-confirmation">                        
                 </div>
 
-                <button type="submit" class="btn btn-info center-in-div"> Register! </button>
+                <button id="post-registration-button" class="btn btn-info center-in-div"> Register! </button>
             </form>
             
-            <form method="post" action="catch_http_request.php" class="account-form inactive-form">
+            <form id="login-form" class="account-form inactive-form">
                 <div class="input-group mb-3">
                     <h5 class="text-muted" style="margin: 0 auto;">Login</h5>
                 </div>
@@ -69,7 +69,7 @@
                     <input id="login-password-input" type="text" class="form-control" placeholder="Please get a decent password" aria-label="login-password" name="login_password">                        
                 </div>
 
-                <button type="submit" class="btn btn-info center-in-div"> Login! </button>
+                <button id="post-login-button" class="btn btn-info center-in-div"> Login! </button>
             </form>
         </div>
 
