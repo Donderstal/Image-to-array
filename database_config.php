@@ -57,4 +57,11 @@
             die( $e->getMessage( ) );
         }
     }
+
+    function LogInUser( $username, $password ) {
+        $USER_DATA = GetUserIfUsernameExists( $username );
+        if ( password_verify( $password, $USER_DATA['password'] ) ) {
+            echo "Hello " . $USER_DATA['username'] . ", your email is " . $USER_DATA['email'] ;
+        }
+    }
 ?>
