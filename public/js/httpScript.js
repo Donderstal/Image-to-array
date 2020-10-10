@@ -2,14 +2,16 @@ const prepareHTTPRequest = ( method, url, data ) => {
     fetch( url, {
         method: method,
         body: data
-    } ).then(
-        response => { 
-            console.log(response)
+    } ).then( response => { 
             return response.json() 
         }
-    ).then(
-        data => {
-            console.log( data )
+    ).then( data => {
+            const responseJSON = JSON.parse(data)
+            if ( responseJSON["log-succes"] ) {
+                document.getElementById( "login-modal-dismiss" ).click( );
+                document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
+                document.getElementById("welcome-div").className = "row window window-active";
+            }
         }
     ).catch(err => {
         console.log("Error Reading data " + err);
@@ -17,24 +19,26 @@ const prepareHTTPRequest = ( method, url, data ) => {
     );
 }
 
-const postRegistrationForm = ( event ) => {
-    event.preventDefault()
-    new FormData(document.getElementById("registration-form"))
-};
+console.log('httpscript')
 
-const postLoginForm = ( ) => {
-    event.preventDefault()
-    new FormData(document.getElementById("login-form"))
+const initHTTPListeners = ( ) => {
+    document.getElementById("post-login-button").addEventListener( 'click', ( event ) => {
+        event.preventDefault()
+        new FormData(document.getElementById("login-form"))
+    }, true );
+
+    document.getElementById("post-registration-button").addEventListener( 'click', ( event ) => {
+        event.preventDefault()
+        new FormData(document.getElementById("registration-form"))
+    }, true );    
 }
 
-document.getElementById("post-login-button").addEventListener( 'click', postLoginForm, true );
+document.addEventListener('DOMContentLoaded', initHTTPListeners );
 
-document.getElementById("post-registration-button").addEventListener( 'click', postRegistrationForm, true );
-
-document.getElementById("registration-form").addEventListener( 'formdata', ( e ) => {
-    prepareHTTPRequest( "POST", "catch_http_request.php", e.formData )
+document.getElementById("registration-form").addEventListener( 'formdata', ( event ) => {
+    prepareHTTPRequest( "POST", "catch_http_request.php", event.formData )
 }, true );
 
-document.getElementById("login-form").addEventListener( 'formdata', ( e ) => {
-    prepareHTTPRequest( "POST", "catch_http_request.php", e.formData )
+document.getElementById("login-form").addEventListener( 'formdata', ( event ) => {
+    prepareHTTPRequest( "POST", "catch_http_request.php", event.formData )
 }, true );

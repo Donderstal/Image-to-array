@@ -4,10 +4,16 @@
     </div>
     <div class="col-sm-4">
         <h3 class="text-center">
-            Welcome to the map app!
+            Welcome, <?php 
+            if ( isset($_SESSION["username"])) {
+                echo $_SESSION["username"];
+            } else {
+                var_dump($_SESSION);
+            }
+            ?>
         </h3>
         <p class="text-center">
-            Do you want to op the mapmaker or see an overview of all the maps in the game?
+            Do you want to open the mapmaker or see an overview of all the maps in the game?
         </p>
     </div>
     <div class="col-sm-4 pt-5">
