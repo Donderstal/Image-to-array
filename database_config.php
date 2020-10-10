@@ -45,7 +45,6 @@
         $DATABASE = GetDAAL( );
 
         if ( GetUserIfUsernameExists( $username ) != null ) {
-            echo "Username is already taken bruh";
             echo implode(GetUserIfUsernameExists( $username ));
             return;
         }
@@ -60,8 +59,16 @@
 
     function LogInUser( $username, $password ) {
         $USER_DATA = GetUserIfUsernameExists( $username );
+        $json_response;
+
         if ( password_verify( $password, $USER_DATA['password'] ) ) {
-            echo "Hello " . $USER_DATA['username'] . ", your email is " . $USER_DATA['email'] ;
+            $_SESSION["username"] = $username;
+            $json_response = json_encode('{"log-succes": true}', true);
+        } 
+        else {
+            $json_response = json_encode('{"log-succes": false}', true);
         }
+
+        echo $json_response;
     }
 ?>
