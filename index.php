@@ -1,6 +1,6 @@
 <?php
     require_once "database_config.php";
-    session_start();
+    $_SESSION['app_running'] = true;
     StartConnection( );
 
     /* Catch requested route */

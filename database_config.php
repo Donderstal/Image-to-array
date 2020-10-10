@@ -1,4 +1,6 @@
 <?php 
+    session_start( );
+
     function GetDAAL( ) {
         $DATABASE = new PDO( "mysql:host=localhost", "root", "" );
         $DATABASE->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -62,7 +64,8 @@
         $json_response;
 
         if ( password_verify( $password, $USER_DATA['password'] ) ) {
-            $_SESSION["username"] = $username;
+            $_SESSION['username'] = $username;
+
             $json_response = json_encode('{"log-succes": true}', true);
         } 
         else {
