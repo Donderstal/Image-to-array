@@ -12,6 +12,12 @@
                 <h1>
                     RPG Mapmaker
                 </h1>
+                <form id="logout-form" class='logout-form'>
+                <?php if(isset($_SESSION["username"])) {
+                    echo "<input type='button' id='log-out-button' type='button' name='logout' value='logout' onclick='LogOut()' class='btn btn-dark'> " .$_SESSION["username"]. " </input>";
+                }
+                ?>
+                </form>
             </div>
         </div>
         <div class="container-fluid vh-100">
