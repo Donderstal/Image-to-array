@@ -8,9 +8,7 @@ const prepareHTTPRequest = ( method, url, data ) => {
     ).then( data => {
             const responseJSON = JSON.parse(data)
             if ( responseJSON["log-succes"] ) {
-                document.getElementById( "login-modal-dismiss" ).click( );
-                document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
-                document.getElementById("welcome-div").className = "row window window-active";
+                location.reload(); 
             }
         }
     ).catch(err => {
@@ -18,8 +16,6 @@ const prepareHTTPRequest = ( method, url, data ) => {
         } 
     );
 }
-
-console.log('httpscript')
 
 const initHTTPListeners = ( ) => {
     document.getElementById("post-login-button").addEventListener( 'click', ( event ) => {
@@ -33,6 +29,10 @@ const initHTTPListeners = ( ) => {
     }, true );    
 }
 
+const LogOut = ( ) => {
+    new FormData(document.getElementById("logout-form"))
+}
+
 document.addEventListener('DOMContentLoaded', initHTTPListeners );
 
 document.getElementById("registration-form").addEventListener( 'formdata', ( event ) => {
@@ -42,3 +42,8 @@ document.getElementById("registration-form").addEventListener( 'formdata', ( eve
 document.getElementById("login-form").addEventListener( 'formdata', ( event ) => {
     prepareHTTPRequest( "POST", "catch_http_request.php", event.formData )
 }, true );
+
+document.getElementById("logout-form").addEventListener( 'formdata', ( event ) => {
+    event.formData.append('logout', true)
+    prepareHTTPRequest( "POST", "catch_http_request.php", event.formData )
+}, true )
