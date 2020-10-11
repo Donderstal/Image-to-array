@@ -47,7 +47,7 @@
         $DATABASE = GetDAAL( );
 
         if ( GetUserIfUsernameExists( $username ) != null ) {
-            echo implode(GetUserIfUsernameExists( $username ));
+            echo json_encode('{"register-succes": false, "error-message": "This username is already taken."}', true);
             return;
         }
 
@@ -57,22 +57,29 @@
         } catch ( PDOException $e ) {
             die( $e->getMessage( ) );
         }
+
+        echo json_encode('{"register-succes": true}', true);
     }
 
     function LogInUser( $username, $password ) {
         $USER_DATA = GetUserIfUsernameExists( $username );
         $json_response;
 
+        if( $USER_DATA == null ) {
+            echo json_encode('{"log-succes": false, "error-message": "This username does not exist. Please register first"}', true);
+            return;
+        }
+
         if ( password_verify( $password, $USER_DATA['password'] ) ) {
             $_SESSION['username'] = $username;
 
-            $json_response = json_encode('{"log-succes": true}', true);
+            echo json_encode('{"log-succes": true}', true);
+            return;
         } 
         else {
-            $json_response = json_encode('{"log-succes": false}', true);
+            echo json_encode('{"log-succes": false, "error-message": "Password is not correct"}', true);
+            return;
         }
-
-        echo $json_response;
     }
 
     function LogOutUser( ) {
