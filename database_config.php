@@ -74,4 +74,9 @@
 
         echo $json_response;
     }
+
+    function LogOutUser( ) {
+        session_destroy( );
+        echo json_encode('{"log-succes": true}', true);
+    }
 ?>
