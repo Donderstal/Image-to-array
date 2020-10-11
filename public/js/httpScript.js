@@ -1,3 +1,5 @@
+const emailRegEx =  /\S+@\S+\.\S+/;
+
 const prepareHTTPRequest = ( method, url, data ) => {
     fetch( url, {
         method: method,
@@ -36,7 +38,13 @@ const LogOut = ( ) => {
 document.addEventListener('DOMContentLoaded', initHTTPListeners );
 
 document.getElementById("registration-form").addEventListener( 'formdata', ( event ) => {
-    prepareHTTPRequest( "POST", "catch_http_request.php", event.formData )
+    if ( document.getElementById("register-password-confirmation").value != document.getElementById("register-password-input").value ) {
+        alert('your password confirmation does not match your first password');
+    } else if ( !emailRegEx.test( document.getElementById("register-email-input").value ) ) {
+        alert("that's not a valid email adress, fool")
+    } else {
+        prepareHTTPRequest( "POST", "catch_http_request.php", event.formData )        
+    }
 }, true );
 
 document.getElementById("login-form").addEventListener( 'formdata', ( event ) => {
