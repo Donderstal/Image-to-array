@@ -28,26 +28,31 @@
         }
     }
 
-    function GetUserIfUsernameExists( $username ) {
+    function ReturnRowIfValueExists( $table, $column, $value ) {
         $DATABASE = GetDAAL( );
-        $USER = null;
+        $DB_ROW = null;
 
         try {
-            $GET_USER_STMT = $DATABASE->prepare( "SELECT * FROM users WHERE username=?" );
-            $GET_USER_STMT->execute( [ $username ] );
-            $USER = $GET_USER_STMT->fetch( );
+            $GET_DB_ROW = $DATABASE->prepare( "SELECT * FROM $table WHERE $column=?" );
+            $GET_DB_ROW->execute( [ $value ] );
+            $DB_ROW = $GET_DB_ROW->fetch( );
         } catch ( PDOException $e ) {
             die( $e->getMessage( ) );
         }
 
-        return $USER;
+        return $DB_ROW;
     }
 
     function CreateUser( $username, $email, $password ) {
         $DATABASE = GetDAAL( );
 
-        if ( GetUserIfUsernameExists( $username ) != null ) {
+        if ( ReturnRowIfValueExists( 'users', 'username', $username ) != null ) {
             echo json_encode('{"register-succes": false, "error-message": "This username is already taken."}', true);
+            return;
+        }
+
+        if ( ReturnRowIfValueExists( 'users', 'email', $email ) != null ) {
+            echo json_encode('{"register-succes": false, "error-message": "This email adress is already registered."}', true);
             return;
         }
 
@@ -62,7 +67,7 @@
     }
 
     function LogInUser( $username, $password ) {
-        $USER_DATA = GetUserIfUsernameExists( $username );
+        $USER_DATA = ReturnRowIfValueExists( 'users', 'username', $username );
         $json_response;
 
         if( $USER_DATA == null ) {
