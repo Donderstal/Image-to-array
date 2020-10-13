@@ -25,6 +25,11 @@ const initHTTPListeners = ( ) => {
         event.preventDefault()
         new FormData(document.getElementById("registration-form"))
     }, true );    
+
+    document.getElementById("post-validation-button").addEventListener( 'click', ( event ) => {
+        event.preventDefault()
+        new FormData(document.getElementById("validation-form"))
+    }, true );    
 }
 
 const LogOut = ( ) => {
@@ -34,7 +39,8 @@ const LogOut = ( ) => {
 const RegisterHTTPCallback = ( data ) => {
     const responseJSON = JSON.parse(data);
     if( responseJSON["register-succes"]) {
-        alert("registration succes!")
+        document.getElementById("login-modal-dismiss").click();
+        document.getElementById("validate-button").click();
     } else if (!responseJSON["register-succes"]) {
         alert(responseJSON["error-message"])
     }
@@ -45,6 +51,16 @@ const LogHTTPCallback = ( data ) => {
     if ( responseJSON["log-succes"] ) {
         location.reload(); 
     } else if ( !responseJSON["log-succes"] ) {
+        alert(responseJSON["error-message"])
+    } 
+}
+
+const ValidationHTTPCallback = ( data ) => {
+    const responseJSON = JSON.parse(data)
+    if ( responseJSON["validate-succes"] ) {
+        alert('Your account has been successfully validated! You will now be logged in.')
+        location.reload(); 
+    } else if ( !responseJSON["validate-succes"] ) {
         alert(responseJSON["error-message"])
     } 
 }
@@ -68,4 +84,8 @@ document.getElementById("login-form").addEventListener( 'formdata', ( event ) =>
 document.getElementById("logout-form").addEventListener( 'formdata', ( event ) => {
     event.formData.append('logout', true)
     prepareHTTPRequest( "POST", "catch_http_request.php", event.formData, LogHTTPCallback )
+}, true )
+
+document.getElementById("validation-form").addEventListener( 'formdata', ( event ) => {
+    prepareHTTPRequest( "POST", "catch_http_request.php", event.formData, ValidationHTTPCallback )
 }, true )

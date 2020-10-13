@@ -20,7 +20,7 @@
                 username VARCHAR(50) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
-                validated BIT NOT NULL,
+                validated BIT NOT NULL DEFAULT 0,
                 validation_code VARCHAR(6),
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );" );
@@ -66,8 +66,8 @@
         $validation_code = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);
 
         try {
-            $CREATE_USER_STMT = $DATABASE->prepare( "INSERT INTO users (username, email, password, validated, validation_code) VALUES (?,?,?,?,?)" );
-            $CREATE_USER_STMT->execute( [ $username, $email, password_hash( $password, PASSWORD_DEFAULT ), 0, $validation_code ] );
+            $CREATE_USER_STMT = $DATABASE->prepare( "INSERT INTO users (username, email, password, validation_code) VALUES (?,?,?,?)" );
+            $CREATE_USER_STMT->execute( [ $username, $email, password_hash( $password, PASSWORD_DEFAULT ), $validation_code ] );
         } catch ( PDOException $e ) {
             die( $e->getMessage( ) );
         }
@@ -115,8 +115,9 @@
             echo json_encode('{"validate-succes": false, "error-message": "This secret code is not correct. Are you sure it is the one we sent you?"}', true);
         } else {
             try {
-                $VALIDATE_USER_STMT = $DATABASE->prepare( "UPDATE users SET (validated, validation_code) VALUES (?,?) WHERE username=$username" );
-                $VALIDATE_USER_STMT->execute( [ 1, null ] );
+                $VALIDATE_USER_STMT = $DATABASE->prepare( "UPDATE users SET validated=?, validation_code=? WHERE username=?" );
+                $VALIDATE_USER_STMT->execute( [ 1, null, $username ] );
+                $_SESSION['username'] = $username;
             } catch ( PDOException $e ) {
                 die( $e->getMessage( ) );
             }
