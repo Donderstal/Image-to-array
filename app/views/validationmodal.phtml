@@ -1,0 +1,50 @@
+<div class="modal fade" id="validationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-muted" id="exampleModalLabel">Please login or register</h5>
+            <button id="login-modal-dismiss" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>                
+        </div>
+        
+        <div class="modal-body">
+
+            <form id="validation-form" class="account-form active-form">
+                <div class="input-group mb-3">
+                    <h5 class="text-muted" style="margin: 0 auto;">Validate account</h5>
+                </div>
+
+                <div class="text-muted">
+                    Please fill in the magical secret code you received on your email down below.
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validation-username-label">Username: </span>
+                    </div>
+                    <input id="validation-username-input" type="text" class="form-control" placeholder="Please fill in a username" aria-label="validation-username" name="validation_username">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validation-username-label">Password: </span>
+                    </div>
+                    <input id="validation-password-input" type="password" class="form-control" placeholder="Please get a decent password" aria-label="validation-password" name="validation_password">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validation-username-label">Validation code: </span>
+                    </div>
+                    <input id="validation-code-input" type="text" class="form-control" placeholder="Please fill in your secret code" aria-label="validation-code" name="validation_code">                        
+                </div>
+
+                <button id="post-validation-button" type="button" class="btn btn-info center-in-div"> Validate! </button>
+            </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
