@@ -10,6 +10,9 @@
     else if( isset( $_POST['logout'] ) ) {
         LogOutUser( );
     }
+    else if( isset( $_POST['validation_username'] ) && isset( $_POST['validation_password']) && isset( $_POST['validation_code'] ) ) {
+        ValidateUser( $_POST['validation_username'], $_POST['validation_password'], $_POST['validation_code'] );
+    }
     else {
         die($_POST);
     }

@@ -19,7 +19,9 @@
                 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 username VARCHAR(50) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL UNIQUE,
+                validated BIT NOT NULL,
+                validation_code VARCHAR(6),
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );" );
         }
@@ -43,6 +45,11 @@
         return $DB_ROW;
     }
 
+    function SendMail( $username, $email, $validation_code ) {
+        $mail_message = "Hello " . $username . ", thanks for registering! <br/> Your validation code is: " . $validation_code;
+        mail( "daanonderstal@hotmail.com", "Your validation code", $mail_message );  
+    }
+
     function CreateUser( $username, $email, $password ) {
         $DATABASE = GetDAAL( );
 
@@ -56,12 +63,16 @@
             return;
         }
 
+        $validation_code = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);
+
         try {
-            $CREATE_USER_STMT = $DATABASE->prepare( "INSERT INTO users (username, email, password) VALUES (?,?,?)" );
-            $CREATE_USER_STMT->execute( [ $username, $email, password_hash( $password, PASSWORD_DEFAULT ) ] );
+            $CREATE_USER_STMT = $DATABASE->prepare( "INSERT INTO users (username, email, password, validated, validation_code) VALUES (?,?,?,?,?)" );
+            $CREATE_USER_STMT->execute( [ $username, $email, password_hash( $password, PASSWORD_DEFAULT ), 0, $validation_code ] );
         } catch ( PDOException $e ) {
             die( $e->getMessage( ) );
         }
+
+        SendMail( $username, $email, $validation_code );
 
         echo json_encode('{"register-succes": true}', true);
     }
@@ -75,7 +86,11 @@
             return;
         }
 
-        if ( password_verify( $password, $USER_DATA['password'] ) ) {
+        if (  $USER_DATA['validated'] == 0 ) {
+            echo json_encode('{"log-succes": false, "error-message": "Your account has not been validated"}', true);
+            return;
+        }
+        else if ( password_verify( $password, $USER_DATA['password'] ) ) {
             $_SESSION['username'] = $username;
 
             echo json_encode('{"log-succes": true}', true);
@@ -84,6 +99,29 @@
         else {
             echo json_encode('{"log-succes": false, "error-message": "Password is not correct"}', true);
             return;
+        }
+    }
+
+    function ValidateUser( $username, $password, $validation_code ) {
+        $DATABASE = GetDAAL( );
+
+        $USER_DATA = ReturnRowIfValueExists( 'users', 'username', $username );
+
+        if ( $USER_DATA == null ) {
+            echo json_encode('{"validate-succes": false, "error-message": "This username is not recognised"}', true);
+        } else if ( !password_verify( $password, $USER_DATA['password'] ) ) {
+            echo json_encode('{"validate-succes": false, "error-message": "This password does not match the one in the database"}', true);
+        } else if ( $USER_DATA["validation_code"] != $validation_code ) {
+            echo json_encode('{"validate-succes": false, "error-message": "This secret code is not correct. Are you sure it is the one we sent you?"}', true);
+        } else {
+            try {
+                $VALIDATE_USER_STMT = $DATABASE->prepare( "UPDATE users SET (validated, validation_code) VALUES (?,?) WHERE username=$username" );
+                $VALIDATE_USER_STMT->execute( [ 1, null ] );
+            } catch ( PDOException $e ) {
+                die( $e->getMessage( ) );
+            }
+    
+            echo json_encode('{"validate-succes": true}', true);
         }
     }
 
