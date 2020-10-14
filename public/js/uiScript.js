@@ -202,10 +202,21 @@ document.getElementById('clear-inputs-button').addEventListener( 'click', ( ) =>
 
 document.getElementById("toggle-register-login").addEventListener( 'click', ( ) => {
     Array.from(document.getElementsByClassName('account-form')).forEach( ( e ) => {
-        if ( e.className == "account-form inactive-form") {
+        if ( e.className == "account-form inactive-form" && (e.id == "registration-form" || e.id == "login-form" )) {
             e.className = "account-form active-form"
         }
-        else {
+        else if ( e.className == "account-form inactive-form" && (e.id == "registration-form" || e.id == "login-form" )) {
+            e.className = "account-form inactive-form"
+        }
+    } )
+})
+
+document.getElementById("toggle-request-restore").addEventListener( 'click', ( ) => {
+    Array.from(document.getElementsByClassName('account-form')).forEach( ( e ) => {
+        if ( e.className == "account-form inactive-form" && (e.id == "request-restore-form" || e.id == "restore-password-form" )) {
+            e.className = "account-form active-form"
+        }
+        else if ( e.className != "account-form inactive-form" && (e.id == "request-restore-form" || e.id == "restore-password-form" )) {
             e.className = "account-form inactive-form"
         }
     } )
