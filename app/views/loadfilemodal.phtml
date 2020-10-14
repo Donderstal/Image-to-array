@@ -1,0 +1,47 @@
+<div class="modal fade" id="loadMapModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-muted" id="exampleModalLabel">Click the file you want to load below!</h5>
+            <button id="load-map-modal-dismiss" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>                
+        </div>
+        
+        <div class="modal-body text-muted">
+            <?php   
+                $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
+                $maps_path = '/user-folders'  . '/' .$_SESSION["username"]. '/maps';
+                $neighbourhoods = scandir( $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path );
+                $maps = scandir( $_SERVER['DOCUMENT_ROOT'].$maps_path  );
+
+                echo "<h6> Neighbourhoods </h6><hr>";
+
+                foreach($neighbourhoods as $neighbourhood) {
+                    if ( $neighbourhood != "." && $neighbourhood != ".." ) {
+                        $json_as_string = file_get_contents($_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path."/".$neighbourhood);
+                        echo $json_as_string;
+                        $json_keys = array_keys( json_decode($json_as_string, true) );
+
+                        echo "<div id='".$neighbourhood."' class='load-neighbourhood-from-server'> ".$neighbourhood." ";
+                        foreach($json_keys as $key) {
+                            echo "<div> ". $key . "</div>";
+                        }
+                        
+                        echo "</div>";                        
+                    }
+                }
+
+                echo "<br/><h6> Individual maps </h6><hr>";
+
+                foreach($maps as $map) {
+                    if ( $map != "." && $map != ".." ) {
+                        echo "<div id='".$map." 'class='load-map-from-server'> ".$map." </div>";                        
+                    }
+                }
+            ?>
+        </div>
+
+      </div>
+    </div>
+  </div>
