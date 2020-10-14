@@ -1,0 +1,78 @@
+<div class="modal fade" id="restorationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-muted" id="exampleModalLabel">Please login or register</h5>
+            <button id="restoration-modal-dismiss" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>                
+        </div>
+        
+        <div class="modal-body">
+            <div class="custom-control custom-switch mb-3">
+                <input type="checkbox" class="custom-control-input" id="toggle-request-restore">
+                <label class="custom-control-label text-muted" for="toggle-request-restore">Toggle forgot password / restore password</label>
+            </div>
+
+            <form id="request-restore-form" class="account-form active-form">
+                <div class="input-group mb-3">
+                    <h5 class="text-muted" style="margin: 0 auto;">Forgot password? Fill in you username and email below</h5>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="request-restore-username-label">Username: </span>
+                    </div>
+                    <input id="request-restore-username-input" type="text" class="form-control" placeholder="Please fill in a username" aria-label="request-restore-username" name="request_restore_username">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="request-restore-email-label">Email: </span>
+                    </div>
+                    <input id="request-restore-email-input" type="email" class="form-control" placeholder="Please fill in an email adress" aria-label="request-restore-username" name="request_restore_email">                        
+                </div>
+
+                <button id="post-request-restore-button" type="button" class="btn btn-info center-in-div"> Request password code! </button>
+            </form>
+            
+            <form id="restore-password-form" class="account-form inactive-form">
+                <div class="input-group mb-3">
+                    <h5 class="text-muted" style="margin: 0 auto;">Enter the code your received on your email to fill in a new password</h5>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="restore-username-label">Username: </span>
+                    </div>
+                    <input id="restore-username-input" type="text" class="form-control" placeholder="Please fill in a username" aria-label="restore-username" name="restore_username">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="restore-username-label">Code: </span>
+                    </div>
+                    <input id="restore-password-input" type="type" class="form-control" placeholder="Please fill in your secret code" aria-label="restore-password" name="restore_password">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="restore-username-label">Password: </span>
+                    </div>
+                    <input id="restore-password-input" type="password" class="form-control" placeholder="Please get a decent password" aria-label="restore-password" name="restore_password">                        
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="restore-username-label">Password confirm: </span>
+                    </div>
+                    <input id="restore-password-confirmation" type="password" class="form-control" placeholder="Please repeat your password" aria-label="restore-password-confirmation">                        
+                </div>
+
+                <button id="post-restore-button" type="button" class="btn btn-info center-in-div"> Set new password and login! </button>
+            </form>
+        </div>
+
+      </div>
+    </div>
+  </div>

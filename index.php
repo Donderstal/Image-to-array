@@ -16,5 +16,6 @@
     require __DIR__ . '/app/views/tilesheetmodal.html';    
     require __DIR__ . '/app/views/loginmodal.html';    
     require __DIR__ . '/app/views/validationmodal.phtml';    
+    require __DIR__ . '/app/views/restorationmodal.phtml';    
     require __DIR__ . '/app/views/foot.phtml';
 ?>
