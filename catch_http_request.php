@@ -13,6 +13,12 @@
     else if( isset( $_POST['validation_username'] ) && isset( $_POST['validation_password']) && isset( $_POST['validation_code'] ) ) {
         ValidateUser( $_POST['validation_username'], $_POST['validation_password'], $_POST['validation_code'] );
     }
+    else if( isset( $_POST['request_restore_username'] ) && isset( $_POST['request_restore_email']) ) {
+        SendRestorationCode( $_POST['request_restore_username'], $_POST['request_restore_email'] );
+    }
+    else if( isset( $_POST['restore_username'] ) && isset( $_POST['restore_password'] ) && isset( $_POST['restore_code'] ) ) {
+        SetNewPassword( $_POST['restore_username'], $_POST['restore_password'], $_POST['restore_code'] );
+    }
     else {
         die($_POST);
     }

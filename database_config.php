@@ -126,6 +126,51 @@
         }
     }
 
+    function SendRestorationCode( $username, $email ) {
+        $DATABASE = GetDAAL( );
+
+        $USER_DATA = ReturnRowIfValueExists( 'users', 'username', $username );
+
+        if ( $USER_DATA != null && $USER_DATA['email'] == $email ) {
+            echo json_encode('{"request-restore-succes": true}', true);
+
+            $validation_code = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);
+
+            try {
+                $RESTORE_CODE_FOR_USER_STMT = $DATABASE->prepare( "UPDATE users SET validated=?, validation_code=? WHERE username=?" );
+                $RESTORE_CODE_FOR_USER_STMT->execute( [ 0, $validation_code, $username ] );
+                SendMail( $username, $email, $validation_code );
+            } catch ( PDOException $e ) {
+                die( $e->getMessage( ) );
+            }
+            return;
+        } else {
+            echo json_encode('{"request-restore-succes": false, "error-message": "This username is not paired with the email you inputted"}', true);
+            return;
+        } 
+    }
+
+    function SetNewPassword( $username, $new_password, $validation_code ) {
+        $DATABASE = GetDAAL( );
+
+        $USER_DATA = ReturnRowIfValueExists( 'users', 'username', $username );
+
+        if ( $USER_DATA != null && $USER_DATA["validation_code"] == $validation_code ) {
+            try {
+                $RESTORE_USER_ACCOUNT = $DATABASE->prepare( "UPDATE users SET password=?, validated=?, validation_code=? WHERE username=?" );
+                $RESTORE_USER_ACCOUNT->execute( [ password_hash( $new_password, PASSWORD_DEFAULT ), 1, null, $username ] );
+                $_SESSION['username'] = $username;
+                echo json_encode('{"restore-password-succes": true}', true);
+            } catch ( PDOException $e ) {
+                die( $e->getMessage( ) );
+            }
+            return;
+        } else {
+            echo json_encode('{"restore-password-succes": false, "error-message": "The username you inputted is not paired with your secret code"}', true);
+            return;
+        } 
+    }
+
     function LogOutUser( ) {
         session_destroy( );
         echo json_encode('{"log-succes": true}', true);
