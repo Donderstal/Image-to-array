@@ -50,6 +50,27 @@
         mail( "daanonderstal@hotmail.com", "Your validation code", $mail_message );  
     }
 
+    function MakeUserDirectory( $username ) {
+        $userdir = 'user-folders/' . str_replace( " ", "_", $username );
+        mkdir( $userdir );
+        mkdir( $userdir . '/neighbourhoods');
+        $user_neighbourhoods = $userdir . '/neighbourhoods';
+        mkdir( $userdir . '/maps');
+
+        try {
+            $master_folder = 'master-folder';
+            $master_files = glob("master-folder/*.*");
+            foreach($master_files as $path_to_old_file){
+                $path_to_new_file = str_replace( $master_folder, $user_neighbourhoods, $path_to_old_file );
+                copy( $path_to_old_file, $path_to_new_file );
+            }
+            
+        }
+        catch( Exception $e ) {
+            die($e->getMessage());
+        }
+    }
+
     function CreateUser( $username, $email, $password ) {
         $DATABASE = GetDAAL( );
 
@@ -117,6 +138,7 @@
             try {
                 $VALIDATE_USER_STMT = $DATABASE->prepare( "UPDATE users SET validated=?, validation_code=? WHERE username=?" );
                 $VALIDATE_USER_STMT->execute( [ 1, null, $username ] );
+                MakeUserDirectory( $username );
                 $_SESSION['username'] = $username;
             } catch ( PDOException $e ) {
                 die( $e->getMessage( ) );
