@@ -15,12 +15,14 @@
         try {
             // Server settings
             //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // for detailed debug output
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->IsSMTP();
+            $mail->Mailer = "smtp";
+
             $mail->SMTPAuth = true;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->SMTPSecure = "tls";
             $mail->Port = 587;
 
+            $mail->Host = 'smtp.gmail.com';
             $mail->Username = 'email'; // YOUR gmail email
             $mail->Password = 'password'; // YOUR gmail password
 
