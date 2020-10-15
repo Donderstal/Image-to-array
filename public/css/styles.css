@@ -66,3 +66,15 @@ h1 {
 .mapmaker-column {
     height: 100vh;
 }
+
+.load-map-modal {
+    position: fixed;
+    left: 5vw;
+    width: 90vw;
+    max-width: 90vw;
+}
+
+.map-selection-list-item:hover {
+    background: black;
+    color: white;
+}

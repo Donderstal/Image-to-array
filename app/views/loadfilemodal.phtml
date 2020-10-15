@@ -1,5 +1,5 @@
 <div class="modal fade" id="loadMapModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog load-map-modal" role="document">
       <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title text-muted" id="exampleModalLabel">Click the file you want to load below!</h5>
@@ -9,37 +9,69 @@
         </div>
         
         <div class="modal-body text-muted">
-            <?php   
-                $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
-                $maps_path = '/user-folders'  . '/' .$_SESSION["username"]. '/maps';
-                $neighbourhoods = scandir( $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path );
-                $maps = scandir( $_SERVER['DOCUMENT_ROOT'].$maps_path  );
+            <div class="container col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php   
+                            $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
+                            $maps_path = '/user-folders'  . '/' .$_SESSION["username"]. '/maps';
+                            $neighbourhoods = scandir( $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path );
+                            $maps = scandir( $_SERVER['DOCUMENT_ROOT'].$maps_path  );
 
-                echo "<h6> Neighbourhoods </h6><hr>";
+                            echo "<h6> Neighbourhoods </h6><hr>";
 
-                foreach($neighbourhoods as $neighbourhood) {
-                    if ( $neighbourhood != "." && $neighbourhood != ".." ) {
-                        $json_as_string = file_get_contents($_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path."/".$neighbourhood);
-                        echo $json_as_string;
-                        $json_keys = array_keys( json_decode($json_as_string, true) );
+                            foreach($neighbourhoods as $neighbourhood) {
+                                if ( $neighbourhood != "." && $neighbourhood != ".." ) {
+                                    $url = $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path."/".$neighbourhood;
+                                    $json_as_string = file_get_contents( $url, false );
+                                    $json_data = json_decode($json_as_string, true);
 
-                        echo "<div id='".$neighbourhood."' class='load-neighbourhood-from-server'> ".$neighbourhood." ";
-                        foreach($json_keys as $key) {
-                            echo "<div> ". $key . "</div>";
-                        }
-                        
-                        echo "</div>";                        
-                    }
-                }
+                                    echo "<div id='".$neighbourhood."' class='load-neighbourhood-from-server'> ".$neighbourhood."<br> <ul class='map-selection-list'>";
+                                    foreach(array_keys($json_data) as $key) {
+                                       $map = $json_data[$key];
+                                       $tilesheet = $map['tileSet'];
+                                       $grid = implode(",", array_merge(...$map['grid']));
+                                       $rows = $map['rows'];
+                                       $columns = $map['columns'];
 
-                echo "<br/><h6> Individual maps </h6><hr>";
+                                       echo "<li id='$key' tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item'> ". $key;
+                                       if ( isset($map["subMaps"]) ) {
+                                            $subMaps = $map["subMaps"];
+                                            echo "<ul class='map-selection-list'>";
+                                            foreach(array_keys($subMaps) as $innerKey) {
+                                                $subMap = $subMaps[$innerKey];
+                                                $tilesheet = $subMap['tileSet'];
+                                                $grid = implode(",", array_merge(...$subMap['grid']));
+                                                $rows = $subMap['rows'];
+                                                $columns = $subMap['columns'];
 
-                foreach($maps as $map) {
-                    if ( $map != "." && $map != ".." ) {
-                        echo "<div id='".$map." 'class='load-map-from-server'> ".$map." </div>";                        
-                    }
-                }
-            ?>
+                                                echo "<li id='$innerKey'  tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item'>". $innerKey."<input type='checkbox' id='$innerKey.checkbox' class='map-selection-list-item-checkbox' /></li>";
+                                            }
+                                            echo "</ul>";  
+                                       }
+                                       echo "<input type='checkbox' id='$key.checkbox' class='map-selection-list-item-checkbox' /></li>";
+
+                                    }
+                                    
+                                    echo "</ul></div>";                        
+                                }
+                            }
+
+                            echo "<br/><h6> Individual maps </h6><hr>";
+
+                            foreach($maps as $map) {
+                                if ( $map != "." && $map != ".." ) {
+                                    echo "<div id='".$map." 'class='load-map-from-server'> ".$map." </div>";                        
+                                }
+                            }
+                        ?>
+                    </div>
+                    <div class="col-md-10">
+                        <canvas id="preview-map-canvas" class="visible-canvas">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
       </div>
