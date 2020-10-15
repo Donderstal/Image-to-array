@@ -14,7 +14,7 @@
                     <div class="col-md-2">
                         <?php   
                             $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
-                            $maps_path = '/user-folders'  . '/' .$_SESSION["username"]. '/maps';
+                            $maps_path = '/user-folders'  . '/' .str_replace( " ", "_", $_SESSION["username"] ). '/maps';
                             $neighbourhoods = scandir( $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path );
                             $maps = scandir( $_SERVER['DOCUMENT_ROOT'].$maps_path  );
 

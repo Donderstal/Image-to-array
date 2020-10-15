@@ -1,6 +1,8 @@
 <?php 
     session_start( );
 
+    require_once "emails.php";
+
     function GetDAAL( ) {
         $DATABASE = new PDO( "mysql:host=localhost", "root", "" );
         $DATABASE->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -43,11 +45,6 @@
         }
 
         return $DB_ROW;
-    }
-
-    function SendMail( $username, $email, $validation_code ) {
-        $mail_message = "Hello " . $username . ", thanks for registering! <br/> Your validation code is: " . $validation_code;
-        mail( "daanonderstal@hotmail.com", "Your validation code", $mail_message );  
     }
 
     function MakeUserDirectory( $username ) {
@@ -93,7 +90,7 @@
             die( $e->getMessage( ) );
         }
 
-        SendMail( $username, $email, $validation_code );
+        SendMail( $username, $email, $validation_code, true );
 
         echo json_encode('{"register-succes": true}', true);
     }
@@ -161,7 +158,7 @@
             try {
                 $RESTORE_CODE_FOR_USER_STMT = $DATABASE->prepare( "UPDATE users SET validated=?, validation_code=? WHERE username=?" );
                 $RESTORE_CODE_FOR_USER_STMT->execute( [ 0, $validation_code, $username ] );
-                SendMail( $username, $email, $validation_code );
+                SendMail( $username, $email, $validation_code, false );
             } catch ( PDOException $e ) {
                 die( $e->getMessage( ) );
             }
