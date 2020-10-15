@@ -44,7 +44,20 @@ document.addEventListener("DOMContentLoaded", function() {
     const sheetY = SHEET_CANVAS.getBoundingClientRect( ).y;
     const mapX = MAP_CANVAS.getBoundingClientRect( ).x;
     const mapY = MAP_CANVAS.getBoundingClientRect( ).y;
+    const previewMapX = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
+    const previewMapY = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
 
+    PREVIEW_MAP = new Map( previewMapX, previewMapY );
     SHEET = new Sheet( sheetX, sheetY );
     MAP = new Map( mapX, mapY );
 });
+
+Array.from(document.getElementsByClassName("map-selection-list-item-checkbox")).forEach( ( e ) => {
+    e.addEventListener("click", ( e ) => {
+        const attributes = document.getElementById(e.target.id).parentElement.attributes;
+        let grid = attributes["grid"].value
+        PREVIEW_MAP_CANVAS.width = attributes["columns"].value + 1 * TILE_SIZE
+        PREVIEW_MAP_CANVAS.height = attributes["rows"].value + 1 * TILE_SIZE
+        PREVIEW_MAP.initGrid( attributes["rows"].value + 1, attributes["columns"].value + 1 );
+    })
+})

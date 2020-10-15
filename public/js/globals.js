@@ -5,13 +5,16 @@ const TILESHEET_PREVIEW = document.getElementById( 'sheet-preview' );
 const SHEET_CANVAS = document.getElementById('tilesheet-canvas');
 const SELECTED_TILE_CANVAS = document.getElementById('selected-tile-canvas');
 const MAP_CANVAS = document.getElementById('map-canvas');
+const PREVIEW_MAP_CANVAS = document.getElementById('preview-map-canvas');
 
 const SHEET_CTX = SHEET_CANVAS.getContext("2d");
 const SELECTED_TILE_CTX = SELECTED_TILE_CANVAS.getContext("2d");
 const MAP_CTX = MAP_CANVAS.getContext("2d");
+const PREVIEW_MAP_CTX = PREVIEW_MAP_CANVAS.getContext("2d");
 
 let SHEET;
 let MAP;
+let PREVIEW_MAP;
 
 const TILE_SIZE = 32;
 
