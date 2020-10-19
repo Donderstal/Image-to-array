@@ -52,12 +52,21 @@ document.addEventListener("DOMContentLoaded", function() {
     MAP = new Map( mapX, mapY, "MAP" );
 });
 
-Array.from(document.getElementsByClassName("map-selection-list-item-checkbox")).forEach( ( e ) => {
+Array.from(document.getElementsByClassName("map-selection-list-item-radio")).forEach( ( e ) => {
     e.addEventListener("click", ( e ) => {
         const attributes = document.getElementById(e.target.id).parentElement.attributes;
-        let grid = attributes["grid"].value
-        PREVIEW_MAP_CANVAS.width = attributes["columns"].value + 1 * TILE_SIZE
-        PREVIEW_MAP_CANVAS.height = attributes["rows"].value + 1 * TILE_SIZE
-        PREVIEW_MAP.initGrid( attributes["rows"].value + 1, attributes["columns"].value + 1 );
+        const columnsInt = parseInt(attributes["columns"].value) + 1;
+        const rowsInt = parseInt(attributes["rows"].value) + 1;
+        const grid = attributes["grid"].value
+
+        const parentElement = document.getElementById(document.getElementById(e.target.id).parentElement.id);
+
+
+        document.getElementById("preview-map-neighbourhood").innerText = parentElement.getAttribute("neighbourhood").split('.')[0];
+        document.getElementById("preview-map-name").innerText = parentElement.id;
+
+        PREVIEW_MAP_CANVAS.width = columnsInt * TILE_SIZE
+        PREVIEW_MAP_CANVAS.height = rowsInt * TILE_SIZE
+        PREVIEW_MAP.initGrid( rowsInt, columnsInt );
     })
 })

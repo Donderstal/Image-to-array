@@ -26,7 +26,7 @@
                                     $json_as_string = file_get_contents( $url, false );
                                     $json_data = json_decode($json_as_string, true);
 
-                                    echo "<div id='".$neighbourhood."' class='load-neighbourhood-from-server'> ".$neighbourhood."<br> <ul class='map-selection-list'>";
+                                    echo "<div class='load-neighbourhood-from-server'> ".$neighbourhood."<br> <ul id='".$neighbourhood."' class='map-selection-list'>";
                                     foreach(array_keys($json_data) as $key) {
                                        $map = $json_data[$key];
                                        $tilesheet = $map['tileSet'];
@@ -34,7 +34,7 @@
                                        $rows = $map['rows'];
                                        $columns = $map['columns'];
 
-                                       echo "<li id='$key' tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item'> ". $key;
+                                       echo "<li id='$key' neighbourhood='$neighbourhood' tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item'> ". $key . "<input type='radio' style='float: right;' name='map-preview-input' id='$key.radio' class='map-selection-list-item-radio' />";
                                        if ( isset($map["subMaps"]) ) {
                                             $subMaps = $map["subMaps"];
                                             echo "<ul class='map-selection-list'>";
@@ -45,11 +45,11 @@
                                                 $rows = $subMap['rows'];
                                                 $columns = $subMap['columns'];
 
-                                                echo "<li id='$innerKey'  tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item'>". $innerKey."<input type='checkbox' id='$innerKey.checkbox' class='map-selection-list-item-checkbox' /></li>";
+                                                echo "<li id='$innerKey' neighbourhood='$neighbourhood' tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item-inner'>". $innerKey."<input type='radio' style='float: right;' name='map-preview-input' id='$innerKey.radio' class='map-selection-list-item-radio' /></li>";
                                             }
                                             echo "</ul>";  
                                        }
-                                       echo "<input type='checkbox' id='$key.checkbox' class='map-selection-list-item-checkbox' /></li>";
+                                       echo "</li>";
 
                                     }
                                     
@@ -66,9 +66,15 @@
                             }
                         ?>
                     </div>
-                    <div class="col-md-10">
-                        <canvas id="preview-map-canvas" class="visible-canvas">
-                        </canvas>
+                    <div class="col-md-10 preview-canvas-wrapper-div">
+                        <div class="preview-map-title-div">
+                            <h5 id="preview-map-neighbourhood"></h5>
+                            <h5 id="preview-map-name"></h5>
+                        </div>
+                        <div class="row preview-map-canvas">
+                            <canvas id="preview-map-canvas" class="visible-canvas">
+                            </canvas>
+                        </div>
                     </div>
                 </div>
             </div>

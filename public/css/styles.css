@@ -74,7 +74,26 @@ h1 {
     max-width: 90vw;
 }
 
-.map-selection-list-item:hover {
-    background: black;
-    color: white;
+.map-selection-list-item-inner, .map-selection-list-item {
+    border-top: 1px black groove;
+}
+
+.preview-map-canvas {
+    border-right: .5px black groove;
+    border-bottom: .5px black groove;
+}
+
+.preview-canvas-wrapper-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-map-title-div {
+    position: absolute;
+    top: 0;
+}
+
+#preview-map-neighbourhood, #preview-map-name{
+    text-align: center;
 }
