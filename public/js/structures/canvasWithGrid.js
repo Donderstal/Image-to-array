@@ -1,8 +1,8 @@
 class CanvasWithGrid {
-    constructor( x, y ) {
+    constructor( x, y, ctx ) {
         this.x = x;
         this.y = y;
-        this.isMap;
+        this.ctx = ctx;;
     };
 
     setDimensions( ) {
@@ -11,7 +11,7 @@ class CanvasWithGrid {
     };
 
     initGrid( rows, cols ) {
-        this.grid = new Grid( this.x, this.y, rows, cols, this.isMap );
+        this.grid = new Grid( this.x, this.y, rows, cols, this.ctx );
     };
 
     clearGrid( ) {
@@ -24,9 +24,8 @@ class CanvasWithGrid {
 };
 
 class Sheet extends CanvasWithGrid {
-    constructor( x, y ) {
-        super( x, y );
-        this.isMap = false;
+    constructor( x, y, ctx ) {
+        super( x, y, ctx );
         console.log("initializing sheet!");
     };
 
@@ -48,9 +47,8 @@ class Sheet extends CanvasWithGrid {
 }
 
 class Map extends CanvasWithGrid {
-    constructor( x, y ) {
-        super( x, y );
-        this.isMap = true;
+    constructor( x, y, ctx ) {
+        super( x, y, ctx );
         console.log("initializing map!")
     };
 

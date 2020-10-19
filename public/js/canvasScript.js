@@ -47,9 +47,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const previewMapX = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
     const previewMapY = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
 
-    PREVIEW_MAP = new Map( previewMapX, previewMapY );
-    SHEET = new Sheet( sheetX, sheetY );
-    MAP = new Map( mapX, mapY );
+    PREVIEW_MAP = new Map( previewMapX, previewMapY, "PREVIEW_MAP" );
+    SHEET = new Sheet( sheetX, sheetY, "SHEET" );
+    MAP = new Map( mapX, mapY, "MAP" );
 });
 
 Array.from(document.getElementsByClassName("map-selection-list-item-checkbox")).forEach( ( e ) => {

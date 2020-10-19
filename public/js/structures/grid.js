@@ -1,11 +1,11 @@
 class Grid {
-    constructor( x, y, rows, cols, isMap ) {
+    constructor( x, y, rows, cols, ctx ) {
         this.x = x;
         this.y = y;
         this.rows = rows;
         this.cols = cols;
         this.array = [];
-        this.isMap = isMap;
+        this.ctx = ctx;
 
         this.initializeGrid( );
     };
@@ -16,7 +16,7 @@ class Grid {
         let tileY = 0;
 
         for( var i = 0; i < limit; i++ ) {
-            this.array.push( new Tile( i, tileX, tileY, this.isMap ) )
+            this.array.push( new Tile( i, tileX, tileY, this.ctx ) )
 
             if ( ( i + 1 ) % this.cols == 0 ) {
                 tileX = 0;
@@ -42,25 +42,37 @@ class Grid {
 }
 
 class Tile {
-    constructor( index, x, y, isMap ) {
+    constructor( index, x, y, ctx ) {
         this.x = x;
         this.y = y;
         this.index = index;
-        this.isMap = isMap
+        this.ctx = this.getCtx( ctx )
 
-        this.isMap ? this.clearTileID( ) : this.setTileID( index );
         this.drawTileBorders( );
     };
 
+    getCtx( ctx ) {
+        switch( ctx ) {
+            case "MAP": 
+                this.clearTileID( )
+                return MAP_CTX;
+            case "SHEET": 
+                this.setTileID( this.index );
+                return SHEET_CTX;
+            case "PREVIEW_MAP": 
+                this.clearTileID( )
+                return PREVIEW_MAP_CTX;
+        }
+    }
+
     drawTileBorders( ) {
-        const ctx = this.isMap ? MAP_CTX : SHEET_CTX;
-        ctx.beginPath();
-        ctx.lineWidth = .5
-        ctx.moveTo( this.x, this.y );
-        ctx.lineTo( this.x, this.y + TILE_SIZE );
-        ctx.moveTo( this.x, this.y );
-        ctx.lineTo( this.x + TILE_SIZE, this.y );
-        ctx.stroke( );
+        this.ctx.beginPath();
+        this.ctx.lineWidth = .5
+        this.ctx.moveTo( this.x, this.y );
+        this.ctx.lineTo( this.x, this.y + TILE_SIZE );
+        this.ctx.moveTo( this.x, this.y );
+        this.ctx.lineTo( this.x + TILE_SIZE, this.y );
+        this.ctx.stroke( );
     }
 
     setTileID( ID ) {
