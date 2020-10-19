@@ -57,16 +57,72 @@ Array.from(document.getElementsByClassName("map-selection-list-item-radio")).for
         const attributes = document.getElementById(e.target.id).parentElement.attributes;
         const columnsInt = parseInt(attributes["columns"].value) + 1;
         const rowsInt = parseInt(attributes["rows"].value) + 1;
-        const grid = attributes["grid"].value
-
+        const grid = attributes["grid"].value.split(',')
         const parentElement = document.getElementById(document.getElementById(e.target.id).parentElement.id);
 
-
-        document.getElementById("preview-map-neighbourhood").innerText = parentElement.getAttribute("neighbourhood").split('.')[0];
-        document.getElementById("preview-map-name").innerText = parentElement.id;
+        document.getElementById("preview-map-tileset").innerText = "Tileset: " + attributes["tilesheet"].value
+        document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + parentElement.getAttribute("neighbourhood").split('.')[0];
+        document.getElementById("preview-map-name").innerText = "Map name: " + parentElement.id;
 
         PREVIEW_MAP_CANVAS.width = columnsInt * TILE_SIZE
         PREVIEW_MAP_CANVAS.height = rowsInt * TILE_SIZE
         PREVIEW_MAP.initGrid( rowsInt, columnsInt );
+
+        const image = new Image();
+    
+        image.src = '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src;
+        image.onload = ( ) => {       
+            drawGrid( { 'rows': rowsInt, 'columns': columnsInt, 'tileSheet': image, 'grid': grid }, TILESHEETS[attributes["tilesheet"].value].tiles )
+        }
     })
 })
+
+const calcTilesheetXyPositions = ( tilesInSheet ) => {
+    let tileX = 0; let tileY = 0;
+    let tilesheetXyValues = []
+
+    for ( var i = 0; i <= tilesInSheet; i++ ) {
+        tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
+        tileX += TILE_SIZE * 2
+        if ( i % 4 == 3 ) {
+            tileX = 0
+            tileY += TILE_SIZE * 2
+        }
+    }
+
+    return tilesheetXyValues;
+}
+
+const drawGrid = ( currentMap, tilesInSheet ) => {
+    const position = { 'x' : 0, 'y' : 0 }
+    const tilesheetXyValues = calcTilesheetXyPositions( tilesInSheet )
+
+    for ( var i = 0; i <= currentMap.grid.length; i+=currentMap.columns ) {
+        drawRow( currentMap, currentMap.grid.slice(i,i+currentMap.columns), position, tilesheetXyValues )
+
+        position.y += TILE_SIZE
+        position.x = 0;
+    }
+}
+
+const drawRow = ( currentMap, currentRow, position, tilesheetXyValues ) => {
+    for ( var j = 0; j < currentMap.columns; j++ ) {
+        const currentTile = currentRow[j]
+
+        drawTileInGridBlock( currentMap, currentTile, position, tilesheetXyValues )
+        position.x += TILE_SIZE
+    }
+}
+
+const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas, tilesheetXyValues ) => {
+    const blockSize = TILE_SIZE  
+    const tilePositionInSheet = tilesheetXyValues[tile]
+
+    PREVIEW_MAP_CTX.drawImage(
+        currentMap.tileSheet, 
+        tilePositionInSheet.x, tilePositionInSheet.y,
+        TILE_SIZE * 2, TILE_SIZE * 2,
+        startPositionInCanvas.x, startPositionInCanvas.y,
+        blockSize, blockSize
+    )           
+}

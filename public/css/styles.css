@@ -94,6 +94,6 @@ h1 {
     top: 0;
 }
 
-#preview-map-neighbourhood, #preview-map-name{
+#preview-map-neighbourhood, #preview-map-name, #preview-map-tileset{
     text-align: center;
 }
