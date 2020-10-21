@@ -57,6 +57,10 @@ const switchView = ( event ) => {
             unsetMapMaker( );
             nextScreen = "mapmaker-new-map-div";
             break;
+        case "confirm-load-map-button" : 
+            loadMapToMapmaker( );
+            nextScreen = "mapmaker-div";
+            break;
         default :
             alert( 'Navigation error. Tell Daan right away!!' );
             break;
@@ -65,6 +69,33 @@ const switchView = ( event ) => {
    document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
 
    document.getElementById(nextScreen).className = nextScreen == "mapmaker-div" ? "window-active" : "row window window-active";
+}
+
+const loadMapToMapmaker = ( ) => {
+    setTilesheet( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src )
+    SHEET_CANVAS.classList.remove('invisible-canvas');
+    SHEET_CANVAS.classList.add('visible-canvas');
+
+    MAP_CANVAS.classList.remove('invisible-canvas');
+    MAP_CANVAS.classList.add('visible-canvas');
+    initMapCanvas( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
+
+    MAP.setNeighbourhood( NEIGHBOURHOOD_TO_LOAD );
+    MAP.setMapName( MAPNAME_TO_LOAD )
+    
+    document.getElementById("mapname-span").textContent = MAPNAME_TO_LOAD;
+    document.getElementById("neighbourhood-span").textContent = NEIGHBOURHOOD_TO_LOAD;
+
+    const image = new Image();
+    
+    image.src = '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src;
+    image.onload = ( ) => {      
+        drawGrid( { 'rows': ROWS_TO_LOAD, 'columns': COLUMNS_TO_LOAD, 'tileSheet': image, 'grid': GRID_TO_LOAD }, TILESHEETS[TILESHEET_TO_LOAD].tiles, MAP_CTX )
+        MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD )
+        MAP.grid.array.forEach( ( e, index ) => {
+            e.setTileID( GRID_TO_LOAD[index] );
+        })
+    }
 }
 
 const mapMakerDataIsSet = ( ) => {
@@ -180,7 +211,7 @@ const setMapInformation = ( ) => {
 }
 
 const exportMapData = ( ) => {
-    alert(JSON.stringify(MAP.exportMapData( )));
+    console.log(JSON.stringify(MAP.exportMapData( )));
 }
 
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )

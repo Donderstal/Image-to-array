@@ -79,7 +79,7 @@ class Map extends CanvasWithGrid {
         })
 
         return {
-            'mapName' : this.mapName + '/' + this.neighbourhood,
+            'mapName' : this.neighbourhood + '/' + this.mapName,
             'tileSet' : SHEET.sheetName,
             'outdoors' : null,
             'music' : null,
