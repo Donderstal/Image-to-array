@@ -55,24 +55,29 @@ document.addEventListener("DOMContentLoaded", function() {
 Array.from(document.getElementsByClassName("map-selection-list-item-radio")).forEach( ( e ) => {
     e.addEventListener("click", ( e ) => {
         const attributes = document.getElementById(e.target.id).parentElement.attributes;
-        const columnsInt = parseInt(attributes["columns"].value) + 1;
-        const rowsInt = parseInt(attributes["rows"].value) + 1;
-        const grid = attributes["grid"].value.split(',')
         const parentElement = document.getElementById(document.getElementById(e.target.id).parentElement.id);
+
+        COLUMNS_TO_LOAD = parseInt(attributes["columns"].value) + 1;
+        ROWS_TO_LOAD = parseInt(attributes["rows"].value) + 1;
+        GRID_TO_LOAD = attributes["grid"].value.split(',');
+
+        TILESHEET_TO_LOAD = attributes["tilesheet"].value
+        MAPNAME_TO_LOAD = parentElement.id;
+        NEIGHBOURHOOD_TO_LOAD = parentElement.getAttribute("neighbourhood").split('.')[0]
 
         document.getElementById("preview-map-tileset").innerText = "Tileset: " + attributes["tilesheet"].value
         document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + parentElement.getAttribute("neighbourhood").split('.')[0];
         document.getElementById("preview-map-name").innerText = "Map name: " + parentElement.id;
 
-        PREVIEW_MAP_CANVAS.width = columnsInt * TILE_SIZE
-        PREVIEW_MAP_CANVAS.height = rowsInt * TILE_SIZE
-        PREVIEW_MAP.initGrid( rowsInt, columnsInt );
+        PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
+        PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
+        PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
 
         const image = new Image();
     
         image.src = '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src;
         image.onload = ( ) => {       
-            drawGrid( { 'rows': rowsInt, 'columns': columnsInt, 'tileSheet': image, 'grid': grid }, TILESHEETS[attributes["tilesheet"].value].tiles )
+            drawGrid( { 'rows': ROWS_TO_LOAD, 'columns': COLUMNS_TO_LOAD, 'tileSheet': image, 'grid': GRID_TO_LOAD }, TILESHEETS[attributes["tilesheet"].value].tiles, PREVIEW_MAP_CTX )
         }
     })
 })
@@ -93,32 +98,32 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
     return tilesheetXyValues;
 }
 
-const drawGrid = ( currentMap, tilesInSheet ) => {
+const drawGrid = ( currentMap, tilesInSheet, ctx ) => {
     const position = { 'x' : 0, 'y' : 0 }
     const tilesheetXyValues = calcTilesheetXyPositions( tilesInSheet )
 
-    for ( var i = 0; i <= currentMap.grid.length; i+=currentMap.columns ) {
-        drawRow( currentMap, currentMap.grid.slice(i,i+currentMap.columns), position, tilesheetXyValues )
+    for ( var i = 0; i < currentMap.grid.length; i+=currentMap.columns ) {
+        drawRow( currentMap, currentMap.grid.slice(i,i+currentMap.columns), position, tilesheetXyValues, ctx )
 
         position.y += TILE_SIZE
         position.x = 0;
     }
 }
 
-const drawRow = ( currentMap, currentRow, position, tilesheetXyValues ) => {
+const drawRow = ( currentMap, currentRow, position, tilesheetXyValues, ctx ) => {
     for ( var j = 0; j < currentMap.columns; j++ ) {
         const currentTile = currentRow[j]
 
-        drawTileInGridBlock( currentMap, currentTile, position, tilesheetXyValues )
+        drawTileInGridBlock( currentMap, currentTile, position, tilesheetXyValues, ctx )
         position.x += TILE_SIZE
     }
 }
 
-const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas, tilesheetXyValues ) => {
+const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas, tilesheetXyValues, ctx ) => {
     const blockSize = TILE_SIZE  
     const tilePositionInSheet = tilesheetXyValues[tile]
 
-    PREVIEW_MAP_CTX.drawImage(
+    ctx.drawImage(
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
         TILE_SIZE * 2, TILE_SIZE * 2,
