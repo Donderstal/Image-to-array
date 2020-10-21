@@ -19,6 +19,9 @@
     else if( isset( $_POST['restore_username'] ) && isset( $_POST['restore_password'] ) && isset( $_POST['restore_code'] ) ) {
         SetNewPassword( $_POST['restore_username'], $_POST['restore_password'], $_POST['restore_code'] );
     }
+    else if( isset( $_POST['map_json']) ) {
+        StoreJSONMapAsFile( json_encode($_POST['map_json']) );
+    }
     else {
         die($_POST);
     }
