@@ -25,13 +25,14 @@
         $folder_name = "user-folders/" . $_SESSION["username"] . "/" . "maps/";
         $file_path = $folder_name . $map_name . ".json";
 
-        if ( !file_exists($path) ) {
+        if ( !file_exists($file_path) ) {
             try {
                 file_put_contents( $file_path, $json_map); 
-                echo json_encode('{"save-map-succes": true, "test": '.$json_map["mapName"].'}' );            
+                echo json_encode('{"save-map-succes": true}' );            
             }
             catch ( Exception $ex ) {
-                echo json_encode('{"save-map-succes": false, "error-message": "'.$ex.'"}' );     
+                die( $e->getMessage( ) );
+                echo json_encode('{"save-map-succes": false}' );     
             }
         } else {
             echo json_encode('{"save-map-succes": false, "error-message": "File with that name already exists"}' );     

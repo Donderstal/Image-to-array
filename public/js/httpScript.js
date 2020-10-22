@@ -5,7 +5,7 @@ const prepareHTTPRequest = ( method, url, data, callback ) => {
         method: method,
         body: data
     } ).then( response => { 
-            return response.json() 
+        return response.json()   
         }
     ).then( 
         result => callback(result)
