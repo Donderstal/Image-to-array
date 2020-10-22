@@ -21,9 +21,7 @@
         }
     }
 
-    function StoreJSONMapAsFile( $json_map ) {
-        $map_name = "map";
-
+    function StoreJSONMapAsFile( $json_map, $map_name ) {
         $folder_name = "user-folders/" . $_SESSION["username"] . "/" . "maps/";
         $file_path = $folder_name . $map_name . ".json";
 

@@ -144,5 +144,6 @@ document.getElementById("restore-password-form").addEventListener( 'formdata', (
 
 document.getElementById("save-map-form").addEventListener( 'formdata', ( event ) => {
     event.formData.append( "map_json", JSON.stringify(MAP.exportMapData( )) )
+    event.formData.append( "map_name", document.getElementById("mapname-label").value )
     prepareHTTPRequest( "POST", "catch_http_request.php", event.formData, SaveMapHTTPCallback )
 }, true )
