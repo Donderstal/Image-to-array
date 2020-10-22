@@ -110,6 +110,6 @@ h1 {
     max-height: 80vh;
 }
 
-.modal-content, .modal-body, .modal-container, .modal-row {
+.load-modal-content, .load-modal-body, .modal-container, .modal-row {
     max-height: 90vh;
 }
