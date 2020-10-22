@@ -44,6 +44,9 @@ const switchView = ( event ) => {
         case "new-map-button" : 
             nextScreen = "mapmaker-new-map-div";
             break;
+        case "map-overview-button" : 
+            nextScreen = "map-overview-div";
+            break;
         case "start-new-map-button" : 
             if ( mapMakerDataIsSet( ) ) {
                 prepareMapmaker( );
@@ -221,6 +224,10 @@ document.getElementById('export-map-button').addEventListener( 'click', exportMa
 
 Array.from(document.getElementsByClassName('navigation-button')).forEach( ( e ) => {
     e.addEventListener( 'click', switchView, true )
+} )
+
+Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
+    e.addEventListener( 'click', (e) => { console.log(e) }, true )
 } )
 
 document.getElementById('clear-grid-button').addEventListener( 'click', clearMapGrid, true )
