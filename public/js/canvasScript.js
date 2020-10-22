@@ -63,10 +63,14 @@ Array.from(document.getElementsByClassName("map-selection-list-item-radio")).for
 
         TILESHEET_TO_LOAD = attributes["tilesheet"].value
         MAPNAME_TO_LOAD = parentElement.id;
-        NEIGHBOURHOOD_TO_LOAD = parentElement.getAttribute("neighbourhood").split('.')[0]
+        if ( parentElement.getAttribute("neighbourhood") ) {
+            NEIGHBOURHOOD_TO_LOAD = parentElement.getAttribute("neighbourhood").split('.')[0];      
+            document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + parentElement.getAttribute("neighbourhood").split('.')[0];                  
+        }
+
 
         document.getElementById("preview-map-tileset").innerText = "Tileset: " + attributes["tilesheet"].value
-        document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + parentElement.getAttribute("neighbourhood").split('.')[0];
+
         document.getElementById("preview-map-name").innerText = "Map name: " + parentElement.id;
 
         PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
@@ -120,6 +124,10 @@ const drawRow = ( currentMap, currentRow, position, tilesheetXyValues, ctx ) => 
 }
 
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas, tilesheetXyValues, ctx ) => {
+    if ( tile === "E" || tile === null) {
+        return 
+    }
+    
     const blockSize = TILE_SIZE  
     const tilePositionInSheet = tilesheetXyValues[tile]
 

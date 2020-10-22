@@ -9,9 +9,9 @@
         </div>
         
         <div class="modal-body text-muted">
-            <div class="container col-md-12">
-                <div class="row">
-                    <div class="col-md-2">
+            <div class="container modal-container col-md-12">
+                <div class="row modal-row">
+                    <div class="col-md-2 load-maps-names-div">
                         <?php   
                             $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
                             $maps_path = '/user-folders'  . '/' .str_replace( " ", "_", $_SESSION["username"] ). '/maps';
@@ -61,7 +61,35 @@
 
                             foreach($maps as $map) {
                                 if ( $map != "." && $map != ".." ) {
-                                    echo "<div id='".$map." 'class='load-map-from-server'> ".$map." </div>";                        
+                                    echo "<div id='".$map." 'class='load-map-from-server'> ".$map." </div>";
+                                    
+                                    $url = $_SERVER['DOCUMENT_ROOT'].$maps_path."/".$map;
+                                    $json_as_string = file_get_contents( $url, false );
+                                    $json_map_string = json_decode($json_as_string, true);
+                                    $json_recoded = json_decode($json_map_string, true);
+
+                                    $tilesheet = $json_recoded['tileSet'];
+                                    $grid = implode(",", $json_recoded['grid']);
+                                    $rows = $json_recoded['rows'];
+                                    $columns = $json_recoded['cols'];
+
+                                    echo "<li id='$map' tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item'> ". $map . "<input type='radio' style='float: right;' name='map-preview-input' id='$map.radio' class='map-selection-list-item-radio' />";
+                                    if ( isset($json_recoded["subMaps"]) ) {
+                                        $subMaps = $json_recoded["subMaps"];
+                                        echo "<ul class='map-selection-list'>";
+                                        foreach(array_keys($subMaps) as $innerKey) {
+                                            $subMap = $subMaps[$innerKey];
+                                            $tilesheet = $subMap['tileSet'];
+                                            $grid = implode(",", array_merge(...$subMap['grid']));
+                                            $rows = $subMap['rows'];
+                                            $columns = $subMap['columns'];
+
+                                            echo "<li id='$innerKey' tilesheet='$tilesheet' grid='$grid' rows='$rows' columns='$columns' class='map-selection-list-item-inner'>". $innerKey."<input type='radio' style='float: right;' name='map-preview-input' id='$innerKey.radio' class='map-selection-list-item-radio' /></li>";
+                                        }
+                                        echo "</ul>";  
+                                    }
+                                    echo "</li>";
+
                                 }
                             }
                         ?>

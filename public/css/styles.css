@@ -72,6 +72,7 @@ h1 {
     left: 5vw;
     width: 90vw;
     max-width: 90vw;
+    max-height: 90vh;
 }
 
 .map-selection-list-item-inner, .map-selection-list-item {
@@ -87,6 +88,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 80vh;
 }
 
 .preview-map-title-div {
@@ -101,4 +103,13 @@ h1 {
 
 #preview-map-neighbourhood, #preview-map-name, #preview-map-tileset{
     text-align: center;
+}
+
+.load-maps-names-div {
+    overflow: scroll;
+    max-height: 80vh;
+}
+
+.modal-content, .modal-body, .modal-container, .modal-row {
+    max-height: 90vh;
 }
