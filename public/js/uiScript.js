@@ -227,7 +227,31 @@ Array.from(document.getElementsByClassName('navigation-button')).forEach( ( e ) 
 } )
 
 Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
-    e.addEventListener( 'click', (e) => { console.log(e) }, true )
+    e.addEventListener( 'click', ( e ) => { 
+        fetch('/master-folder/downtown.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            let counter = 0;
+            Object.keys(json).forEach( ( mapName ) => {
+                counter += (parseInt(json[mapName].columns) + 1) * TILE_SIZE;
+                let mapCanvas = document.createElement("canvas");
+                mapCanvas.id = json[mapName].mapName;
+                document.getElementById("map-overview-canvas-wrapper").appendChild( mapCanvas );
+
+                const mapX = mapCanvas.getBoundingClientRect( ).x;
+                const mapY = mapCanvas.getBoundingClientRect( ).y;
+            })
+        })
+        .catch(err => {
+            console.log("Error Reading data " + err);
+            } 
+        );
+    }, true )
 } )
 
 document.getElementById('clear-grid-button').addEventListener( 'click', clearMapGrid, true )

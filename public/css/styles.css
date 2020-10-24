@@ -113,3 +113,7 @@ h1 {
 .load-modal-content, .load-modal-body, .modal-container, .modal-row {
     max-height: 90vh;
 }
+
+.map-overview-canvas-wrapper {
+    width: 4608;
+}
