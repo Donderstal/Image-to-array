@@ -137,8 +137,13 @@ const captureMapClick = ( event ) => {
 }
 
 const prepareMapmaker = ( ) => {
-    setMapInformation( );    
-    setMapGrid( );
+    const rows = document.getElementById('rows-input').value;
+    const columns = document.getElementById('columns-input').value;
+    const mapName = document.getElementById("mapname-label").value;
+    const neighbourhood = document.getElementById("neighbourhood-label").value;
+
+    setMapInformation( mapName, neighbourhood );    
+    setMapGrid( rows, columns );
 }
 
 const unsetMapMaker = ( ) => {
@@ -166,15 +171,7 @@ const unselectTileSheet = ( ) =>{
     setValueOfReadOnlyElement( 'tilesheet-selection-input', "" );
 }
 
-const setMapGrid = ( ) => {
-    const rows = document.getElementById('rows-input').value;
-    const columns = document.getElementById('columns-input').value;
-
-    if ( rows > 16 || columns > 24 ) {
-        alert( 'Your input is not valid. A map can have no more than 16 rows and 24 columns.' )
-        return;
-    }
-
+const setMapGrid = ( rows, columns ) => {
     makeHiddenCanvasVisible( MAP_CANVAS );
 
     document.getElementById('rows-input').value = null;
@@ -184,10 +181,7 @@ const setMapGrid = ( ) => {
     initMapCanvas( rows, columns );
 }
 
-const setMapInformation = ( ) => {
-    const mapName = document.getElementById("mapname-label").value;
-    const neighbourhood = document.getElementById("neighbourhood-label").value;
-
+const setMapInformation = ( mapName, neighbourhood ) => {
     MAP.setNeighbourhood( neighbourhood );
     MAP.setMapName( mapName )
 
