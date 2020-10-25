@@ -73,19 +73,15 @@ const switchView = ( event ) => {
 
 const loadMapToMapmaker = ( ) => {
     setTilesheet( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src )
-    SHEET_CANVAS.classList.remove('invisible-canvas');
-    SHEET_CANVAS.classList.add('visible-canvas');
+    makeHiddenCanvasVisible( SHEET_CANVAS );
+    makeHiddenCanvasVisible( MAP_CANVAS );
 
-    MAP_CANVAS.classList.remove('invisible-canvas');
-    MAP_CANVAS.classList.add('visible-canvas');
     initMapCanvas( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
 
     MAP.setNeighbourhood( NEIGHBOURHOOD_TO_LOAD );
     MAP.setMapName( MAPNAME_TO_LOAD )
     
-    document.getElementById("mapname-span").textContent = MAPNAME_TO_LOAD;
-    document.getElementById("neighbourhood-span").textContent = NEIGHBOURHOOD_TO_LOAD;
-
+    setTextContentOfElements( { "mapname-span": MAPNAME_TO_LOAD, "neighbourhood-span": NEIGHBOURHOOD_TO_LOAD } )
     const image = new Image();
     
     image.src = '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src;
@@ -120,12 +116,11 @@ const mapMakerDataIsSet = ( ) => {
 
 const confirmTilesheetChoice = ( ) => {
     const src = TILESHEET_PREVIEW.getAttribute("src");
-    setTilesheet( src )
-    document.getElementById('tilesheet-selection-input').readOnly = false;
-    document.getElementById('tilesheet-selection-input').value = src;
-    document.getElementById('tilesheet-selection-input').readOnly = true;
-    SHEET_CANVAS.classList.remove('invisible-canvas');
-    SHEET_CANVAS.classList.add('visible-canvas');
+
+    setTilesheet( src );
+    setValueOfReadOnlyElement( 'tilesheet-selection-input', src );
+
+    makeHiddenCanvasVisible( SHEET_CANVAS );
 }
 
 const captureSheetClick = ( event ) => {
@@ -153,29 +148,22 @@ const unsetMapMaker = ( ) => {
 }
 
 const unsetMapInformation = ( ) => {
-    document.getElementById("mapname-span").textContent = null;
-    document.getElementById("neighbourhood-span").textContent = null;
+    setTextContentOfElements( { "mapname-span": null, "neighbourhood-span": null } )
 
     MAP.setNeighbourhood( null );
     MAP.setMapName( null )
 }
 
 const unsetMapGrid = ( ) => {
-    document.getElementById("rows-span").textContent = null;
-    document.getElementById("columns-span").textContent = null;
-
-    MAP_CANVAS.classList.remove('visible-canvas');
-    MAP_CANVAS.classList.add('invisible-canvas');
+    setTextContentOfElements( { "rows-span": null, "columns-span": null } )
+    hideVisibleCanvas( MAP_CANVAS );
 
     MAP.clearGrid( );
 }
 
 const unselectTileSheet = ( ) =>{
-    SHEET_CANVAS.classList.remove('visible-canvas');
-    SHEET_CANVAS.classList.add('invisible-canvas');
-    document.getElementById('tilesheet-selection-input').readOnly = false;
-    document.getElementById('tilesheet-selection-input').value = "";
-    document.getElementById('tilesheet-selection-input').readOnly = true;
+    hideVisibleCanvas( SHEET_CANVAS );
+    setValueOfReadOnlyElement( 'tilesheet-selection-input', "" );
 }
 
 const setMapGrid = ( ) => {
@@ -187,15 +175,12 @@ const setMapGrid = ( ) => {
         return;
     }
 
-    MAP_CANVAS.classList.remove('invisible-canvas');
-    MAP_CANVAS.classList.add('visible-canvas')
+    makeHiddenCanvasVisible( MAP_CANVAS );
 
     document.getElementById('rows-input').value = null;
     document.getElementById('columns-input').value = null;
 
-    document.getElementById("rows-span").textContent = rows;
-    document.getElementById("columns-span").textContent = columns;
-
+    setTextContentOfElements( { "rows-span": rows, "columns-span": columns } )
     initMapCanvas( rows, columns );
 }
 
@@ -205,9 +190,8 @@ const setMapInformation = ( ) => {
 
     MAP.setNeighbourhood( neighbourhood );
     MAP.setMapName( mapName )
-    
-    document.getElementById("mapname-span").textContent = mapName;
-    document.getElementById("neighbourhood-span").textContent = neighbourhood;
+
+    setTextContentOfElements( { "mapname-span": mapName, "neighbourhood-span": neighbourhood } )
 }
 
 const exportMapData = ( ) => {
