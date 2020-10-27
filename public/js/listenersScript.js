@@ -76,3 +76,84 @@ Array.from(document.getElementsByClassName("map-selection-list-item-radio")).for
         PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src, PREVIEW_MAP.drawMapFromGridData );
     })
 })
+
+Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
+    e.addEventListener( 'click', ( e ) => { 
+        while (document.getElementById("map-overview-canvas-wrapper").firstChild) {
+            document.getElementById("map-overview-canvas-wrapper").removeChild(document.getElementById("map-overview-canvas-wrapper").firstChild);
+        }
+
+        fetch('/master-folder/' + e.target.id)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            initializeMapOverviewCanvases( json );
+        })
+        .catch(err => {
+            console.log("Error Reading data " + err);
+            } 
+        );
+    }, true )
+} )
+
+const initializeMapOverviewCanvases = ( json ) => {
+    let Xcounter = 0;
+    let Yposition = document.getElementById("map-overview-canvas-wrapper").getBoundingClientRect( ).y
+    let canvasElementsList = [ ];
+
+    Object.keys(json).forEach( ( mapName ) => {
+        let mapCanvas = document.createElement("canvas");
+        mapCanvas.id = json[mapName].mapName;
+        mapCanvas.className = "overview-canvas"
+        canvasElementsList.push( { 
+            node: mapCanvas,
+            mapData: json[mapName],
+            mapClass : null
+        } );
+
+        Xcounter += json[mapName].columns * TILE_SIZE;
+    } );
+
+    document.getElementById("map-overview-canvas-wrapper").width = Xcounter;
+    Xcounter = 0;
+
+    canvasElementsList.forEach( ( e ) => {
+        e.node.width    = (e.mapData.columns + 1) * TILE_SIZE;
+        e.node.height   = (e.mapData.rows + 1) * TILE_SIZE;
+        document.getElementById("map-overview-canvas-wrapper").append(e.node)
+        e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
+        e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
+        e.mapClass.setTileGrid( e.mapData.grid.flat(1) );
+        e.mapClass.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[e.mapData.tileSet].src, e.mapClass.drawMapFromGridData );
+
+        Xcounter += e.mapData.columns * TILE_SIZE;
+    } );
+}
+
+const mapOverview = document.querySelector('.map-overview-canvas-wrapper');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+mapOverview.addEventListener('mousedown', (e) => {
+  isDown = true;
+  startX = e.pageX - mapOverview.offsetLeft;
+  scrollLeft = mapOverview.scrollLeft;
+});
+mapOverview.addEventListener('mouseleave', () => {
+  isDown = false;
+});
+mapOverview.addEventListener('mouseup', () => {
+  isDown = false;
+});
+mapOverview.addEventListener('mousemove', (e) => {
+  if(!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - mapOverview.offsetLeft;
+  const walk = x - startX;
+  mapOverview.scrollLeft = scrollLeft - walk;
+});

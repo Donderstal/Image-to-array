@@ -113,3 +113,12 @@ h1 {
 .load-modal-content, .load-modal-body, .modal-container, .modal-row {
     max-height: 90vh;
 }
+
+.map-overview-canvas-wrapper {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+.overview-canvas {
+    display: inline-block;
+}
