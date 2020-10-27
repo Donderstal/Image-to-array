@@ -45,9 +45,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const previewMapX = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
     const previewMapY = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
 
-    PREVIEW_MAP = new Map( previewMapX, previewMapY, "PREVIEW_MAP" );
-    SHEET = new Sheet( sheetX, sheetY, "SHEET" );
-    MAP = new Map( mapX, mapY, "MAP" );
+    PREVIEW_MAP = new Map( previewMapX, previewMapY, PREVIEW_MAP_CTX );
+    SHEET = new Sheet( sheetX, sheetY, SHEET_CTX );
+    MAP = new Map( mapX, mapY, MAP_CTX );
 });
 
 Array.from(document.getElementsByClassName("map-selection-list-item-radio")).forEach( ( e ) => {

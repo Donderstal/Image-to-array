@@ -31,6 +31,21 @@ class Grid {
         this.grid = [];
     }
 
+    drawMap( tileSheet ) {
+        for ( var i = 0; i < this.array.length; i += this.columns ) {
+            let row = this.array.slice( i, i + this.columns )
+            this.drawRowInMap( row, tileSheet )
+        }
+    }
+
+    drawRowInMap( currentRow, tileSheet ) {
+        for ( var j = 0; j < this.columns; j++ ) {
+            const currentTile = currentRow[j]
+    
+            currentTile.drawTileInMap( tileSheet )
+        }
+    }
+
     getTileAtXY( x, y ) {
         const column = Math.floor(event.offsetX / TILE_SIZE);
         const row = Math.floor(event.offsetY / TILE_SIZE);
@@ -66,6 +81,22 @@ class Tile {
         this.ctx.moveTo( this.x, this.y );
         this.ctx.lineTo( this.x + TILE_SIZE, this.y );
         this.ctx.stroke( );
+    }
+
+    drawTileInMap( sheetImage ) {
+        if ( this.ID === "E" || this.ID === null) {
+            return;
+        }
+
+        const tilesheetXy = SHEET_XY_VALUES[tile]
+    
+        this.ctx.drawImage(
+            sheetImage, 
+            tilesheetXy.x, tilesheetXy.y,
+            TILE_SIZE * 2, TILE_SIZE * 2,
+            this.x, this.y,
+            TILE_SIZE, TILE_SIZE
+        )
     }
 
     setTileID( ID ) {
