@@ -28,6 +28,9 @@ const switchView = ( event ) => {
             else {
                 return;
             }
+        case "map-overview-button" : 
+            nextScreen = "map-overview-div";
+            break;
         case "back-to-map-menu-button" :
             unsetMapMaker( );
             nextScreen = "mapmaker-new-map-div";
