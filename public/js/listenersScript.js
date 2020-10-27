@@ -66,20 +66,13 @@ Array.from(document.getElementsByClassName("map-selection-list-item-radio")).for
             document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + parentElement.getAttribute("neighbourhood").split('.')[0];                  
         }
 
-
         document.getElementById("preview-map-tileset").innerText = "Tileset: " + attributes["tilesheet"].value
-
         document.getElementById("preview-map-name").innerText = "Map name: " + parentElement.id;
 
         PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
         PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
         PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
-
-        const image = new Image();
-    
-        image.src = '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src;
-        image.onload = ( ) => {       
-            drawGrid( { 'rows': ROWS_TO_LOAD, 'columns': COLUMNS_TO_LOAD, 'tileSheet': image, 'grid': GRID_TO_LOAD }, TILESHEETS[attributes["tilesheet"].value].tiles, PREVIEW_MAP_CTX )
-        }
+        PREVIEW_MAP.setTileGrid( GRID_TO_LOAD );
+        PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src, PREVIEW_MAP.drawMapFromGridData );
     })
 })

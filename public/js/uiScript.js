@@ -56,17 +56,14 @@ const loadMapToMapmaker = ( ) => {
     MAP.setNeighbourhood( NEIGHBOURHOOD_TO_LOAD );
     MAP.setMapName( MAPNAME_TO_LOAD )
     
-    setTextContentOfElements( { "mapname-span": MAPNAME_TO_LOAD, "neighbourhood-span": NEIGHBOURHOOD_TO_LOAD } )
-    const image = new Image();
-    
-    image.src = '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src;
-    image.onload = ( ) => {      
-        drawGrid( { 'rows': ROWS_TO_LOAD, 'columns': COLUMNS_TO_LOAD, 'tileSheet': image, 'grid': GRID_TO_LOAD }, TILESHEETS[TILESHEET_TO_LOAD].tiles, MAP_CTX )
-        MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD )
-        MAP.grid.array.forEach( ( e, index ) => {
-            e.setTileID( GRID_TO_LOAD[index] );
-        })
-    }
+    setTextContentOfElements( { 
+        "mapname-span": MAPNAME_TO_LOAD, "neighbourhood-span": NEIGHBOURHOOD_TO_LOAD, 
+        "rows-span": ROWS_TO_LOAD, "columns-span": COLUMNS_TO_LOAD 
+    } );
+
+    MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD )
+    MAP.setTileGrid( GRID_TO_LOAD );
+    MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, MAP.drawMapFromGridData )
 }
 
 const mapMakerDataIsSet = ( ) => {
