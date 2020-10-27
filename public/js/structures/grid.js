@@ -39,31 +39,24 @@ class Grid {
 
         return this.array[tileIndex]
     }
+
+    setTileGridToArray( tileGrid ) {
+        this.array.forEach( ( e, index ) => {
+            e.setTileID( tileGrid[index] );
+        })
+    }
 }
 
 class Tile {
     constructor( index, x, y, ctx ) {
         this.x = x;
         this.y = y;
-        this.index = index;
-        this.ctx = this.getCtx( ctx )
+        this.ctx = ctx;
+        this.index = index;  
 
+        ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
     };
-
-    getCtx( ctx ) {
-        switch( ctx ) {
-            case "MAP": 
-                this.clearTileID( )
-                return MAP_CTX;
-            case "SHEET": 
-                this.setTileID( this.index );
-                return SHEET_CTX;
-            case "PREVIEW_MAP": 
-                this.clearTileID( )
-                return PREVIEW_MAP_CTX;
-        }
-    }
 
     drawTileBorders( ) {
         this.ctx.beginPath();
