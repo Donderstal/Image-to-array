@@ -32,16 +32,15 @@ class Grid {
     }
 
     drawMap( tileSheet ) {
-        for ( var i = 0; i < this.array.length; i += this.columns ) {
-            let row = this.array.slice( i, i + this.columns )
+        for ( var i = 0; i < this.array.length; i += this.cols ) {
+            let row = this.array.slice( i, i + this.cols )
             this.drawRowInMap( row, tileSheet )
         }
     }
 
     drawRowInMap( currentRow, tileSheet ) {
-        for ( var j = 0; j < this.columns; j++ ) {
+        for ( var j = 0; j < this.cols; j++ ) {
             const currentTile = currentRow[j]
-    
             currentTile.drawTileInMap( tileSheet )
         }
     }
@@ -88,7 +87,7 @@ class Tile {
             return;
         }
 
-        const tilesheetXy = SHEET_XY_VALUES[tile]
+        const tilesheetXy = SHEET_XY_VALUES[this.ID]
     
         this.ctx.drawImage(
             sheetImage, 

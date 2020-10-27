@@ -63,3 +63,22 @@ const TILESHEETS = {
         "tiles": 608
     }
 };
+
+const setSheetXyValues = ( tilesInSheet ) => {
+    let tileX = 0; let tileY = 0;
+    let tilesheetXyValues = []
+
+    for ( var i = 0; i <= tilesInSheet; i++ ) {
+        tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
+        tileX += TILE_SIZE * 2
+        if ( i % 4 == 3 ) {
+            tileX = 0
+            tileY += TILE_SIZE * 2
+        }
+    }
+
+    return tilesheetXyValues;
+}
+
+const SHEET_XY_VALUES = setSheetXyValues( 608 );
+

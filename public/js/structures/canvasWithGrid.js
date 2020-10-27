@@ -15,14 +15,17 @@ class CanvasWithGrid {
     };
 
     setTileGrid( gridToSet ) {
-        this.setTileGridToArray( gridToSet )
+        this.grid.setTileGridToArray( gridToSet )
     }
 
     loadImageWithCallback( src, callback ) {
         this.sheetImage = new Image();
         this.sheetImage.src = src;
 
-        this.sheetImage.onload( callback )
+        this.sheetImage.onload = ( ) => { 
+            const boundCallback = callback.bind(this);
+            boundCallback( );
+        };
     }
 
     drawMapFromGridData( ) {
