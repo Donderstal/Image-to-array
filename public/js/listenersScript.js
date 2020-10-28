@@ -108,9 +108,12 @@ const initializeMapOverviewCanvases = ( json ) => {
     Object.keys(json).forEach( ( mapName ) => {
         let mapCanvas = document.createElement("canvas");
         mapCanvas.id = json[mapName].mapName;
-        mapCanvas.className = "overview-canvas"
+        mapCanvas.className = "overview-canvas border-right border-warning"
+        let infoCanvas = document.createElement("canvas");
+        infoCanvas.className = "overview-canvas border-right border-warning"
         canvasElementsList.push( { 
             node: mapCanvas,
+            infoCanvas: infoCanvas,
             mapData: json[mapName],
             mapClass : null
         } );
@@ -118,13 +121,17 @@ const initializeMapOverviewCanvases = ( json ) => {
         Xcounter += json[mapName].columns * TILE_SIZE;
     } );
 
+    document.getElementById("map-overview-info-wrapper").width = Xcounter;
     document.getElementById("map-overview-canvas-wrapper").width = Xcounter;
     Xcounter = 0;
 
     canvasElementsList.forEach( ( e ) => {
-        e.node.width    = (e.mapData.columns + 1) * TILE_SIZE;
-        e.node.height   = (e.mapData.rows + 1) * TILE_SIZE;
+        e.node.width        = (e.mapData.columns + 1) * TILE_SIZE;
+        e.node.height       = (e.mapData.rows + 1) * TILE_SIZE;
+        e.infoCanvas.width     = (e.mapData.columns + 1) * TILE_SIZE;
+        e.infoCanvas.height    = 4 * TILE_SIZE;
         document.getElementById("map-overview-canvas-wrapper").append(e.node)
+        document.getElementById("map-overview-info-wrapper").append(e.infoCanvas)
         e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
         e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
         e.mapClass.setTileGrid( e.mapData.grid.flat(1) );
@@ -135,6 +142,7 @@ const initializeMapOverviewCanvases = ( json ) => {
 }
 
 const mapOverview = document.querySelector('.map-overview-canvas-wrapper');
+const mapOverviewInfo = document.querySelector('.map-overview-info-wrapper');
 let isDown = false;
 let startX;
 let scrollLeft;
@@ -156,4 +164,5 @@ mapOverview.addEventListener('mousemove', (e) => {
   const x = e.pageX - mapOverview.offsetLeft;
   const walk = x - startX;
   mapOverview.scrollLeft = scrollLeft - walk;
+  mapOverviewInfo.scrollLeft = scrollLeft - walk;
 });

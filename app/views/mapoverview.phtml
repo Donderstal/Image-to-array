@@ -1,16 +1,24 @@
 <div id="map-overview-div" class="row window window-inactive my-auto">
-    <div class="row pb-2 pt-2">
-        <?php
-            $master_neighbourhoods_path = '/master-folder/';
-            $master_neighbourhoods = scandir( $_SERVER['DOCUMENT_ROOT'].$master_neighbourhoods_path );
-            foreach($master_neighbourhoods as $master_neighbourhood) {
-                if ( $master_neighbourhood != "." && $master_neighbourhood != ".." ) {  
-                    echo "<button id='".$master_neighbourhood."'-overview-button' class='btn btn-large btn-success select-map-for-overview-button'>".$master_neighbourhood."</button>";                        
+    <div class="row pb-2 pt-2 pr-3 pl-3">
+        <div class="overview-header-row">
+            <h3>Neighbourhoods available for overview</h2>
+        </div>
+        <div class="overview-header-row">
+            <?php
+                $master_neighbourhoods_path = '/master-folder/';
+                $master_neighbourhoods = scandir( $_SERVER['DOCUMENT_ROOT'].$master_neighbourhoods_path );
+                foreach($master_neighbourhoods as $master_neighbourhood) {
+                    if ( $master_neighbourhood != "." && $master_neighbourhood != ".." ) {  
+                        echo "<button id='".$master_neighbourhood."'-overview-button' class='btn btn-large btn-success select-map-for-overview-button ml-2 mr-2'>".$master_neighbourhood."</button>";                        
+                    }
                 }
-            }
-        ?>      
+            ?>  
+        </div>
     </div>
-    <div id="map-overview-canvas-wrapper" class="map-overview-canvas-wrapper border-top border-bottom border-info pb-2 pt-2">
+    <div id="map-overview-info-wrapper" class="map-overview-info-wrapper border-top border-bottom border-info pb-2 pt-2">
+            
+    </div>
+    <div id="map-overview-canvas-wrapper" class="map-overview-canvas-wrapper border-top border-bottom border-info">
             
     </div>
 </div>

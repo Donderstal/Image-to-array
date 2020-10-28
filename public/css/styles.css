@@ -114,11 +114,17 @@ h1 {
     max-height: 90vh;
 }
 
-.map-overview-canvas-wrapper {
+.map-overview-canvas-wrapper, .map-overview-info-wrapper {
     overflow-x: scroll;
     white-space: nowrap;
 }
 
 .overview-canvas {
     display: inline-block;
+}
+
+.overview-header-row {
+    width: 100vw;
+    display: block;
+    text-align: center;
 }
