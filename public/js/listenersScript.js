@@ -124,6 +124,20 @@ const setInfoToInfoCanvas = ( canvas, data ) => {
     }
 }
 
+const initButtonsInDiv = ( div, mapData ) => {
+    const showSubMapsButton = document.createElement("button");
+    showSubMapsButton.className = 'btn btn-large btn-success select-map-for-overview-button m-2 show-submaps'
+    showSubMapsButton.id = 'show-' + mapData.mapName + '-submaps'
+    showSubMapsButton.innerText = "Show submaps"
+    div.append(showSubMapsButton)
+
+    const loadMapButton = document.createElement("button");
+    loadMapButton.className = 'btn btn-large btn-success select-map-for-overview-button m-2 load-from-overview'
+    loadMapButton.id = 'load-' + mapData.mapName + '-from-overview'
+    loadMapButton.innerText = "Load map to mapmaker"
+    div.append(loadMapButton)
+}
+
 const initializeMapOverviewCanvases = ( json ) => {
     let Xcounter = 0;
     let Yposition = document.getElementById("map-overview-canvas-wrapper").getBoundingClientRect( ).y
@@ -135,9 +149,12 @@ const initializeMapOverviewCanvases = ( json ) => {
         mapCanvas.className = "overview-canvas border-right border-warning"
         let infoCanvas = document.createElement("canvas");
         infoCanvas.className = "overview-canvas border-right border-warning"
+        let buttonsDiv = document.createElement("div");
+        buttonsDiv.className = "overview-canvas border-right border-warning"
         canvasElementsList.push( { 
             node: mapCanvas,
             infoCanvas: infoCanvas,
+            buttonsDiv: buttonsDiv,
             mapData: json[mapName],
             mapClass : null
         } );
@@ -147,15 +164,25 @@ const initializeMapOverviewCanvases = ( json ) => {
 
     document.getElementById("map-overview-info-wrapper").width = Xcounter;
     document.getElementById("map-overview-canvas-wrapper").width = Xcounter;
+    document.getElementById("map-overview-buttons-wrapper").width = Xcounter;
     Xcounter = 0;
 
     canvasElementsList.forEach( ( e ) => {
         e.node.width        = (e.mapData.columns + 1) * TILE_SIZE;
         e.node.height       = (e.mapData.rows + 1) * TILE_SIZE;
+
         e.infoCanvas.width     = (e.mapData.columns + 1) * TILE_SIZE;
         e.infoCanvas.height    = 6 * TILE_SIZE;
+
+        initButtonsInDiv( e.buttonsDiv, e.mapData );
+
+        e.buttonsDiv.style.width     = (e.mapData.columns + 1) * TILE_SIZE + "px";
+        e.buttonsDiv.style.height    = 2 * TILE_SIZE + "px";
+
         document.getElementById("map-overview-canvas-wrapper").append(e.node)
         document.getElementById("map-overview-info-wrapper").append(e.infoCanvas)
+        document.getElementById("map-overview-buttons-wrapper").append(e.buttonsDiv)
+
         e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
         e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
         e.mapClass.setTileGrid( e.mapData.grid.flat(1) );
@@ -163,10 +190,15 @@ const initializeMapOverviewCanvases = ( json ) => {
         setInfoToInfoCanvas( e.infoCanvas, e.mapData );
         Xcounter += e.mapData.columns * TILE_SIZE;
     } );
+
+    Array.from(document.getElementsByClassName('show-submaps')).forEach( ( button ) => {
+        button.addEventListener( 'click', ( e ) => { console.log( e.target.id ) }, true )
+    } )
 }
 
 const mapOverview = document.querySelector('.map-overview-canvas-wrapper');
 const mapOverviewInfo = document.querySelector('.map-overview-info-wrapper');
+const mapOverviewButtons = document.querySelector('.map-overview-buttons-wrapper');
 let isDown = false;
 let startX;
 let scrollLeft;
@@ -189,4 +221,5 @@ mapOverview.addEventListener('mousemove', (e) => {
   const walk = x - startX;
   mapOverview.scrollLeft = scrollLeft - walk;
   mapOverviewInfo.scrollLeft = scrollLeft - walk;
+  mapOverviewButtons.scrollLeft = scrollLeft - walk;
 });
