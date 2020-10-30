@@ -76,3 +76,150 @@ Array.from(document.getElementsByClassName("map-selection-list-item-radio")).for
         PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src, PREVIEW_MAP.drawMapFromGridData );
     })
 })
+
+Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
+    e.addEventListener( 'click', ( e ) => { 
+        while (document.getElementById("map-overview-canvas-wrapper").firstChild) {
+            document.getElementById("map-overview-canvas-wrapper").removeChild(document.getElementById("map-overview-canvas-wrapper").firstChild);
+            document.getElementById("map-overview-info-wrapper").removeChild(document.getElementById("map-overview-info-wrapper").firstChild);
+        }
+
+        fetch('/master-folder/' + e.target.id)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            initializeMapOverviewCanvases( json );
+        })
+        .catch(err => {
+            console.log("Error Reading data " + err);
+            } 
+        );
+    }, true )
+} )
+
+const setInfoToInfoCanvas = ( canvas, data ) => {
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#f8f9fa";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#343a40";    
+    ctx.font = TILE_SIZE / 2 + "px Arial";
+    ctx.fillText( "Name: " + data.mapName.split('/')[2], TILE_SIZE, TILE_SIZE );
+    ctx.fillText( "Characters: " + ( ( data.characters == undefined ) ? "No" : data.characters.length ), TILE_SIZE, TILE_SIZE * 1.75 );
+    ctx.fillText( "Doors: " + ( ( data.doors == undefined ) ? "No" : data.doors.length ), TILE_SIZE, TILE_SIZE * 2.50 );
+    ctx.fillText( "Mapobjects: " + ( ( data.mapObjects == undefined ) ? "No" : data.mapObjects.length ), TILE_SIZE, TILE_SIZE * 3.25 );
+
+    ctx.fillText( "SUBMAPS", TILE_SIZE * 8, TILE_SIZE );
+    if ( data.subMaps != undefined ) {
+        Object.keys(data.subMaps).forEach( ( subMap, index ) => {
+            ctx.fillText( "* " + subMap, TILE_SIZE * 8, ( TILE_SIZE * 1.75 ) + ( TILE_SIZE * ( index * .75 ) ) );
+        } )
+    }
+    else {
+        ctx.fillText( "No", TILE_SIZE * 8, TILE_SIZE * 1.75 );
+    }
+}
+
+const initButtonsInDiv = ( div, mapData ) => {
+    const showSubMapsButton = document.createElement("button");
+    showSubMapsButton.className = 'btn btn-large btn-success select-map-for-overview-button m-2 show-submaps'
+    showSubMapsButton.id = 'show-' + mapData.mapName + '-submaps'
+    showSubMapsButton.innerText = "Show submaps"
+    div.append(showSubMapsButton)
+
+    const loadMapButton = document.createElement("button");
+    loadMapButton.className = 'btn btn-large btn-success select-map-for-overview-button m-2 load-from-overview'
+    loadMapButton.id = 'load-' + mapData.mapName + '-from-overview'
+    loadMapButton.innerText = "Load map to mapmaker"
+    div.append(loadMapButton)
+}
+
+const initializeMapOverviewCanvases = ( json ) => {
+    let Xcounter = 0;
+    let Yposition = document.getElementById("map-overview-canvas-wrapper").getBoundingClientRect( ).y
+    let canvasElementsList = [ ];
+
+    Object.keys(json).forEach( ( mapName ) => {
+        let mapCanvas = document.createElement("canvas");
+        mapCanvas.id = json[mapName].mapName;
+        mapCanvas.className = "overview-canvas border-right border-warning"
+        let infoCanvas = document.createElement("canvas");
+        infoCanvas.className = "overview-canvas border-right border-warning"
+        let buttonsDiv = document.createElement("div");
+        buttonsDiv.className = "overview-canvas border-right border-warning"
+        canvasElementsList.push( { 
+            node: mapCanvas,
+            infoCanvas: infoCanvas,
+            buttonsDiv: buttonsDiv,
+            mapData: json[mapName],
+            mapClass : null
+        } );
+
+        Xcounter += json[mapName].columns * TILE_SIZE;
+    } );
+
+    document.getElementById("map-overview-info-wrapper").width = Xcounter;
+    document.getElementById("map-overview-canvas-wrapper").width = Xcounter;
+    document.getElementById("map-overview-buttons-wrapper").width = Xcounter;
+    Xcounter = 0;
+
+    canvasElementsList.forEach( ( e ) => {
+        e.node.width        = (e.mapData.columns + 1) * TILE_SIZE;
+        e.node.height       = (e.mapData.rows + 1) * TILE_SIZE;
+
+        e.infoCanvas.width     = (e.mapData.columns + 1) * TILE_SIZE;
+        e.infoCanvas.height    = 6 * TILE_SIZE;
+
+        initButtonsInDiv( e.buttonsDiv, e.mapData );
+
+        e.buttonsDiv.style.width     = (e.mapData.columns + 1) * TILE_SIZE + "px";
+        e.buttonsDiv.style.height    = 2 * TILE_SIZE + "px";
+
+        document.getElementById("map-overview-canvas-wrapper").append(e.node)
+        document.getElementById("map-overview-info-wrapper").append(e.infoCanvas)
+        document.getElementById("map-overview-buttons-wrapper").append(e.buttonsDiv)
+
+        e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
+        e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
+        e.mapClass.setTileGrid( e.mapData.grid.flat(1) );
+        e.mapClass.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[e.mapData.tileSet].src, e.mapClass.drawMapFromGridData );
+        setInfoToInfoCanvas( e.infoCanvas, e.mapData );
+        Xcounter += e.mapData.columns * TILE_SIZE;
+    } );
+
+    Array.from(document.getElementsByClassName('show-submaps')).forEach( ( button ) => {
+        button.addEventListener( 'click', ( e ) => { console.log( e.target.id ) }, true )
+    } )
+}
+
+const mapOverview = document.querySelector('.map-overview-canvas-wrapper');
+const mapOverviewInfo = document.querySelector('.map-overview-info-wrapper');
+const mapOverviewButtons = document.querySelector('.map-overview-buttons-wrapper');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+mapOverview.addEventListener('mousedown', (e) => {
+  isDown = true;
+  startX = e.pageX - mapOverview.offsetLeft;
+  scrollLeft = mapOverview.scrollLeft;
+});
+mapOverview.addEventListener('mouseleave', () => {
+  isDown = false;
+});
+mapOverview.addEventListener('mouseup', () => {
+  isDown = false;
+});
+mapOverview.addEventListener('mousemove', (e) => {
+  if(!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - mapOverview.offsetLeft;
+  const walk = x - startX;
+  mapOverview.scrollLeft = scrollLeft - walk;
+  mapOverviewInfo.scrollLeft = scrollLeft - walk;
+  mapOverviewButtons.scrollLeft = scrollLeft - walk;
+});
