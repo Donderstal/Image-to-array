@@ -81,6 +81,7 @@ Array.from(document.getElementsByClassName('select-map-for-overview-button')).fo
     e.addEventListener( 'click', ( e ) => { 
         while (document.getElementById("map-overview-canvas-wrapper").firstChild) {
             document.getElementById("map-overview-canvas-wrapper").removeChild(document.getElementById("map-overview-canvas-wrapper").firstChild);
+            document.getElementById("map-overview-info-wrapper").removeChild(document.getElementById("map-overview-info-wrapper").firstChild);
         }
 
         fetch('/master-folder/' + e.target.id)
@@ -99,6 +100,29 @@ Array.from(document.getElementsByClassName('select-map-for-overview-button')).fo
         );
     }, true )
 } )
+
+const setInfoToInfoCanvas = ( canvas, data ) => {
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#f8f9fa";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#343a40";    
+    ctx.font = TILE_SIZE / 2 + "px Arial";
+    ctx.fillText( "Name: " + data.mapName.split('/')[2], TILE_SIZE, TILE_SIZE );
+    ctx.fillText( "Characters: " + ( ( data.characters == undefined ) ? "No" : data.characters.length ), TILE_SIZE, TILE_SIZE * 1.75 );
+    ctx.fillText( "Doors: " + ( ( data.doors == undefined ) ? "No" : data.doors.length ), TILE_SIZE, TILE_SIZE * 2.50 );
+    ctx.fillText( "Mapobjects: " + ( ( data.mapObjects == undefined ) ? "No" : data.mapObjects.length ), TILE_SIZE, TILE_SIZE * 3.25 );
+
+    ctx.fillText( "SUBMAPS", TILE_SIZE * 8, TILE_SIZE );
+    if ( data.subMaps != undefined ) {
+        Object.keys(data.subMaps).forEach( ( subMap, index ) => {
+            ctx.fillText( "* " + subMap, TILE_SIZE * 8, ( TILE_SIZE * 1.75 ) + ( TILE_SIZE * ( index * .75 ) ) );
+        } )
+    }
+    else {
+        ctx.fillText( "No", TILE_SIZE * 8, TILE_SIZE * 1.75 );
+    }
+}
 
 const initializeMapOverviewCanvases = ( json ) => {
     let Xcounter = 0;
@@ -129,14 +153,14 @@ const initializeMapOverviewCanvases = ( json ) => {
         e.node.width        = (e.mapData.columns + 1) * TILE_SIZE;
         e.node.height       = (e.mapData.rows + 1) * TILE_SIZE;
         e.infoCanvas.width     = (e.mapData.columns + 1) * TILE_SIZE;
-        e.infoCanvas.height    = 4 * TILE_SIZE;
+        e.infoCanvas.height    = 6 * TILE_SIZE;
         document.getElementById("map-overview-canvas-wrapper").append(e.node)
         document.getElementById("map-overview-info-wrapper").append(e.infoCanvas)
         e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
         e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
         e.mapClass.setTileGrid( e.mapData.grid.flat(1) );
         e.mapClass.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[e.mapData.tileSet].src, e.mapClass.drawMapFromGridData );
-
+        setInfoToInfoCanvas( e.infoCanvas, e.mapData );
         Xcounter += e.mapData.columns * TILE_SIZE;
     } );
 }
