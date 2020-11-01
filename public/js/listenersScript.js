@@ -124,44 +124,11 @@ const setInfoToInfoCanvas = ( canvas, data ) => {
     }
 }
 
-const initButtonsInDiv = ( div, mapData ) => {
-    const showSubMapsButton = document.createElement("button");
-    showSubMapsButton.className = 'btn btn-large btn-success select-map-for-overview-button m-2 show-submaps'
-    showSubMapsButton.id = 'show-' + mapData.mapName + '-submaps'
-    showSubMapsButton.innerText = "Show submaps"
-    div.append(showSubMapsButton)
-
-    const loadMapButton = document.createElement("button");
-    loadMapButton.className = 'btn btn-large btn-success select-map-for-overview-button m-2 load-from-overview'
-    loadMapButton.id = 'load-' + mapData.mapName + '-from-overview'
-    loadMapButton.innerText = "Load map to mapmaker"
-    div.append(loadMapButton)
-}
-
 const initializeMapOverviewCanvases = ( json ) => {
     let Xcounter = 0;
     let Yposition = OVERVIEW_CANVAS_WRAPPER.getBoundingClientRect( ).y
 
-    let canvasElementsList = [ ];
-    let overviewClassList = "overview-canvas border-right border-warning";
-
-    Object.keys( json ).forEach( ( mapName ) => {
-        canvasElementsList.push( { 
-            node: createNodeWithClassOrID( 'canvas', overviewClassList, mapName ),
-            infoCanvas: createNodeWithClassOrID( 'canvas', overviewClassList ),
-            buttonsDiv: createNodeWithClassOrID( 'div', overviewClassList ),
-            mapData: json[mapName],
-            mapClass : null
-        } );
-
-        Xcounter += json[mapName].columns * TILE_SIZE;
-    } );
-
-    OVERVIEW_INFO_WRAPPER.width = Xcounter;
-    OVERVIEW_CANVAS_WRAPPER.width = Xcounter;
-    OVERVIEW_BUTTONS_WRAPPER.width = Xcounter;
-    Xcounter = 0;
-
+    let canvasElementsList = getCanvasElementsListFromMapJSON( json );
     canvasElementsList.forEach( ( e ) => {
         e.node.width        = MAX_CANVAS_WIDTH;
         e.node.height       = MAX_CANVAS_HEIGHT;
@@ -190,9 +157,6 @@ const initializeMapOverviewCanvases = ( json ) => {
         button.addEventListener( 'click', ( e ) => { console.log( e.target.id ) }, true )
     } )
 }
-let isDown = false;
-let startX;
-let scrollLeft;
 
 OVERVIEW_CANVAS_WRAPPER.addEventListener('mousedown', (e) => {
     initMapOverviewScrollOnClick
