@@ -23,3 +23,11 @@ const setTextContentOfElements = ( keyValuePairs ) => {
         getNodeWithID( key ).textContent = keyValuePairs[key];
     }
 }
+
+const createNodeWithClassOrID = ( element, className = null, id = null ) => {
+    let node = document.createElement(element);
+    node.className = className;
+    node.id = id;
+
+    return node;
+}

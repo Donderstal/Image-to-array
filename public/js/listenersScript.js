@@ -141,20 +141,15 @@ const initButtonsInDiv = ( div, mapData ) => {
 const initializeMapOverviewCanvases = ( json ) => {
     let Xcounter = 0;
     let Yposition = document.getElementById("map-overview-canvas-wrapper").getBoundingClientRect( ).y
-    let canvasElementsList = [ ];
 
-    Object.keys(json).forEach( ( mapName ) => {
-        let mapCanvas = document.createElement("canvas");
-        mapCanvas.id = json[mapName].mapName;
-        mapCanvas.className = "overview-canvas border-right border-warning"
-        let infoCanvas = document.createElement("canvas");
-        infoCanvas.className = "overview-canvas border-right border-warning"
-        let buttonsDiv = document.createElement("div");
-        buttonsDiv.className = "overview-canvas border-right border-warning"
+    let canvasElementsList = [ ];
+    let overviewClassList = "overview-canvas border-right border-warning";
+
+    Object.keys( json ).forEach( ( mapName ) => {
         canvasElementsList.push( { 
-            node: mapCanvas,
-            infoCanvas: infoCanvas,
-            buttonsDiv: buttonsDiv,
+            node: createNodeWithClassOrID( 'canvas', overviewClassList, mapName ),
+            infoCanvas: createNodeWithClassOrID( 'canvas', overviewClassList ),
+            buttonsDiv: createNodeWithClassOrID( 'div', overviewClassList ),
             mapData: json[mapName],
             mapClass : null
         } );
@@ -168,15 +163,15 @@ const initializeMapOverviewCanvases = ( json ) => {
     Xcounter = 0;
 
     canvasElementsList.forEach( ( e ) => {
-        e.node.width        = (e.mapData.columns + 1) * TILE_SIZE;
-        e.node.height       = (e.mapData.rows + 1) * TILE_SIZE;
+        e.node.width        = MAX_CANVAS_WIDTH;
+        e.node.height       = MAX_CANVAS_HEIGHT;
 
-        e.infoCanvas.width     = (e.mapData.columns + 1) * TILE_SIZE;
+        e.infoCanvas.width     = MAX_CANVAS_WIDTH;
         e.infoCanvas.height    = 6 * TILE_SIZE;
 
         initButtonsInDiv( e.buttonsDiv, e.mapData );
 
-        e.buttonsDiv.style.width     = (e.mapData.columns + 1) * TILE_SIZE + "px";
+        e.buttonsDiv.style.width     = MAX_CANVAS_WIDTH + "px";
         e.buttonsDiv.style.height    = 2 * TILE_SIZE + "px";
 
         document.getElementById("map-overview-canvas-wrapper").append(e.node)
