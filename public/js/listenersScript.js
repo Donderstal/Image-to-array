@@ -79,11 +79,7 @@ Array.from(document.getElementsByClassName("map-selection-list-item-radio")).for
 
 Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
     e.addEventListener( 'click', ( e ) => { 
-        while (document.getElementById("map-overview-canvas-wrapper").firstChild) {
-            document.getElementById("map-overview-canvas-wrapper").removeChild(document.getElementById("map-overview-canvas-wrapper").firstChild);
-            document.getElementById("map-overview-info-wrapper").removeChild(document.getElementById("map-overview-info-wrapper").firstChild);
-        }
-
+        clearOverviewWrapperElements( )
         fetch('/master-folder/' + e.target.id)
         .then(response => {
             if (!response.ok) {
@@ -92,6 +88,7 @@ Array.from(document.getElementsByClassName('select-map-for-overview-button')).fo
             return response.json();
         })
         .then(json => {
+            MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD = json
             initializeMapOverviewCanvases( json );
         })
         .catch(err => {
@@ -124,11 +121,11 @@ const setInfoToInfoCanvas = ( canvas, data ) => {
     }
 }
 
-const initializeMapOverviewCanvases = ( json ) => {
+const initializeMapOverviewCanvases = ( ) => {
     let Xcounter = 0;
     let Yposition = OVERVIEW_CANVAS_WRAPPER.getBoundingClientRect( ).y
 
-    let canvasElementsList = getCanvasElementsListFromMapJSON( json );
+    let canvasElementsList = getCanvasElementsListFromMapJSON( );
     canvasElementsList.forEach( ( e ) => {
         e.node.width        = MAX_CANVAS_WIDTH;
         e.node.height       = MAX_CANVAS_HEIGHT;
@@ -154,7 +151,7 @@ const initializeMapOverviewCanvases = ( json ) => {
     } );
 
     Array.from(document.getElementsByClassName('show-submaps')).forEach( ( button ) => {
-        button.addEventListener( 'click', ( e ) => { console.log( e.target.id ) }, true )
+        button.addEventListener( 'click', handleShowSubMapsButtonClick, true )
     } )
 }
 
@@ -173,3 +170,20 @@ OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
         return;
     }
 });
+
+const handleShowSubMapsButtonClick = ( event ) => {
+    console.log(event.target.id)
+    clearOverviewWrapperElements( );
+
+    if ( IN_SUBMAP_OVERVIEW ) {
+        MAP_OVERVIEW_CURRENT_SUBMAP = null;
+        IN_SUBMAP_OVERVIEW = false;
+    }
+    else {
+        clearOverviewWrapperElements( );
+        MAP_OVERVIEW_CURRENT_SUBMAP = MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD[event.target.id].subMaps;
+        IN_SUBMAP_OVERVIEW = true;
+    }
+
+    initializeMapOverviewCanvases( );     
+}

@@ -31,3 +31,9 @@ const createNodeWithClassOrID = ( element, className = null, id = null ) => {
 
     return node;
 }
+
+const removeAllChildrenFromParent = ( elementID ) => {
+    while (document.getElementById(elementID).firstChild) {
+        document.getElementById(elementID).removeChild(document.getElementById(elementID).firstChild);
+    }
+}

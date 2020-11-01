@@ -22,9 +22,9 @@ const initButtonsInDiv = ( div, mapData ) => {
     const showSubMapsButton = createNodeWithClassOrID( 
         'button',
         buttonClassList + 'select-map-for-overview-button show-submaps', 
-        'show-' + mapData.mapName + '-submaps'
+        mapData.mapName
     );
-    showSubMapsButton.innerText = "Show submaps"
+    showSubMapsButton.innerText = IN_SUBMAP_OVERVIEW ? "Show main maps" : "Show submaps"
     div.append(showSubMapsButton)
 
     const loadMapButton = createNodeWithClassOrID( 
@@ -42,10 +42,18 @@ const setMapOverviewElementsTotalWidth = ( width ) => {
     OVERVIEW_BUTTONS_WRAPPER.width = width;
 }
 
+const clearOverviewWrapperElements = ( ) => {
+    removeAllChildrenFromParent( "map-overview-canvas-wrapper" );
+    removeAllChildrenFromParent( "map-overview-info-wrapper" );
+    removeAllChildrenFromParent( "map-overview-buttons-wrapper" );
+}
+
 const getCanvasElementsListFromMapJSON = ( json ) => {
     let canvasElementsList = [ ];
     let overviewClassList = "overview-canvas border-right border-warning";
     let Xcounter = 0;
+
+    const json = IN_SUBMAP_OVERVIEW ? MAP_OVERVIEW_CURRENT_SUBMAP : MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD
 
     Object.keys( json ).forEach( ( mapName ) => {
         canvasElementsList.push( { 
