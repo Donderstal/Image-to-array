@@ -12,6 +12,10 @@ const SELECTED_TILE_CTX = SELECTED_TILE_CANVAS.getContext("2d");
 const MAP_CTX = MAP_CANVAS.getContext("2d");
 const PREVIEW_MAP_CTX = PREVIEW_MAP_CANVAS.getContext("2d");
 
+const OVERVIEW_CANVAS_WRAPPER =  document.querySelector('.map-overview-canvas-wrapper');
+const OVERVIEW_INFO_WRAPPER = document.querySelector('.map-overview-info-wrapper');
+const OVERVIEW_BUTTONS_WRAPPER = document.querySelector('.map-overview-buttons-wrapper');
+
 let SHEET;
 let MAP;
 let PREVIEW_MAP;
@@ -22,6 +26,10 @@ let ROWS_TO_LOAD;
 let GRID_TO_LOAD;
 let MAPNAME_TO_LOAD;
 let NEIGHBOURHOOD_TO_LOAD
+
+let IS_OVERVIEW_SCROLL_ACTIVE;
+let OVERVIEW_SCROLL_X_COUNTER;
+let OVERVIEW_SCROLL_LEFT;
 
 const TILE_SIZE = 32;
 

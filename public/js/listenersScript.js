@@ -140,7 +140,7 @@ const initButtonsInDiv = ( div, mapData ) => {
 
 const initializeMapOverviewCanvases = ( json ) => {
     let Xcounter = 0;
-    let Yposition = document.getElementById("map-overview-canvas-wrapper").getBoundingClientRect( ).y
+    let Yposition = OVERVIEW_CANVAS_WRAPPER.getBoundingClientRect( ).y
 
     let canvasElementsList = [ ];
     let overviewClassList = "overview-canvas border-right border-warning";
@@ -157,9 +157,9 @@ const initializeMapOverviewCanvases = ( json ) => {
         Xcounter += json[mapName].columns * TILE_SIZE;
     } );
 
-    document.getElementById("map-overview-info-wrapper").width = Xcounter;
-    document.getElementById("map-overview-canvas-wrapper").width = Xcounter;
-    document.getElementById("map-overview-buttons-wrapper").width = Xcounter;
+    OVERVIEW_INFO_WRAPPER.width = Xcounter;
+    OVERVIEW_CANVAS_WRAPPER.width = Xcounter;
+    OVERVIEW_BUTTONS_WRAPPER.width = Xcounter;
     Xcounter = 0;
 
     canvasElementsList.forEach( ( e ) => {
@@ -174,9 +174,9 @@ const initializeMapOverviewCanvases = ( json ) => {
         e.buttonsDiv.style.width     = MAX_CANVAS_WIDTH + "px";
         e.buttonsDiv.style.height    = 2 * TILE_SIZE + "px";
 
-        document.getElementById("map-overview-canvas-wrapper").append(e.node)
-        document.getElementById("map-overview-info-wrapper").append(e.infoCanvas)
-        document.getElementById("map-overview-buttons-wrapper").append(e.buttonsDiv)
+        OVERVIEW_CANVAS_WRAPPER.append(e.node)
+        OVERVIEW_INFO_WRAPPER.append(e.infoCanvas)
+        OVERVIEW_BUTTONS_WRAPPER.append(e.buttonsDiv)
 
         e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
         e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
@@ -190,31 +190,22 @@ const initializeMapOverviewCanvases = ( json ) => {
         button.addEventListener( 'click', ( e ) => { console.log( e.target.id ) }, true )
     } )
 }
-
-const mapOverview = document.querySelector('.map-overview-canvas-wrapper');
-const mapOverviewInfo = document.querySelector('.map-overview-info-wrapper');
-const mapOverviewButtons = document.querySelector('.map-overview-buttons-wrapper');
 let isDown = false;
 let startX;
 let scrollLeft;
 
-mapOverview.addEventListener('mousedown', (e) => {
-  isDown = true;
-  startX = e.pageX - mapOverview.offsetLeft;
-  scrollLeft = mapOverview.scrollLeft;
+OVERVIEW_CANVAS_WRAPPER.addEventListener('mousedown', (e) => {
+    initMapOverviewScrollOnClick
 });
-mapOverview.addEventListener('mouseleave', () => {
-  isDown = false;
+OVERVIEW_CANVAS_WRAPPER.addEventListener('mouseleave', () => {
+    stopMapOverviewScroll;
 });
-mapOverview.addEventListener('mouseup', () => {
-  isDown = false;
-});
-mapOverview.addEventListener('mousemove', (e) => {
-  if(!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - mapOverview.offsetLeft;
-  const walk = x - startX;
-  mapOverview.scrollLeft = scrollLeft - walk;
-  mapOverviewInfo.scrollLeft = scrollLeft - walk;
-  mapOverviewButtons.scrollLeft = scrollLeft - walk;
+OVERVIEW_CANVAS_WRAPPER.addEventListener('mouseup', () => { stopMapOverviewScroll; });
+OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
+    e.preventDefault();
+    if ( IS_OVERVIEW_SCROLL_ACTIVE ) {
+        mapOverviewHorizontalScroll( e ) 
+    } else {
+        return;
+    }
 });
