@@ -16,7 +16,7 @@ const mapOverviewHorizontalScroll = ( event ) => {
     OVERVIEW_BUTTONS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
 }
 
-const initButtonsInDiv = ( div, mapData ) => {
+const initButtonsInDiv = ( div, mapData, index ) => {
     const buttonClassList = 'btn btn-large btn-success m-2 '
 
     const showSubMapsButton = createNodeWithClassOrID( 
@@ -29,8 +29,8 @@ const initButtonsInDiv = ( div, mapData ) => {
 
     const loadMapButton = createNodeWithClassOrID( 
         'button',
-        buttonClassList + 'select-map-for-overview-button load-from-overview', 
-        'load-' + mapData.mapName + '-from-overview'
+        buttonClassList + 'load-from-overview', 
+        'load-map-' + index
     );
     loadMapButton.innerText = "Load map to mapmaker"
     div.append(loadMapButton)
@@ -48,6 +48,28 @@ const clearOverviewWrapperElements = ( ) => {
     removeAllChildrenFromParent( "map-overview-buttons-wrapper" );
 }
 
+const setLoadMapListeners = ( ) => {
+    Array.from(document.getElementsByClassName('load-from-overview')).forEach( ( el ) => {
+        el.addEventListener( 'click', ( e ) => {
+            const mapName = e.target.id.split('-')[2];
+            const activeMaps = IN_SUBMAP_OVERVIEW ? MAP_OVERVIEW_CURRENT_SUBMAP : MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD
+            const keysList = Object.keys( activeMaps )
+            const map = activeMaps[keysList[mapName]]
+
+            TILESHEET_TO_LOAD = map["tileSet"];
+            NEIGHBOURHOOD_TO_LOAD = map["mapName"].split('-')[0];
+            MAPNAME_TO_LOAD = map["mapName"].split('-')[2];
+            COLUMNS_TO_LOAD = map["columns"] + 1;
+            ROWS_TO_LOAD = map["rows"] + 1;
+            GRID_TO_LOAD = map["grid"].flat(1);
+
+            loadMapToMapmaker( );
+            document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
+            document.getElementById("mapmaker-div").className = "window-active";
+        } )
+    })
+}
+
 const getCanvasElementsListFromMapJSON = ( ) => {
     let canvasElementsList = [ ];
     let overviewClassList = "overview-canvas border-left border-right border-warning";
@@ -55,13 +77,14 @@ const getCanvasElementsListFromMapJSON = ( ) => {
 
     const json = IN_SUBMAP_OVERVIEW ? MAP_OVERVIEW_CURRENT_SUBMAP : MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD
 
-    Object.keys( json ).forEach( ( mapName ) => {
+    Object.keys( json ).forEach( ( mapName, index ) => {
         canvasElementsList.push( { 
             mapCanvas: createNodeWithClassOrID( 'canvas', overviewClassList, mapName ),
             infoCanvas: createNodeWithClassOrID( 'canvas', overviewClassList ),
             buttonsDiv: createNodeWithClassOrID( 'div', overviewClassList ),
             mapData: json[mapName],
             mapClass : null,
+            index: index
         } );
 
         Xcounter += json[mapName].columns * TILE_SIZE;
@@ -71,7 +94,6 @@ const getCanvasElementsListFromMapJSON = ( ) => {
 
     return canvasElementsList
 }
-
 
 const setInfoToInfoCanvas = ( canvas, data ) => {
     const ctx = canvas.getContext("2d");
@@ -116,8 +138,8 @@ const setInfoCanvas = ( infoCanvas, mapData ) => {
     setInfoToInfoCanvas( infoCanvas, mapData );
 }
 
-const setButtonsDiv = ( buttonsDiv, mapData ) => {
-    initButtonsInDiv( buttonsDiv, mapData );
+const setButtonsDiv = ( buttonsDiv, mapData, index ) => {
+    initButtonsInDiv( buttonsDiv, mapData, index );
 
     buttonsDiv.style.width = MAX_CANVAS_WIDTH + "px";
     buttonsDiv.style.height = 2 * TILE_SIZE + "px";
@@ -136,7 +158,7 @@ const setCanvasElementData = ( element, canvasX, canvasY ) => {
     const mapData = element.mapData;
     setOverviewCanvas( element.mapCanvas );
     setInfoCanvas( element.infoCanvas, mapData );
-    setButtonsDiv( element.buttonsDiv, mapData );
+    setButtonsDiv( element.buttonsDiv, mapData, element.index );
     setMapClass( element.mapClass, element.mapCanvas, mapData, canvasX, canvasY );
 }
 
@@ -169,4 +191,6 @@ const initializeMapOverviewCanvases = ( ) => {
     Array.from(document.getElementsByClassName('show-submaps')).forEach( ( button ) => {
         button.addEventListener( 'click', handleShowSubMapsButtonClick, true )
     } )
+
+    setLoadMapListeners( );
 }
