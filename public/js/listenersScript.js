@@ -98,63 +98,6 @@ Array.from(document.getElementsByClassName('select-map-for-overview-button')).fo
     }, true )
 } )
 
-const setInfoToInfoCanvas = ( canvas, data ) => {
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#f8f9fa";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#343a40";    
-    ctx.font = TILE_SIZE / 2 + "px Arial";
-    ctx.fillText( "Name: " + data.mapName.split('/')[2], TILE_SIZE, TILE_SIZE );
-    ctx.fillText( "Characters: " + ( ( data.characters == undefined ) ? "No" : data.characters.length ), TILE_SIZE, TILE_SIZE * 1.75 );
-    ctx.fillText( "Doors: " + ( ( data.doors == undefined ) ? "No" : data.doors.length ), TILE_SIZE, TILE_SIZE * 2.50 );
-    ctx.fillText( "Mapobjects: " + ( ( data.mapObjects == undefined ) ? "No" : data.mapObjects.length ), TILE_SIZE, TILE_SIZE * 3.25 );
-
-    ctx.fillText( "SUBMAPS", TILE_SIZE * 8, TILE_SIZE );
-    if ( data.subMaps != undefined ) {
-        Object.keys(data.subMaps).forEach( ( subMap, index ) => {
-            ctx.fillText( "* " + subMap, TILE_SIZE * 8, ( TILE_SIZE * 1.75 ) + ( TILE_SIZE * ( index * .75 ) ) );
-        } )
-    }
-    else {
-        ctx.fillText( "No", TILE_SIZE * 8, TILE_SIZE * 1.75 );
-    }
-}
-
-const initializeMapOverviewCanvases = ( ) => {
-    let Xcounter = 0;
-    let Yposition = OVERVIEW_CANVAS_WRAPPER.getBoundingClientRect( ).y
-
-    let canvasElementsList = getCanvasElementsListFromMapJSON( );
-    canvasElementsList.forEach( ( e ) => {
-        e.node.width        = MAX_CANVAS_WIDTH;
-        e.node.height       = MAX_CANVAS_HEIGHT;
-
-        e.infoCanvas.width     = MAX_CANVAS_WIDTH;
-        e.infoCanvas.height    = 6 * TILE_SIZE;
-
-        initButtonsInDiv( e.buttonsDiv, e.mapData );
-
-        e.buttonsDiv.style.width     = MAX_CANVAS_WIDTH + "px";
-        e.buttonsDiv.style.height    = 2 * TILE_SIZE + "px";
-
-        OVERVIEW_CANVAS_WRAPPER.append(e.node)
-        OVERVIEW_INFO_WRAPPER.append(e.infoCanvas)
-        OVERVIEW_BUTTONS_WRAPPER.append(e.buttonsDiv)
-
-        e.mapClass      = new Map( Xcounter, Yposition, e.node.getContext( "2d" ) );
-        e.mapClass.initGrid( e.mapData.rows + 1, e.mapData.columns + 1 );
-        e.mapClass.setTileGrid( e.mapData.grid.flat(1) );
-        e.mapClass.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[e.mapData.tileSet].src, e.mapClass.drawMapFromGridData );
-        setInfoToInfoCanvas( e.infoCanvas, e.mapData );
-        Xcounter += e.mapData.columns * TILE_SIZE;
-    } );
-
-    Array.from(document.getElementsByClassName('show-submaps')).forEach( ( button ) => {
-        button.addEventListener( 'click', handleShowSubMapsButtonClick, true )
-    } )
-}
-
 OVERVIEW_CANVAS_WRAPPER.addEventListener('mousedown', (e) => {
     initMapOverviewScrollOnClick
 });
@@ -170,20 +113,3 @@ OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
         return;
     }
 });
-
-const handleShowSubMapsButtonClick = ( event ) => {
-    console.log(event.target.id)
-    clearOverviewWrapperElements( );
-
-    if ( IN_SUBMAP_OVERVIEW ) {
-        MAP_OVERVIEW_CURRENT_SUBMAP = null;
-        IN_SUBMAP_OVERVIEW = false;
-    }
-    else {
-        clearOverviewWrapperElements( );
-        MAP_OVERVIEW_CURRENT_SUBMAP = MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD[event.target.id].subMaps;
-        IN_SUBMAP_OVERVIEW = true;
-    }
-
-    initializeMapOverviewCanvases( );     
-}
