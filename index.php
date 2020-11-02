@@ -2,25 +2,29 @@
     require_once "database_config.php";
     StartConnection( );
 
+    $APP_FOLDER = __DIR__ . '/app/';
+    $VIEWS_FOLDER = __DIR__ . '/app/views/';
+    $MODALS_FOLDER = __DIR__ . '/app/modals/';
+
     /* Catch requested route */
     $request = $_SERVER['REQUEST_URI'];
-    require __DIR__ . '/app/views/head.phtml';
+    require $APP_FOLDER . 'head.phtml';
 
-    require __DIR__ . '/app/views/tilesheetmodal.html';    
-    require __DIR__ . '/app/views/loginmodal.html';    
-    require __DIR__ . '/app/views/validationmodal.phtml';    
-    require __DIR__ . '/app/views/restorationmodal.phtml';  
-    require __DIR__ . '/app/views/loadfilemodal.phtml';   
+    require $MODALS_FOLDER . 'tilesheetmodal.html';    
+    require $MODALS_FOLDER . 'loginmodal.html';    
+    require $MODALS_FOLDER . 'validationmodal.phtml';    
+    require $MODALS_FOLDER . 'restorationmodal.phtml';  
+    require $MODALS_FOLDER . 'loadfilemodal.phtml';   
 
-    require __DIR__ . '/app/views/mapmaker.html';   
+    require $VIEWS_FOLDER . 'mapmaker.html';   
     if ( !isset($_SESSION["username"]) ) {
-        require __DIR__ . '/app/views/login.html';
+        require $VIEWS_FOLDER . 'login.html';
     } else {
-        require __DIR__ . '/app/views/welcome.phtml';        
+        require $VIEWS_FOLDER . 'welcome.phtml';        
     }
-    require __DIR__ . '/app/views/mapmakermenu.html';
-    require __DIR__ . '/app/views/newmap.html';
-    require __DIR__ . '/app/views/mapoverview.phtml';
+    require $VIEWS_FOLDER . 'mapmakermenu.html';
+    require $VIEWS_FOLDER . 'newmap.html';
+    require $VIEWS_FOLDER . 'mapoverview.phtml';
  
-    require __DIR__ . '/app/views/foot.phtml';
+    require $APP_FOLDER . 'foot.phtml';
 ?>
