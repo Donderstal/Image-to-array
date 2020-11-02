@@ -321,7 +321,7 @@
             },
             "my-house" : {   
                 "mapName": "my-neighbourhood/A1/my-house",
-                "tileSet": "my-house",
+                "tileSet": "my_house",
                 "music": "game-jam-2.mp3",
                 "outdoors": false,
                 "columns": 3,

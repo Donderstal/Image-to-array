@@ -11,9 +11,9 @@ const initMapOverviewScrollOnClick = ( event ) => {
 const mapOverviewHorizontalScroll = ( event ) => {
     const x = event.pageX - OVERVIEW_CANVAS_WRAPPER.offsetLeft;
     const step = x - OVERVIEW_SCROLL_X_COUNTER;
-    OVERVIEW_CANVAS_WRAPPER.scrollLeft = scrollLeft - step;
-    OVERVIEW_INFO_WRAPPER.scrollLeft = scrollLeft - step;
-    OVERVIEW_BUTTONS_WRAPPER.scrollLeft = scrollLeft - step;
+    OVERVIEW_CANVAS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
+    OVERVIEW_INFO_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
+    OVERVIEW_BUTTONS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
 }
 
 const initButtonsInDiv = ( div, mapData ) => {
@@ -48,7 +48,7 @@ const clearOverviewWrapperElements = ( ) => {
     removeAllChildrenFromParent( "map-overview-buttons-wrapper" );
 }
 
-const getCanvasElementsListFromMapJSON = ( json ) => {
+const getCanvasElementsListFromMapJSON = ( ) => {
     let canvasElementsList = [ ];
     let overviewClassList = "overview-canvas border-right border-warning";
     let Xcounter = 0;
@@ -119,7 +119,7 @@ const setButtonsDiv = ( buttonsDiv, mapData ) => {
 }
 
 const setMapClass = ( mapClass, mapCanvas, mapData, canvasX, canvasY ) => {
-    mapClass      = new Map( canvasX, canvasY, Yposition, mapCanvas.getContext( "2d" ) );
+    mapClass      = new Map( canvasX, canvasY, mapCanvas.getContext( "2d" ) );
     mapClass.initGrid( mapData.rows + 1, mapData.columns + 1 );
     mapClass.setTileGrid( mapData.grid.flat(1) );
     mapClass.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[mapData.tileSet].src, mapClass.drawMapFromGridData );
@@ -134,7 +134,6 @@ const setCanvasElementData = ( element, canvasX, canvasY ) => {
 }
 
 const handleShowSubMapsButtonClick = ( event ) => {
-    console.log(event.target.id)
     clearOverviewWrapperElements( );
 
     if ( IN_SUBMAP_OVERVIEW ) {
@@ -143,7 +142,7 @@ const handleShowSubMapsButtonClick = ( event ) => {
     }
     else {
         clearOverviewWrapperElements( );
-        MAP_OVERVIEW_CURRENT_SUBMAP = MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD[event.target.id].subMaps;
+        MAP_OVERVIEW_CURRENT_SUBMAP = MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD[event.target.id.split('/')[2]].subMaps;
         IN_SUBMAP_OVERVIEW = true;
     }
 

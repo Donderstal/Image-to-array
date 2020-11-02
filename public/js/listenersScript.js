@@ -89,7 +89,7 @@ Array.from(document.getElementsByClassName('select-map-for-overview-button')).fo
         })
         .then(json => {
             MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD = json
-            initializeMapOverviewCanvases( json );
+            initializeMapOverviewCanvases( );
         })
         .catch(err => {
             console.log("Error Reading data " + err);
@@ -99,12 +99,14 @@ Array.from(document.getElementsByClassName('select-map-for-overview-button')).fo
 } )
 
 OVERVIEW_CANVAS_WRAPPER.addEventListener('mousedown', (e) => {
-    initMapOverviewScrollOnClick
+    initMapOverviewScrollOnClick(e)
 });
 OVERVIEW_CANVAS_WRAPPER.addEventListener('mouseleave', () => {
-    stopMapOverviewScroll;
+    stopMapOverviewScroll();
 });
-OVERVIEW_CANVAS_WRAPPER.addEventListener('mouseup', () => { stopMapOverviewScroll; });
+OVERVIEW_CANVAS_WRAPPER.addEventListener('mouseup', () => { 
+    stopMapOverviewScroll(); 
+});
 OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
     e.preventDefault();
     if ( IS_OVERVIEW_SCROLL_ACTIVE ) {
