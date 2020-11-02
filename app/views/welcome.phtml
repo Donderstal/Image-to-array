@@ -1,22 +1,37 @@
-<div id="welcome-div" class="row window window-active my-auto">
-    <div class="col-sm-4 pt-5">
-        <button id="mapmaker-button" class="mt-5 btn btn-success btn-lg btn-block navigation-button">Mapmaker</button>
+<div id="welcome-div" class="col-sm-12 window-active">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3 class="text-center">
+                Welcome, <?php 
+                if ( isset($_SESSION["username"])) {
+                    echo $_SESSION["username"];
+                } else {
+                    var_dump($_SESSION);
+                }
+                ?>
+            </h3>
+            <hr/>
+        </div>
     </div>
-    <div class="col-sm-4">
-        <h3 class="text-center">
-            Welcome, <?php 
-            if ( isset($_SESSION["username"])) {
-                echo $_SESSION["username"];
-            } else {
-                var_dump($_SESSION);
-            }
-            ?>
-        </h3>
-        <p class="text-center">
-            Do you want to open the mapmaker or see an overview of all the maps in the game?
-        </p>
+    <div class="row">
+        <div class="col-sm-4">
+            <button id="new-map-button" class="mt-5 btn btn-success btn-lg btn-block navigation-button">
+                Create new map
+            </button>
+        </div>
     </div>
-    <div class="col-sm-4 pt-5">
-        <button id="map-overview-button" class="mt-5 btn btn-success btn-lg btn-block navigation-button" >Map overview</button>
+    <div class="row">
+        <div class="col-sm-4">
+            <button id="load-map-button" data-toggle="modal" data-target="#loadMapModal" class="mt-5 btn btn-success btn-lg btn-block">
+                Load map
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <button id="map-overview-button" class="mt-5 btn btn-success btn-lg btn-block navigation-button">
+                Map overview
+            </button>
+        </div>
     </div>
 </div>

@@ -8,21 +8,26 @@ const showTilesheetPreview = ( ) => {
 
 const switchView = ( event ) => {
    let nextScreen;
+   let className;
 
    switch ( event.target.id ) {
         case "log-in-button" : 
             nextScreen = "welcome-div";
+            className = "col-sm-12 window-active";
             break;
         case "mapmaker-button" : 
             nextScreen = "mapmaker-menu-div";
+            className = "row window window-active";
             break;
         case "new-map-button" : 
             nextScreen = "mapmaker-new-map-div";
+            className = "row window window-active";
             break;
         case "start-new-map-button" : 
             if ( mapMakerDataIsSet( ) ) {
                 prepareMapmaker( );
                 nextScreen = "mapmaker-div";
+                className = "row window window-active";
                 break;
             }
             else {
@@ -30,14 +35,17 @@ const switchView = ( event ) => {
             }
         case "map-overview-button" : 
             nextScreen = "map-overview-div";
+            className = "row window window-active";
             break;
         case "back-to-map-menu-button" :
             unsetMapMaker( );
             nextScreen = "mapmaker-new-map-div";
+            className = "row window window-active";
             break;
         case "confirm-load-map-button" : 
             loadMapToMapmaker( );
             nextScreen = "mapmaker-div";
+            className = "window-active";
             break;
         default :
             alert( 'Navigation error. Tell Daan right away!!' );
@@ -46,7 +54,7 @@ const switchView = ( event ) => {
 
    document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
 
-   document.getElementById(nextScreen).className = nextScreen == "mapmaker-div" ? "window-active" : "row window window-active";
+   document.getElementById(nextScreen).className = className;
 }
 
 const loadMapToMapmaker = ( ) => {

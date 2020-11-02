@@ -22,7 +22,6 @@
     } else {
         require $VIEWS_FOLDER . 'welcome.phtml';        
     }
-    require $VIEWS_FOLDER . 'mapmakermenu.html';
     require $VIEWS_FOLDER . 'newmap.html';
     require $VIEWS_FOLDER . 'mapoverview.phtml';
  
