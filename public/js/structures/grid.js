@@ -6,26 +6,37 @@ class Grid {
         this.cols = cols;
         this.array = [];
         this.ctx = ctx;
+        this.isOverviewCanvas = this.ctx != MAP_CTX && this.ctx != SHEET_CTX && this.ctx != PREVIEW_MAP_CTX;
 
         this.initializeGrid( );
     };
     
     initializeGrid( ) {
         const limit = this.rows * this.cols
-        let tileX = 0;
-        let tileY = 0;
+        let tileX = ( this.isOverviewCanvas ) ? this.getXOffset( ) : 0;
+        let tileY = ( this.isOverviewCanvas ) ? this.getYOffset( ) : 0;
 
         for( var i = 0; i < limit; i++ ) {
             this.array.push( new Tile( i, tileX, tileY, this.ctx ) )
 
             if ( ( i + 1 ) % this.cols == 0 ) {
-                tileX = 0;
+                tileX = ( this.isOverviewCanvas ) ? this.getXOffset( ) : 0;
                 tileY += TILE_SIZE;
             } else {
                 tileX += TILE_SIZE
             }
         };
     };
+
+    getXOffset( ) {
+        const overflowColumns = MAX_COLS - this.cols;
+        return ( overflowColumns * TILE_SIZE ) / 2;
+    }
+
+    getYOffset( ) {
+        const overflowRows = MAX_ROWS - this.rows;
+        return ( overflowRows * TILE_SIZE ) / 2;
+    }
 
     clearGrid( ) {
         this.grid = [];

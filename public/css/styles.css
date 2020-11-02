@@ -114,9 +114,13 @@ h1 {
     max-height: 90vh;
 }
 
-.map-overview-canvas-wrapper, .map-overview-info-wrapper, .map-overview-buttons-wrapper, .map-overview-submaps-wrapper {
+.map-overview-canvas-wrapper, .map-overview-info-wrapper, .map-overview-buttons-wrapper {
     overflow-x: scroll;
     white-space: nowrap;
+}
+
+.map-overview-buttons-wrapper {
+    text-align: center;
 }
 
 .overview-canvas {

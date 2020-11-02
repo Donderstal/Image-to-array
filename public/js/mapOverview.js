@@ -17,7 +17,7 @@ const mapOverviewHorizontalScroll = ( event ) => {
 }
 
 const initButtonsInDiv = ( div, mapData ) => {
-    const buttonClassList = 'btn btn-large btn-success m-2'
+    const buttonClassList = 'btn btn-large btn-success m-2 '
 
     const showSubMapsButton = createNodeWithClassOrID( 
         'button',
@@ -50,7 +50,7 @@ const clearOverviewWrapperElements = ( ) => {
 
 const getCanvasElementsListFromMapJSON = ( ) => {
     let canvasElementsList = [ ];
-    let overviewClassList = "overview-canvas border-right border-warning";
+    let overviewClassList = "overview-canvas border-left border-right border-warning";
     let Xcounter = 0;
 
     const json = IN_SUBMAP_OVERVIEW ? MAP_OVERVIEW_CURRENT_SUBMAP : MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD
@@ -85,15 +85,22 @@ const setInfoToInfoCanvas = ( canvas, data ) => {
     ctx.fillText( "Doors: " + ( ( data.doors == undefined ) ? "No" : data.doors.length ), TILE_SIZE, TILE_SIZE * 2.50 );
     ctx.fillText( "Mapobjects: " + ( ( data.mapObjects == undefined ) ? "No" : data.mapObjects.length ), TILE_SIZE, TILE_SIZE * 3.25 );
 
-    ctx.fillText( "SUBMAPS", TILE_SIZE * 8, TILE_SIZE );
-    if ( data.subMaps != undefined ) {
-        Object.keys(data.subMaps).forEach( ( subMap, index ) => {
-            ctx.fillText( "* " + subMap, TILE_SIZE * 8, ( TILE_SIZE * 1.75 ) + ( TILE_SIZE * ( index * .75 ) ) );
-        } )
+    if ( !IN_SUBMAP_OVERVIEW ) {
+        ctx.fillText( "SUBMAPS", TILE_SIZE * 8, TILE_SIZE );
+        if ( data.subMaps != undefined ) {
+            Object.keys(data.subMaps).forEach( ( subMap, index ) => {
+                ctx.fillText( "* " + subMap, TILE_SIZE * 8, ( TILE_SIZE * 1.75 ) + ( TILE_SIZE * ( index * .75 ) ) );
+            } )
+        }
+        else {
+            ctx.fillText( "No", TILE_SIZE * 8, TILE_SIZE * 1.75 );
+        }
     }
     else {
-        ctx.fillText( "No", TILE_SIZE * 8, TILE_SIZE * 1.75 );
+        ctx.fillText( "MAIN MAP", TILE_SIZE * 8, TILE_SIZE );
+        ctx.fillText( data.mapName.split('/')[0], TILE_SIZE * 8, TILE_SIZE * 1.75 );
     }
+
 }
 
 const setOverviewCanvas = ( mapCanvas ) => {
