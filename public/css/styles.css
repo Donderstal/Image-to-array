@@ -115,8 +115,16 @@ h1 {
 }
 
 .map-overview-canvas-wrapper, .map-overview-info-wrapper, .map-overview-buttons-wrapper {
-    overflow-x: scroll;
+    overflow: hidden;
     white-space: nowrap;
+}
+
+.map-overview-canvas-wrapper:hover {
+    cursor: grab;
+}
+
+.map-overview-canvas-wrapper:active {
+    cursor: grabbing;
 }
 
 .map-overview-buttons-wrapper {
@@ -125,6 +133,8 @@ h1 {
 
 .overview-canvas {
     display: inline-block;
+    margin-left: .5vw;
+    margin-right: .5vw;
 }
 
 .overview-header-row {
@@ -135,4 +145,8 @@ h1 {
 
 .go-back-button {
     visibility: hidden;
+}
+
+body {
+    overflow: hidden;
 }
