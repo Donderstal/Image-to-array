@@ -1,6 +1,6 @@
 <div id="welcome-div" class="col-sm-12 window-active">
-    <div class="row">
-        <div class="col-sm-4">
+    <div class="row p-3">
+        <div class="offset-sm-2 col-sm-4 p-3">
             <h3 class="text-center">
                 Welcome, <?php 
                 if ( isset($_SESSION["username"])) {
@@ -14,21 +14,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="offset-sm-2 col-sm-4">
             <button id="new-map-button" class="mt-5 btn btn-success btn-lg btn-block navigation-button">
                 Create new map
             </button>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="offset-sm-2 col-sm-4">
             <button id="load-map-button" data-toggle="modal" data-target="#loadMapModal" class="mt-5 btn btn-success btn-lg btn-block">
                 Load map
             </button>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="offset-sm-2 col-sm-4">
             <button id="map-overview-button" class="mt-5 btn btn-success btn-lg btn-block navigation-button">
                 Map overview
             </button>

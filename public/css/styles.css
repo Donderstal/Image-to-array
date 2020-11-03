@@ -132,3 +132,7 @@ h1 {
     display: block;
     text-align: center;
 }
+
+.go-back-button {
+    visibility: hidden;
+}

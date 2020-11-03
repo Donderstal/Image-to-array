@@ -8,13 +8,14 @@
     </head>
     <body class="bg-dark text-white">
         <div class="header border-bottom border-info">
-            <div class="header-inner container">
-                <h1>
-                    RPG Mapmaker
-                </h1>
+            <div class="header-inner">
+            <?php if(isset($_SESSION["username"])) {
+                    echo "<button id='go-back-button' type='button' class='btn btn-dark navigation-button go-back-button'> <- Back </button>";
+                }
+                ?>
                 <form id="logout-form" class='logout-form'>
                 <?php if(isset($_SESSION["username"])) {
-                    echo "<input type='button' id='log-out-button' type='button' name='logout' value='logout' onclick='LogOut()' class='btn btn-dark'> " .$_SESSION["username"]. " </input>";
+                    echo "<input id='log-out-button' type='button' name='logout' value='logout' onclick='LogOut()' class='btn btn-dark'> " .$_SESSION["username"]. " </input>";
                 }
                 ?>
                 </form>

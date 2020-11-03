@@ -11,6 +11,7 @@ const switchView = ( event ) => {
    let className;
 
    switch ( event.target.id ) {
+        case "go-back-button" :
         case "log-in-button" : 
             nextScreen = "welcome-div";
             className = "col-sm-12 window-active";
@@ -50,7 +51,13 @@ const switchView = ( event ) => {
         default :
             alert( 'Navigation error. Tell Daan right away!!' );
             break;
-   }
+    }
+
+    if ( nextScreen != "welcome-div" ) {
+        document.getElementById('go-back-button').style.visibility = "visible";
+    } else {
+        document.getElementById('go-back-button').style.visibility = "invisible";
+    }
 
    document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
 
