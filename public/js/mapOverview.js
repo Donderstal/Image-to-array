@@ -72,7 +72,7 @@ const setLoadMapListeners = ( ) => {
 
 const getCanvasElementsListFromMapJSON = ( ) => {
     let canvasElementsList = [ ];
-    let overviewClassList = "overview-canvas border-left border-right border-warning";
+    let overviewClassList = "overview-canvas";
     let Xcounter = 0;
 
     const json = IN_SUBMAP_OVERVIEW ? MAP_OVERVIEW_CURRENT_SUBMAP : MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD

@@ -133,8 +133,8 @@ h1 {
 
 .overview-canvas {
     display: inline-block;
-    margin-left: .5vw;
-    margin-right: .5vw;
+    margin-left: .125vw;
+    margin-right: .125vw;
 }
 
 .overview-header-row {
