@@ -115,3 +115,35 @@ OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
         return;
     }
 });
+
+MAP_CANVAS.addEventListener('mouseup', (event) => { 
+    let endingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);
+    MOUSE_DRAG_RANGE.END = { 'x': endingTile.x, 'y': endingTile.y }
+    const square = {
+        TOP: MOUSE_DRAG_RANGE.START.y > MOUSE_DRAG_RANGE.END.y ? MOUSE_DRAG_RANGE.END.y : MOUSE_DRAG_RANGE.START.y,
+        RIGHT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.START.x : MOUSE_DRAG_RANGE.END.x,
+        BOTTOM: MOUSE_DRAG_RANGE.START.y > MOUSE_DRAG_RANGE.END.y ? MOUSE_DRAG_RANGE.START.y : MOUSE_DRAG_RANGE.END.y,
+        LEFT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.END.x : MOUSE_DRAG_RANGE.START.x
+    }
+    
+    MAP.grid.array.forEach( ( tile ) => {
+        if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
+            tile.setTileID( SHEET.activeTile.index )
+            MAP_CTX.drawImage( 
+                SHEET_CANVAS.image, 
+                SHEET.activeTile.x * 2, SHEET.activeTile.y * 2, 
+                TILE_SIZE * 2, TILE_SIZE * 2, 
+                tile.x, tile.y, 
+                TILE_SIZE, TILE_SIZE 
+            )
+        }
+    } )
+});
+MAP_CANVAS.addEventListener('mousedown', (event) => {
+    MOUSE_DRAG_IN_MAPMAKER = false;
+    let startingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);   
+    MOUSE_DRAG_RANGE.START = { 'x': startingTile.x, 'y': startingTile.y }
+});
+MAP_CANVAS.addEventListener('mousemove', (event) => {
+    MOUSE_DRAG_IN_MAPMAKER = true;
+});

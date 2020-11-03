@@ -36,6 +36,10 @@ let MAP_OVERVIEW_CURRENT_SUBMAP;
 let IN_SUBMAP_OVERVIEW;
 
 let MOUSE_DRAG_IN_MAPMAKER;
+let MOUSE_DRAG_RANGE = {
+    START: null,
+    END: null
+};
 
 const TILE_SIZE = 32;
 
