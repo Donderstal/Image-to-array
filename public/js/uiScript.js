@@ -117,7 +117,7 @@ const confirmTilesheetChoice = ( ) => {
 }
 
 const captureSheetClick = ( event ) => {
-    SHEET.getTileAtXY(event.offsetX, event.offsetY);
+    SHEET.captureTileAtXY(event.offsetX, event.offsetY);
 }
 
 const captureMapClick = ( event ) => {
@@ -125,7 +125,7 @@ const captureMapClick = ( event ) => {
         
     }
     else {
-        MAP.getTileAtXY(event.offsetX, event.offsetY);        
+        MAP.drawTileAtXY(event.offsetX, event.offsetY);        
     }
 }
 

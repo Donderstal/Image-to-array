@@ -57,7 +57,7 @@ class Sheet extends CanvasWithGrid {
         this.grid.initializeGrid( );
     }
 
-    getTileAtXY( x, y ) {
+    captureTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         this.activeTile = tile;
         SELECTED_TILE_CTX.drawImage( SHEET_CANVAS, tile.x, tile.y, TILE_SIZE, TILE_SIZE, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
@@ -84,7 +84,7 @@ class Map extends CanvasWithGrid {
         this.neighbourhood = neighbourhood
     }
 
-    getTileAtXY( x, y ) {
+    drawTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( SHEET.activeTile.index )
         MAP_CTX.drawImage( SHEET_CANVAS.image, SHEET.activeTile.x * 2, SHEET.activeTile.y * 2, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
