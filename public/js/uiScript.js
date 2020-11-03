@@ -28,7 +28,7 @@ const switchView = ( event ) => {
             if ( mapMakerDataIsSet( ) ) {
                 prepareMapmaker( );
                 nextScreen = "mapmaker-div";
-                className = "row window window-active";
+                className = "window-active";
                 break;
             }
             else {
@@ -45,6 +45,7 @@ const switchView = ( event ) => {
             break;
         case "confirm-load-map-button" : 
             loadMapToMapmaker( );
+            document.getElementById("load-map-modal-dismiss").click( );
             nextScreen = "mapmaker-div";
             className = "window-active";
             break;
@@ -111,6 +112,8 @@ const confirmTilesheetChoice = ( ) => {
     setValueOfReadOnlyElement( 'tilesheet-selection-input', src );
 
     makeHiddenCanvasVisible( SHEET_CANVAS );
+
+    document.getElementById("dismiss-tilesheet-modal").click( );
 }
 
 const captureSheetClick = ( event ) => {
