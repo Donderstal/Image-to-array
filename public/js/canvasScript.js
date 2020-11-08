@@ -38,3 +38,46 @@ const initMapCanvas = ( rows, cols ) => {
 const clearMapGrid = ( ) => {
     MAP.clearGrid( )
 }
+
+const mirrorTile = ( direction ) => {
+    let mirrorSetting = SHEET.activeTile.settings.mirror;
+    const isHorizontal = direction == "Hori";
+    switch ( mirrorSetting ) {
+        case "No": 
+            SHEET.activeTile.settings.mirror = isHorizontal ? "Hori" : "Vert";
+            break;
+        case "Hori":
+            SHEET.activeTile.settings.mirror = isHorizontal ? "No" : "Both";
+            break;
+        case "Vert":
+            SHEET.activeTile.settings.mirror = isHorizontal ? "Both" : "No";
+            break;
+        case "Both":
+            SHEET.activeTile.settings.mirror = isHorizontal ? "Vert" : "Hori";
+            break;
+        default:
+            alert('Error in mirroring tile. Call the police!')
+    }
+}
+
+const flipTile = ( direction ) => {
+    let angleSetting = SHEET.activeTile.settings.angle;
+    const isClockWise = direction == "Hori";
+    switch ( angleSetting ) {
+        case 0: 
+            SHEET.activeTile.settings.angle = isClockWise ? 90 : 270;
+            break;
+        case 90:
+            SHEET.activeTile.settings.angle = isClockWise ? 180 : 0;
+            break;
+        case 180:
+            SHEET.activeTile.settings.angle = isClockWise ? 270 : 90;
+            break;
+        case 270:
+            SHEET.activeTile.settings.angle = isClockWise ? 0 : 180;
+            break;
+        default:
+            alert('Error in flipping tile. Call the police!')
+    }
+}
+

@@ -60,6 +60,10 @@ class Sheet extends CanvasWithGrid {
     captureTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         this.activeTile = tile;
+        this.activeTile.settings = {
+            angle: 0,
+            mirror: "No"
+        }
         SELECTED_TILE_CTX.drawImage( SHEET_CANVAS, tile.x, tile.y, TILE_SIZE, TILE_SIZE, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
     }
 }
