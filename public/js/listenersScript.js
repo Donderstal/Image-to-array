@@ -130,11 +130,7 @@ MAP_CANVAS.addEventListener('mouseup', (event) => {
         if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
             tile.setTileID( SHEET.activeTile.index )
             MAP_CTX.drawImage( 
-                SHEET_CANVAS.image, 
-                SHEET.activeTile.x * 2, SHEET.activeTile.y * 2, 
-                TILE_SIZE * 2, TILE_SIZE * 2, 
-                tile.x, tile.y, 
-                TILE_SIZE, TILE_SIZE 
+                SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE 
             )
         }
     } )

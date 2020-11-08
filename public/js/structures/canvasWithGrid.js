@@ -149,6 +149,7 @@ class Map extends CanvasWithGrid {
     drawTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( SHEET.activeTile.index )
+        tile.setSettings(  );
         MAP_CTX.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
     }
 

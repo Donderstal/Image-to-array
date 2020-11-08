@@ -78,6 +78,7 @@ class Tile {
         this.y = y;
         this.ctx = ctx;
         this.index = index;  
+        this.settings = {};
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -107,6 +108,10 @@ class Tile {
             this.x, this.y,
             TILE_SIZE, TILE_SIZE
         )
+    }
+
+    setSettings( ) {
+        this.settings = SHEET.activeTileSettings;
     }
 
     setTileID( ID ) {
