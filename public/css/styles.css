@@ -14,6 +14,11 @@
     right: 1vw;
 }
 
+.selected-tile-canvas {
+    margin-top: 64px;
+    margin-bottom: 32px;
+}
+
 h1 {
     display: block;
     margin: 0 auto;
@@ -153,4 +158,32 @@ h1 {
 
 body {
     overflow: hidden;
+}
+
+.flip-tile-png, .mirror-tile {
+    max-width: 32px;
+}
+
+.flip-tile-png:hover, .mirror-tile:hover {
+    cursor: pointer;
+    border-top: 1px groove transparent;
+}
+
+.arrow-left {
+    float:left;
+    transform: scaleX(-1) rotate(90deg);
+}
+
+.arrow-right {
+    float:right;
+    transform: rotate(90deg);
+}
+
+.mirror-hori {
+    float:left;
+    transform: rotate(90deg);
+}
+
+.mirror-vert {
+    float: right;
 }
