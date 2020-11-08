@@ -79,6 +79,10 @@ h1 {
     border-top: 1px black groove;
 }
 
+.map-selection-list-item-radio {
+    margin-top: .5vh
+}
+
 .preview-map-canvas {
     border-right: .5px black groove;
     border-bottom: .5px black groove;
