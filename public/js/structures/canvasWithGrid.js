@@ -62,7 +62,7 @@ class Sheet extends CanvasWithGrid {
         this.activeTile = tile;
         this.activeTileSettings = {
             'angle': 0,
-            'mirror': "No"
+            'mirror': false
         }
         SELECTED_TILE_CTX.drawImage( SHEET_CANVAS.image, tile.x* 2, tile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
     }
@@ -107,22 +107,7 @@ class Sheet extends CanvasWithGrid {
 
     setMirror( ) {
         const ctx = SELECTED_TILE_CTX;
-        switch( this.activeTileSettings['mirror'] ) {
-            case "No": 
-                ctx.setTransform(1,0,0,1,0,0);
-                break;
-            case "Hori":
-                ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 );
-                break;
-            case "Vert":
-                ctx.setTransform( 1, 0, 0, -1, 0, TILE_SIZE * 2 );
-                break;
-            case "Both":
-                ctx.setTransform( -1, 0, 0, -1, TILE_SIZE * 2, TILE_SIZE * 2 );
-                break;
-            default:
-                alert('Error in flipping tile. Call the police!')
-        }
+        this.activeTileSettings['mirror'] ? ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 ) : ctx.setTransform(1,0,0,1,0,0);
     }
 }
 

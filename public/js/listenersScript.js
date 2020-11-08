@@ -146,5 +146,4 @@ MAP_CANVAS.addEventListener('mousemove', (event) => {
 
 document.getElementById('arrow-flip-left').addEventListener( 'click', ( ) => { flipTile("Counter-clockwise") }, true )
 document.getElementById('arrow-flip-right').addEventListener( 'click', ( ) => { flipTile("Clockwise") }, true )
-document.getElementById('mirror-hori-icon').addEventListener( 'click', ( ) => { mirrorTile("Hori") }, true )
-document.getElementById('mirror-vert-icon').addEventListener( 'click', ( ) => { mirrorTile("Vert") }, true )
+document.getElementById('mirror-hori-icon').addEventListener( 'click', ( ) => { mirrorTile( ) }, true )

@@ -180,10 +180,6 @@ body {
 }
 
 .mirror-hori {
-    float:left;
-    transform: rotate(90deg);
-}
-
-.mirror-vert {
-    float: right;
+    display: block;
+    margin: auto;
 }

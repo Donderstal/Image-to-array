@@ -39,24 +39,8 @@ const clearMapGrid = ( ) => {
     MAP.clearGrid( )
 }
 
-const mirrorTile = ( direction ) => {
-    const isHorizontal = direction == "Hori";
-    switch ( SHEET.activeTileSettings.mirror ) {
-        case "No": 
-            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "Hori" : "Vert");
-            break;
-        case "Hori":
-            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "No" : "Both");
-            break;
-        case "Vert":
-            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "Both" : "No");
-            break;
-        case "Both":
-            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "Vert" : "Hori");
-            break;
-        default:
-            alert('Error in mirroring tile. Call the police!')
-    }
+const mirrorTile = (  ) => {
+    SHEET.updateActiveTileSettings( 'mirror', !SHEET.activeTileSettings.mirror);
 }
 
 const flipTile = ( direction ) => {
