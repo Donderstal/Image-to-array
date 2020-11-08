@@ -40,20 +40,19 @@ const clearMapGrid = ( ) => {
 }
 
 const mirrorTile = ( direction ) => {
-    let mirrorSetting = SHEET.activeTile.settings.mirror;
     const isHorizontal = direction == "Hori";
-    switch ( mirrorSetting ) {
+    switch ( SHEET.activeTileSettings.mirror ) {
         case "No": 
-            SHEET.activeTile.settings.mirror = isHorizontal ? "Hori" : "Vert";
+            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "Hori" : "Vert");
             break;
         case "Hori":
-            SHEET.activeTile.settings.mirror = isHorizontal ? "No" : "Both";
+            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "No" : "Both");
             break;
         case "Vert":
-            SHEET.activeTile.settings.mirror = isHorizontal ? "Both" : "No";
+            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "Both" : "No");
             break;
         case "Both":
-            SHEET.activeTile.settings.mirror = isHorizontal ? "Vert" : "Hori";
+            SHEET.updateActiveTileSettings('mirror', isHorizontal ? "Vert" : "Hori");
             break;
         default:
             alert('Error in mirroring tile. Call the police!')
@@ -61,20 +60,19 @@ const mirrorTile = ( direction ) => {
 }
 
 const flipTile = ( direction ) => {
-    let angleSetting = SHEET.activeTile.settings.angle;
-    const isClockWise = direction == "Hori";
-    switch ( angleSetting ) {
+    const isClockWise = direction == "Clockwise";
+    switch ( SHEET.activeTileSettings.angle ) {
         case 0: 
-            SHEET.activeTile.settings.angle = isClockWise ? 90 : 270;
+            SHEET.updateActiveTileSettings('angle', isClockWise ? 90 : 270);
             break;
         case 90:
-            SHEET.activeTile.settings.angle = isClockWise ? 180 : 0;
+            SHEET.updateActiveTileSettings('angle', isClockWise ? 180 : 0);
             break;
         case 180:
-            SHEET.activeTile.settings.angle = isClockWise ? 270 : 90;
+            SHEET.updateActiveTileSettings('angle', isClockWise ? 270 : 90);
             break;
         case 270:
-            SHEET.activeTile.settings.angle = isClockWise ? 0 : 180;
+            SHEET.updateActiveTileSettings('angle', isClockWise ? 0 : 180);
             break;
         default:
             alert('Error in flipping tile. Call the police!')

@@ -60,11 +60,69 @@ class Sheet extends CanvasWithGrid {
     captureTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         this.activeTile = tile;
-        this.activeTile.settings = {
-            angle: 0,
-            mirror: "No"
+        this.activeTileSettings = {
+            'angle': 0,
+            'mirror': "No"
         }
-        SELECTED_TILE_CTX.drawImage( SHEET_CANVAS, tile.x, tile.y, TILE_SIZE, TILE_SIZE, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
+        SELECTED_TILE_CTX.drawImage( SHEET_CANVAS.image, tile.x* 2, tile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
+    }
+
+    updateActiveTileSettings( key, value) {
+        this.activeTileSettings[key] = value
+        this.drawTileWithSetting( )
+    }
+
+    drawTileWithSetting(  ) {
+        const ctx = SELECTED_TILE_CTX;
+        this.setMirror( );
+        switch( this.activeTileSettings['angle'] ) {
+            case 0: 
+                ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x* 2, this.activeTile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );
+                break;
+            case 90:
+                ctx.translate( 0 + TILE_SIZE * 2, 0 );
+                ctx.rotate( 90 * ( Math.PI / 180 ) );
+                ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x* 2, this.activeTile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );      
+                ctx.rotate( -(90 * ( Math.PI / 180 ) ))
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            case 180:
+                ctx.translate( 0 + TILE_SIZE * 2, 0 + TILE_SIZE * 2 );
+                ctx.rotate( Math.PI );
+                ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x* 2, this.activeTile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );   
+                ctx.rotate( -Math.PI )
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            case 270:
+                ctx.translate( 0, 0 + TILE_SIZE * 2 );
+                ctx.rotate( 270 * ( Math.PI / 180 ) )
+                ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x * 2, this.activeTile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );           
+                ctx.rotate( -(270 * ( Math.PI / 180 )) )
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            default:
+                alert('Error in flipping tile. Call the police!')
+        }
+    }
+
+    setMirror( ) {
+        const ctx = SELECTED_TILE_CTX;
+        switch( this.activeTileSettings['mirror'] ) {
+            case "No": 
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            case "Hori":
+                ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 );
+                break;
+            case "Vert":
+                ctx.setTransform( 1, 0, 0, -1, 0, TILE_SIZE * 2 );
+                break;
+            case "Both":
+                ctx.setTransform( -1, 0, 0, -1, TILE_SIZE * 2, TILE_SIZE * 2 );
+                break;
+            default:
+                alert('Error in flipping tile. Call the police!')
+        }
     }
 }
 
@@ -91,7 +149,7 @@ class Map extends CanvasWithGrid {
     drawTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( SHEET.activeTile.index )
-        MAP_CTX.drawImage( SHEET_CANVAS.image, SHEET.activeTile.x * 2, SHEET.activeTile.y * 2, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+        MAP_CTX.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
     }
 
     exportMapData( ) {
