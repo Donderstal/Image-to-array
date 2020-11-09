@@ -37,7 +37,54 @@
         } else {
             echo json_encode('{"save-map-succes": false, "error-message": "File with that name already exists"}' );     
         }
-
     }
 
+    function GetUserJSONFilesIfLoggedIn( ) {
+        $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
+        $maps_path = '/user-folders'  . '/' .str_replace( " ", "_", $_SESSION["username"] ). '/maps';
+        $neighbourhood_files = scandir( $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path );
+        $map_files = scandir( $_SERVER['DOCUMENT_ROOT'].$maps_path );
+
+        $Return_Arr = array( 
+            "get-user-maps-success" => "Tmapsmapsmaps", 
+            "error-message" => "error burh..."
+        );
+
+        $neighbourhoods = array( );
+        $maps = array( );
+
+        foreach( $neighbourhood_files as $neighbourhood) {
+            if ( $neighbourhood != "." && $neighbourhood != ".." ) {
+                $url = $_SERVER['DOCUMENT_ROOT'].$neighbourhoods_path."/".$neighbourhood;
+                $json_as_string = file_get_contents( $url, false );
+                $json_data = json_decode($json_as_string, true);
+
+                $neighbourhood_arr = array( );
+                
+                try {
+                    foreach(array_keys($json_data) as $key) {
+                        $neighbourhood_arr[$key] = $json_data[$key];
+                    }
+                    $neighbourhoods[$neighbourhood] = $neighbourhood_arr;                   
+                }
+                catch( Exception $ex ) {
+                    die($ex);                    
+                }
+            }
+        }
+
+        foreach( $map_files as $map ) {
+            if ( $map != "." && $map != ".." ) {
+                $url = $_SERVER['DOCUMENT_ROOT'].$maps_path."/".$map;
+                $json_as_string = file_get_contents( $url, false );
+                $json_data = json_decode($json_as_string, true);
+
+                $maps[$map] = json_decode($json_data);
+            }
+        }
+
+        $Return_Arr["neighbourhoods"] = $neighbourhoods;
+        $Return_Arr["maps"] = $maps;
+        echo json_encode($Return_Arr);
+    }
 ?>

@@ -22,6 +22,9 @@
     else if( isset( $_POST['map_json'] ) && isset( $_POST['map_name'] ) ) {
         StoreJSONMapAsFile( json_encode($_POST['map_json']), $_POST['map_name'] );
     }
+    else if ( isset( $_POST['get-maps'] ) ) {
+        GetUserJSONFilesIfLoggedIn( );
+    }
     else {
         echo json_encode('{ "error-message": "The form you posted was incomplete..." }');
     }
