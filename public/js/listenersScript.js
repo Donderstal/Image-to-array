@@ -38,6 +38,7 @@ document.getElementById("toggle-request-restore").addEventListener( 'click', ( )
 })
 
 document.addEventListener("DOMContentLoaded", function() {
+    setUserMapFilesIfLoggedIn( );
     const sheetX = SHEET_CANVAS.getBoundingClientRect( ).x;
     const sheetY = SHEET_CANVAS.getBoundingClientRect( ).y;
     const mapX = MAP_CANVAS.getBoundingClientRect( ).x;

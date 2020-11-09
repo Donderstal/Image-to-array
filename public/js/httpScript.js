@@ -109,6 +109,33 @@ const SaveMapHTTPCallback = ( data ) => {
     } 
 }
 
+const MapCallback = ( data ) => {
+    const responseJSON = JSON.parse(data)
+    if ( responseJSON["get-user-maps-success"] ) {
+        MAP_STORAGE["neighbourhoods"] = responseJSON["neighbourhoods"] 
+        MAP_STORAGE["maps"] = responseJSON["maps"] 
+    } else if ( !responseJSON["get-user-maps-success"] ) {
+        alert(responseJSON["error-message"])
+    } 
+}
+
+const setUserMapFilesIfLoggedIn = ( ) => {
+    var formData = new FormData();
+    formData.append( 'get-maps', true );
+    fetch( "catch_http_request.php", {
+        method: "POST",
+        body: formData
+    } ).then( response => { 
+        return response.text()   
+        }
+    ).then( 
+        result => MapCallback(result)
+    ).catch(err => {
+        console.log("Error Reading data " + err);
+        } 
+    );    
+}
+
 document.addEventListener('DOMContentLoaded', initHTTPListeners );
 
 document.getElementById("registration-form").addEventListener( 'formdata', ( event ) => {

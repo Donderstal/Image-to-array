@@ -41,6 +41,11 @@ let MOUSE_DRAG_RANGE = {
     END: null
 };
 
+let MAP_STORAGE = { 
+    "neighbourhoods": null,
+    "maps": null
+};
+
 const TILE_SIZE = 32;
 
 const MAX_ROWS = 16;
