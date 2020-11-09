@@ -74,10 +74,10 @@ class Sheet extends CanvasWithGrid {
 
     drawTileWithSetting(  ) {
         const ctx = SELECTED_TILE_CTX;
-        this.setMirror( );
+        this.activeTileSettings['mirror'] ? ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 ) : ctx.setTransform(1,0,0,1,0,0);
         switch( this.activeTileSettings['angle'] ) {
             case 0: 
-                ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x* 2, this.activeTile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );
+                ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x * 2, this.activeTile.y * 2, TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );
                 break;
             case 90:
                 ctx.translate( 0 + TILE_SIZE * 2, 0 );
@@ -104,11 +104,6 @@ class Sheet extends CanvasWithGrid {
                 alert('Error in flipping tile. Call the police!')
         }
     }
-
-    setMirror( ) {
-        const ctx = SELECTED_TILE_CTX;
-        this.activeTileSettings['mirror'] ? ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 ) : ctx.setTransform(1,0,0,1,0,0);
-    }
 }
 
 class Map extends CanvasWithGrid {
@@ -134,7 +129,7 @@ class Map extends CanvasWithGrid {
     drawTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( SHEET.activeTile.index )
-        tile.setSettings(  );
+        tile.setSettings( SHEET.activeTileSettings );
         MAP_CTX.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
     }
 

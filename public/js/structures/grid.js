@@ -78,7 +78,6 @@ class Tile {
         this.y = y;
         this.ctx = ctx;
         this.index = index;  
-        this.settings = {};
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -100,18 +99,56 @@ class Tile {
         }
 
         const tilesheetXy = SHEET_XY_VALUES[this.ID]
+
+        if ( this.mirrored || this.angle != 0 ) {
+            this.flipTileBeforeDrawing( sheetImage, tilesheetXy )
+        }
     
         this.ctx.drawImage(
-            sheetImage, 
-            tilesheetXy.x, tilesheetXy.y,
+            SELECTED_TILE_CANVAS, 
+            0, 0,
             TILE_SIZE * 2, TILE_SIZE * 2,
             this.x, this.y,
             TILE_SIZE, TILE_SIZE
         )
     }
 
-    setSettings( ) {
-        this.settings = SHEET.activeTileSettings;
+    flipTileBeforeDrawing( sheetImage, tilesheetXy ) {
+        const ctx = SELECTED_TILE_CTX;
+        this.mirrored ? ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 ) : ctx.setTransform(1,0,0,1,0,0);
+        switch( this.angle ) {
+            case 0: 
+                ctx.drawImage( sheetImage, tilesheetXy.x, tilesheetXy.y, TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );
+                break;
+            case 90:
+                ctx.translate( 0 + TILE_SIZE * 2, 0 );
+                ctx.rotate( 90 * ( Math.PI / 180 ) );
+                ctx.drawImage( sheetImage, tilesheetXy.x, tilesheetXy.y, TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );   
+                ctx.rotate( -(90 * ( Math.PI / 180 ) ))
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            case 180:
+                ctx.translate( 0 + TILE_SIZE * 2, 0 + TILE_SIZE * 2 );
+                ctx.rotate( Math.PI );
+                ctx.drawImage( sheetImage, tilesheetXy.x, tilesheetXy.y, TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );   
+                ctx.rotate( -Math.PI )
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            case 270:
+                ctx.translate( 0, 0 + TILE_SIZE * 2 );
+                ctx.rotate( 270 * ( Math.PI / 180 ) )
+                ctx.drawImage( sheetImage, tilesheetXy.x, tilesheetXy.y, TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );      
+                ctx.rotate( -(270 * ( Math.PI / 180 )) )
+                ctx.setTransform(1,0,0,1,0,0);
+                break;
+            default:
+                alert('Error in flipping tile. Call the police!')
+        }
+    }
+
+    setSettings( settings ) {
+        this.mirrored = settings['mirror'];
+        this.angle = settings['angle'];
     }
 
     setTileID( ID ) {
