@@ -67,7 +67,13 @@ class Grid {
 
     setTileGridToArray( tileGrid ) {
         this.array.forEach( ( e, index ) => {
-            e.setTileID( tileGrid[index] );
+            if ( typeof tileGrid[index] == 'string' || typeof tileGrid[index] == 'number' ) {
+                e.setTileID( tileGrid[index] );                
+            }
+            else {
+                e.setTileID( tileGrid[index].id );     
+                e.setSettings( { 'mirrored': tileGrid[index].mirrored, 'angle': tileGrid[index].angle } )
+            }
         })
     }
 }
@@ -78,6 +84,8 @@ class Tile {
         this.y = y;
         this.ctx = ctx;
         this.index = index;  
+        this.angle = 0;
+        this.mirrored = false;
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -100,9 +108,7 @@ class Tile {
 
         const tilesheetXy = SHEET_XY_VALUES[this.ID]
 
-        if ( this.mirrored || this.angle != 0 ) {
-            this.flipTileBeforeDrawing( sheetImage, tilesheetXy )
-        }
+        this.flipTileBeforeDrawing( sheetImage, tilesheetXy );
     
         this.ctx.drawImage(
             SELECTED_TILE_CANVAS, 
@@ -147,7 +153,7 @@ class Tile {
     }
 
     setSettings( settings ) {
-        this.mirrored = settings['mirror'];
+        this.mirrored = settings['mirrored'];
         this.angle = settings['angle'];
     }
 

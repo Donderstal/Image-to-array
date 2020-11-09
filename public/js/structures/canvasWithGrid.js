@@ -62,7 +62,7 @@ class Sheet extends CanvasWithGrid {
         this.activeTile = tile;
         this.activeTileSettings = {
             'angle': 0,
-            'mirror': false
+            'mirrored': false
         }
         SELECTED_TILE_CTX.drawImage( SHEET_CANVAS.image, tile.x* 2, tile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 )
     }
@@ -74,7 +74,7 @@ class Sheet extends CanvasWithGrid {
 
     drawTileWithSetting(  ) {
         const ctx = SELECTED_TILE_CTX;
-        this.activeTileSettings['mirror'] ? ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 ) : ctx.setTransform(1,0,0,1,0,0);
+        this.activeTileSettings['mirrored'] ? ctx.setTransform( -1, 0, 0, 1, TILE_SIZE * 2, 0 ) : ctx.setTransform(1,0,0,1,0,0);
         switch( this.activeTileSettings['angle'] ) {
             case 0: 
                 ctx.drawImage( SHEET_CANVAS.image, this.activeTile.x * 2, this.activeTile.y * 2, TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2 );
