@@ -40,7 +40,7 @@ const clearMapGrid = ( ) => {
 }
 
 const mirrorTile = (  ) => {
-    SHEET.updateActiveTileSettings( 'mirrored', !SHEET.activeTileSettings.mirror);
+    SHEET.updateActiveTileSettings( 'mirrored', !SHEET.activeTileSettings.mirrored);
 }
 
 const flipTile = ( direction ) => {
