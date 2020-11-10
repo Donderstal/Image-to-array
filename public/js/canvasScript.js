@@ -64,9 +64,13 @@ const flipTile = ( direction ) => {
 }
 
 const setMapJSON = ( JSON ) => {
-    document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + JSON["mapName"].split('/')[0]
-    document.getElementById("preview-map-tileset").innerText = "Tileset: " + JSON["tileSet"]
-    document.getElementById("preview-map-name").innerText = "Map name: " + JSON["mapName"].split('/')[2];
+    TILESHEET_TO_LOAD = JSON["tileSet"];
+    NEIGHBOURHOOD_TO_LOAD = JSON["mapName"].split('/')[0];
+    MAPNAME_TO_LOAD = JSON["mapName"].split('/')[2];
+
+    document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + NEIGHBOURHOOD_TO_LOAD
+    document.getElementById("preview-map-tileset").innerText = "Tileset: " + TILESHEET_TO_LOAD
+    document.getElementById("preview-map-name").innerText = "Map name: " + MAPNAME_TO_LOAD
 
     ROWS_TO_LOAD = JSON.rows + 1;
     COLUMNS_TO_LOAD = JSON.columns + 1;
@@ -77,5 +81,5 @@ const setMapJSON = ( JSON ) => {
     PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
     PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
     PREVIEW_MAP.setTileGrid( GRID_TO_LOAD );
-    PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[JSON["tileSet"]].src, PREVIEW_MAP.drawMapFromGridData );
+    PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, PREVIEW_MAP.drawMapFromGridData );
 }
