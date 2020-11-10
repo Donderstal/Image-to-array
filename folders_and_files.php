@@ -65,7 +65,7 @@
                     foreach(array_keys($json_data) as $key) {
                         $neighbourhood_arr[$key] = $json_data[$key];
                     }
-                    $neighbourhoods[$neighbourhood] = $neighbourhood_arr;                   
+                    $neighbourhoods[explode(".", $neighbourhood)[0]] = $neighbourhood_arr;                   
                 }
                 catch( Exception $ex ) {
                     die($ex);                    
@@ -79,7 +79,7 @@
                 $json_as_string = file_get_contents( $url, false );
                 $json_data = json_decode($json_as_string, true);
 
-                $maps[$map] = json_decode($json_data);
+                $maps[explode(".", $map)[0]] = json_decode($json_data);
             }
         }
 

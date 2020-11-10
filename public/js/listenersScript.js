@@ -51,33 +51,6 @@ document.addEventListener("DOMContentLoaded", function() {
     MAP = new Map( mapX, mapY, MAP_CTX );
 });
 
-Array.from(document.getElementsByClassName("map-selection-list-item-radio")).forEach( ( e ) => {
-    e.addEventListener("click", ( e ) => {
-        const attributes = document.getElementById(e.target.id).parentElement.attributes;
-        const parentElement = document.getElementById(document.getElementById(e.target.id).parentElement.id);
-
-        COLUMNS_TO_LOAD = parseInt(attributes["columns"].value) + 1;
-        ROWS_TO_LOAD = parseInt(attributes["rows"].value) + 1;
-        GRID_TO_LOAD = attributes["grid"].value.split(',');
-
-        TILESHEET_TO_LOAD = attributes["tilesheet"].value
-        MAPNAME_TO_LOAD = parentElement.id;
-        if ( parentElement.getAttribute("neighbourhood") ) {
-            NEIGHBOURHOOD_TO_LOAD = parentElement.getAttribute("neighbourhood").split('.')[0];      
-            document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + parentElement.getAttribute("neighbourhood").split('.')[0];                  
-        }
-
-        document.getElementById("preview-map-tileset").innerText = "Tileset: " + attributes["tilesheet"].value
-        document.getElementById("preview-map-name").innerText = "Map name: " + parentElement.id;
-
-        PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
-        PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
-        PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
-        PREVIEW_MAP.setTileGrid( GRID_TO_LOAD );
-        PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[attributes["tilesheet"].value].src, PREVIEW_MAP.drawMapFromGridData );
-    })
-})
-
 Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
     e.addEventListener( 'click', ( e ) => { 
         clearOverviewWrapperElements( )
