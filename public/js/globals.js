@@ -41,6 +41,8 @@ let MOUSE_DRAG_RANGE = {
     END: null
 };
 
+let ALL_MAPS = {};
+
 let MAP_STORAGE = { 
     "neighbourhoods": null,
     "maps": null

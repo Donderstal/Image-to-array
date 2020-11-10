@@ -63,3 +63,19 @@ const flipTile = ( direction ) => {
     }
 }
 
+const setMapJSON = ( JSON ) => {
+    document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + JSON["mapName"].split('/')[0]
+    document.getElementById("preview-map-tileset").innerText = "Tileset: " + JSON["tileSet"]
+    document.getElementById("preview-map-name").innerText = "Map name: " + JSON["mapName"].split('/')[2];
+
+    ROWS_TO_LOAD = JSON.rows + 1;
+    COLUMNS_TO_LOAD = JSON.columns + 1;
+    GRID_TO_LOAD = ( typeof JSON.grid[0] == 'string' || JSON.grid[0] == 'number' ) ? JSON.grid : JSON.grid.flat()
+
+
+    PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
+    PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
+    PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
+    PREVIEW_MAP.setTileGrid( GRID_TO_LOAD );
+    PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[JSON["tileSet"]].src, PREVIEW_MAP.drawMapFromGridData );
+}

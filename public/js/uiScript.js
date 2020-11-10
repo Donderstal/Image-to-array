@@ -228,7 +228,15 @@ const addElementsToList = ( unorderedList, mapsObject, key ) => {
 
     let mapInput = document.createElement("input")
     mapInput.setAttribute( 'type', 'radio')
+    mapInput.setAttribute( "name", "load-map-preview")
+    mapInput.id = mapsObject["mapName"];
     mapInput.className = 'map-selection-list-item-radio'
+    MAP_STORAGE[mapsObject["mapName"]] = mapsObject
+
+    mapInput.addEventListener( "click", ( e ) => {
+        setMapJSON( MAP_STORAGE[e.target.id] );
+    })
+
     mapLi.append(mapInput)
 
     if ( mapsObject["subMaps"] ) {
