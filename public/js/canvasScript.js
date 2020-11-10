@@ -40,27 +40,37 @@ const clearMapGrid = ( ) => {
 }
 
 const mirrorTile = (  ) => {
+    document.getElementById('tile-mirrored-span').innerHTML =  "";
+    let mirroredTextNode = document.createTextNode("Mirrored: " + !SHEET.activeTileSettings.mirrored);
     SHEET.updateActiveTileSettings( 'mirrored', !SHEET.activeTileSettings.mirrored);
+    document.getElementById('tile-mirrored-span').append(mirroredTextNode);
 }
 
 const flipTile = ( direction ) => {
+    document.getElementById('tile-angle-span').innerHTML =  "";
+
     const isClockWise = direction == "Clockwise";
+    let newAngle;
     switch ( SHEET.activeTileSettings.angle ) {
         case 0: 
-            SHEET.updateActiveTileSettings('angle', isClockWise ? 90 : 270);
+            newAngle = isClockWise ? 90 : 270
             break;
         case 90:
-            SHEET.updateActiveTileSettings('angle', isClockWise ? 180 : 0);
+            newAngle = isClockWise ? 180 : 0;
             break;
         case 180:
-            SHEET.updateActiveTileSettings('angle', isClockWise ? 270 : 90);
+            newAngle =  isClockWise ? 270 : 90;
             break;
         case 270:
-            SHEET.updateActiveTileSettings('angle', isClockWise ? 0 : 180);
+            newAngle = isClockWise ? 0 : 180;
             break;
         default:
             alert('Error in flipping tile. Call the police!')
     }
+    SHEET.updateActiveTileSettings('angle', newAngle);
+
+    let angleTextNode = document.createTextNode("Angle: " + newAngle + "°");
+    document.getElementById('tile-angle-span').append(angleTextNode);
 }
 
 const setMapJSON = ( JSON ) => {
