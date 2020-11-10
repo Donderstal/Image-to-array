@@ -69,6 +69,7 @@ const loadMapToMapmaker = ( ) => {
     setTilesheet( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src )
     makeHiddenCanvasVisible( SHEET_CANVAS );
     makeHiddenCanvasVisible( MAP_CANVAS );
+    ON_MAPMAKER_PAGE = true;
 
     initMapCanvas( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
 
@@ -135,11 +136,14 @@ const prepareMapmaker = ( ) => {
     const mapName = document.getElementById("mapname-label").value;
     const neighbourhood = document.getElementById("neighbourhood-label").value;
 
+    ON_MAPMAKER_PAGE = true;
+
     setMapInformation( mapName, neighbourhood );    
     setMapGrid( rows, columns );
 }
 
 const unsetMapMaker = ( ) => {
+    ON_MAPMAKER_PAGE = false;
     unsetMapInformation( );
     unsetMapGrid( );
     unselectTileSheet( );

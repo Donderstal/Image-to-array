@@ -121,3 +121,20 @@ MAP_CANVAS.addEventListener('mousemove', (event) => {
 document.getElementById('arrow-flip-left').addEventListener( 'click', ( ) => { flipTile("Counter-clockwise") }, true )
 document.getElementById('arrow-flip-right').addEventListener( 'click', ( ) => { flipTile("Clockwise") }, true )
 document.getElementById('mirror-hori-icon').addEventListener( 'click', ( ) => { mirrorTile( ) }, true )
+
+document.addEventListener('keydown', ( e ) => {
+    if ( ON_MAPMAKER_PAGE ) {
+        // q
+        if ( e.keyCode == 81 ){
+            flipTile("Counter-clockwise")
+        }
+        // w
+        else if ( e.keyCode == 87 ) {
+            mirrorTile( )
+        }
+        // e
+        else if ( e.keyCode == 69 ){
+            flipTile("Clockwise")
+        }
+    }
+})
