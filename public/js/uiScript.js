@@ -184,3 +184,67 @@ const setMapInformation = ( mapName, neighbourhood ) => {
 const exportMapData = ( ) => {
     console.log(JSON.stringify(MAP.exportMapData( )));
 }
+
+
+const setUserMapsToPreview = ( ) => {
+    const neighbourhoods = MAP_STORAGE["neighbourhoods"];
+    const maps = MAP_STORAGE["maps"];
+
+    const filesWrapper = document.getElementsByClassName("load-maps-names-div")[0];
+
+    addTitleElementToLoadMapMenu("Neighbourhoods", filesWrapper)
+
+    Object.keys(neighbourhoods).forEach( key => {
+        let node = document.createElement("div")
+        node.className = "load-neighbourhood-from-server"
+        let textNode = document.createTextNode(key)
+        node.appendChild(textNode);
+        createListForJSONMaps( node, neighbourhoods[key] )
+        filesWrapper.append(node)
+    });
+
+    addTitleElementToLoadMapMenu("Individual maps", filesWrapper)
+
+    let node = document.createElement("div")
+    node.className = "load-maps-from-server"
+    createListForJSONMaps( node, maps )
+    filesWrapper.append(node)
+}
+
+const addTitleElementToLoadMapMenu = ( text, filesWrapper ) => {
+    let node = document.createElement("h6")
+    let textNode = document.createTextNode(text)
+    node.appendChild(textNode)
+    filesWrapper.appendChild(node)
+    filesWrapper.appendChild(document.createElement("hr"))
+}
+
+const addElementsToList = ( unorderedList, mapsObject, key ) => {
+    let mapLi = document.createElement("li");
+    mapLi.className = 'map-selection-list-item'
+
+    let textNode = document.createTextNode(key)
+    mapLi.appendChild(textNode);
+
+    let mapInput = document.createElement("input")
+    mapInput.setAttribute( 'type', 'radio')
+    mapInput.className = 'map-selection-list-item-radio'
+    mapLi.append(mapInput)
+
+    if ( mapsObject["subMaps"] ) {
+        createListForJSONMaps( mapLi, mapsObject["subMaps"] )
+    }
+
+    unorderedList.append(mapLi)
+}
+
+const createListForJSONMaps = ( parent, mapsObject ) => {
+    let unorderedList = document.createElement("ul")
+    unorderedList.className = "map-selection-list"
+
+    Object.keys(mapsObject).forEach( key => {
+        addElementsToList( unorderedList, mapsObject[key], key );
+    });
+
+    parent.appendChild(unorderedList);
+}

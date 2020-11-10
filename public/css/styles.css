@@ -85,7 +85,8 @@ h1 {
 }
 
 .map-selection-list-item-radio {
-    margin-top: .5vh
+    margin-top: .5vh;
+    float: right;
 }
 
 .preview-map-canvas {

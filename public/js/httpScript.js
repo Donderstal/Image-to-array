@@ -114,6 +114,7 @@ const MapCallback = ( data ) => {
     if ( responseJSON["get-user-maps-success"] ) {
         MAP_STORAGE["neighbourhoods"] = responseJSON["neighbourhoods"] 
         MAP_STORAGE["maps"] = responseJSON["maps"] 
+        setUserMapsToPreview( )
     } else if ( !responseJSON["get-user-maps-success"] ) {
         alert(responseJSON["error-message"])
     } 
