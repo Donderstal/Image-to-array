@@ -46,7 +46,8 @@ let ALL_MAPS = {};
 
 let HOOD_MANAGER_DATA = {
     ACTIVE: null,
-    HOODJSON: {}
+    HOODJSON: {},
+    EDITING_HOOD: false
 };
 
 let MAP_STORAGE = { 

@@ -45,6 +45,27 @@ const generateNeighbourhoodButtons = ( ) => {
     } )
 }
 
+const selectNeighbourhoodForManager = ( key ) => {
+    const allHoods = MAP_STORAGE["neighbourhoods"];
+
+    HOOD_MANAGER_DATA.ACTIVE = key;
+    HOOD_MANAGER_DATA.HOODJSON = allHoods[key];
+
+    
+    document.getElementById("current-neighbourhood-title").innerText = "Current: " + HOOD_MANAGER_DATA.ACTIVE
+
+    document.getElementsByClassName("edit-neighbourhood-controls-for-manager")[0].classList = "edit-neighbourhood-controls-for-manager";
+    document.getElementsByClassName("select-neighbourhood-controls-for-manager")[0].classList = "select-neighbourhood-controls-for-manager window-inactive";    
+}
+
+const unsetNeighbourhoodForManager =  ( ) => {
+    HOOD_MANAGER_DATA.ACTIVE = null
+    HOOD_MANAGER_DATA.HOODJSON = { };
+
+    document.getElementsByClassName("edit-neighbourhood-controls-for-manager")[0].classList = "edit-neighbourhood-controls-for-manager window-inactive";
+    document.getElementsByClassName("select-neighbourhood-controls-for-manager")[0].classList = "select-neighbourhood-controls-for-manager";    
+}
+
 const handleAddNeighbourhoodButton = ( ) => {
     const newHoodName = document.getElementById("add-neighbourhood-input").value;
     if ( confirm("Create a new neighbourhood named: '" + newHoodName + "'?") ) {
@@ -52,17 +73,19 @@ const handleAddNeighbourhoodButton = ( ) => {
         allHoods[newHoodName] = {};
         generateNeighbourhoodButtons()
     } 
+
+    return newHoodName;
 }
 
 const handleSelectNeighbourhoodInManagerClick = ( event ) => {
     const hoodId = event.target.id;
-    const allHoods = MAP_STORAGE["neighbourhoods"];
+    let key;
 
     if ( hoodId == "add-neighbourhood-button" ) {
-        handleAddNeighbourhoodButton( )
+        key = handleAddNeighbourhoodButton( )
     } else {
-        const key = hoodId.replace("manage-", "")
-        HOOD_MANAGER_DATA.ACTIVE = key;
-        HOOD_MANAGER_DATA.HOODJSON = allHoods[key];
+        key = hoodId.replace("manage-", "")
     }
+
+    selectNeighbourhoodForManager(key)
 }

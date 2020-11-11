@@ -138,3 +138,5 @@ document.addEventListener('keydown', ( e ) => {
         }
     }
 })
+
+document.getElementById("return-to-hood-selection").addEventListener( 'click', unsetNeighbourhoodForManager)
