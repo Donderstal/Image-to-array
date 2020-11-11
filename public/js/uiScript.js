@@ -23,6 +23,17 @@ const switchView = ( event ) => {
         case "new-map-button" : 
             nextScreen = "mapmaker-new-map-div";
             className = "row window window-active";
+            const activeHoods = MAP_STORAGE["neighbourhoods"];
+
+            document.getElementById('neighbourhood-select-tag').innerHTML = "<option value='null'>None</option>";
+            Object.keys(activeHoods).forEach(key => {
+                let option = document.createElement('option')
+                option.setAttribute( 'value', key)
+                option.appendChild(document.createTextNode(key))
+                console.log(key)
+                document.getElementById('neighbourhood-select-tag').append(option)
+            })
+            
             break;
         case "start-new-map-button" : 
             if ( mapMakerDataIsSet( ) ) {
@@ -34,6 +45,10 @@ const switchView = ( event ) => {
             else {
                 return;
             }
+        case "manage-neighbourhoods-button" : 
+            nextScreen = "neighbourhood-manager-div";
+            className = "row window window-active";
+            break;
         case "map-overview-button" : 
             nextScreen = "map-overview-div";
             className = "row window window-active";
@@ -235,10 +250,10 @@ const addElementsToList = ( unorderedList, mapsObject, key ) => {
     mapInput.setAttribute( "name", "load-map-preview")
     mapInput.id = mapsObject["mapName"];
     mapInput.className = 'map-selection-list-item-radio'
-    MAP_STORAGE[mapsObject["mapName"]] = mapsObject
+    ALL_MAPS[mapsObject["mapName"]] = mapsObject
 
     mapInput.addEventListener( "click", ( e ) => {
-        setMapJSON( MAP_STORAGE[e.target.id] );
+        setMapJSON( ALL_MAPS[e.target.id] );
     })
 
     mapLi.append(mapInput)
