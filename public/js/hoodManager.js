@@ -22,6 +22,7 @@ const generateNeighbourhoodButtons = ( ) => {
     let newHoodInput = document.createElement('input')
     newHoodInput.setAttribute( 'type', 'text' );
     newHoodInput.setAttribute( 'placeholder', 'Create new' );
+    newHoodInput.id = "add-neighbourhood-input"
     newHoodInput.className  = "form-control";
 
     let innerNewHoodDiv = document.createElement('div')
@@ -44,12 +45,21 @@ const generateNeighbourhoodButtons = ( ) => {
     } )
 }
 
+const handleAddNeighbourhoodButton = ( ) => {
+    const newHoodName = document.getElementById("add-neighbourhood-input").value;
+    if ( confirm("Create a new neighbourhood named: '" + newHoodName + "'?") ) {
+        const allHoods = MAP_STORAGE["neighbourhoods"];
+        allHoods[newHoodName] = {};
+        generateNeighbourhoodButtons()
+    } 
+}
+
 const handleSelectNeighbourhoodInManagerClick = ( event ) => {
     const hoodId = event.target.id;
     const allHoods = MAP_STORAGE["neighbourhoods"];
-    console.log(event.target)
+
     if ( hoodId == "add-neighbourhood-button" ) {
-        alert('new neighbourhood bruh!')
+        handleAddNeighbourhoodButton( )
     } else {
         const key = hoodId.replace("manage-", "")
         HOOD_MANAGER_DATA.ACTIVE = key;
