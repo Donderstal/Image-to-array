@@ -44,6 +44,11 @@ let MOUSE_DRAG_RANGE = {
 
 let ALL_MAPS = {};
 
+let HOOD_MANAGER_DATA = {
+    ACTIVE: null,
+    HOODJSON: {}
+};
+
 let MAP_STORAGE = { 
     "neighbourhoods": null,
     "maps": null
