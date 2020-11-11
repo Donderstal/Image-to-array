@@ -24,6 +24,7 @@
     }
     require $VIEWS_FOLDER . 'newmap.html';
     require $VIEWS_FOLDER . 'mapoverview.phtml';
+    require $VIEWS_FOLDER . 'neighbourhoodsmanager.html';
  
     require $APP_FOLDER . 'foot.phtml';
 ?>
