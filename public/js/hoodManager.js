@@ -48,14 +48,27 @@ const generateNeighbourhoodButtons = ( ) => {
 const setNeighbourhoodToManagerCanvas = ( ) => {
     HOOD_MANAGER_DATA.STRIPPED_JSON = { };
 
-    Object.keys( HOOD_MANAGER_DATA.HOODJSON ).forEach( key, index => {
+    Object.keys( HOOD_MANAGER_DATA.HOODJSON ).forEach( ( key ) => {
         HOOD_MANAGER_DATA.STRIPPED_JSON[key] = {
             mapName: HOOD_MANAGER_DATA.HOODJSON[key].mapName,
             neighbours: HOOD_MANAGER_DATA.HOODJSON[key].neighbours,
-            subMaps: HOOD_MANAGER_DATA.HOODJSON[key].subMaps,
+            subMaps: {},
             doors: HOOD_MANAGER_DATA.HOODJSON[key].doors
         }
+
+        if ( HOOD_MANAGER_DATA.HOODJSON[key].subMaps ) {
+            Object.keys( HOOD_MANAGER_DATA.HOODJSON[key].subMaps ).forEach( ( innerKey ) => {
+                HOOD_MANAGER_DATA.STRIPPED_JSON[key].subMaps[innerKey] = {
+                    mapName: HOOD_MANAGER_DATA.HOODJSON[key].subMaps[innerKey].mapName,
+                    neighbours: HOOD_MANAGER_DATA.HOODJSON[key].subMaps[innerKey].neighbours,
+                    subMaps: HOOD_MANAGER_DATA.HOODJSON[key].subMaps[innerKey].subMaps,
+                    doors: HOOD_MANAGER_DATA.HOODJSON[key].subMaps[innerKey].doors
+                }
+            })            
+        }
     })
+
+    document.getElementById("json-container").textContent = JSON.stringify(HOOD_MANAGER_DATA.STRIPPED_JSON, undefined, 2);
 }
 
 const selectNeighbourhoodForManager = ( key ) => {
@@ -63,7 +76,6 @@ const selectNeighbourhoodForManager = ( key ) => {
 
     HOOD_MANAGER_DATA.ACTIVE = key;
     HOOD_MANAGER_DATA.HOODJSON = allHoods[key];
-
     
     document.getElementById("current-neighbourhood-title").innerText = "Current: " + HOOD_MANAGER_DATA.ACTIVE
 
