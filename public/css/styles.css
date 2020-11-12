@@ -185,3 +185,8 @@ body {
     display: block;
     margin: auto;
 }
+
+.neighbourhood-manager-canvas {
+    width: 100%;
+    height: 100%;
+}

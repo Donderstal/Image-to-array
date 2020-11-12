@@ -16,6 +16,9 @@ const OVERVIEW_CANVAS_WRAPPER =  document.querySelector('.map-overview-canvas-wr
 const OVERVIEW_INFO_WRAPPER = document.querySelector('.map-overview-info-wrapper');
 const OVERVIEW_BUTTONS_WRAPPER = document.querySelector('.map-overview-buttons-wrapper');
 
+const MANAGER_CANVAS = document.getElementById("neighbourhood-manager-canvas");
+const MANAGER_CTX = MANAGER_CANVAS.getContext("2d");
+
 let SHEET;
 let MAP;
 let PREVIEW_MAP;

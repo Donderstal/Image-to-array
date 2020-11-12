@@ -48,7 +48,7 @@ const switchView = ( event ) => {
         case "manage-neighbourhoods-button" : 
             prepareNeighbourhoodManager( )
             nextScreen = "neighbourhood-manager-div";
-            className = "row window window-active";
+            className = "row window window-active my-auto p-2 h-100";
             break;
         case "map-overview-button" : 
             nextScreen = "map-overview-div";

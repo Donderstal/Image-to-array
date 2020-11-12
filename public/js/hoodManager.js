@@ -45,6 +45,19 @@ const generateNeighbourhoodButtons = ( ) => {
     } )
 }
 
+const setNeighbourhoodToManagerCanvas = ( ) => {
+    HOOD_MANAGER_DATA.STRIPPED_JSON = { };
+
+    Object.keys( HOOD_MANAGER_DATA.HOODJSON ).forEach( key, index => {
+        HOOD_MANAGER_DATA.STRIPPED_JSON[key] = {
+            mapName: HOOD_MANAGER_DATA.HOODJSON[key].mapName,
+            neighbours: HOOD_MANAGER_DATA.HOODJSON[key].neighbours,
+            subMaps: HOOD_MANAGER_DATA.HOODJSON[key].subMaps,
+            doors: HOOD_MANAGER_DATA.HOODJSON[key].doors
+        }
+    })
+}
+
 const selectNeighbourhoodForManager = ( key ) => {
     const allHoods = MAP_STORAGE["neighbourhoods"];
 
@@ -55,7 +68,9 @@ const selectNeighbourhoodForManager = ( key ) => {
     document.getElementById("current-neighbourhood-title").innerText = "Current: " + HOOD_MANAGER_DATA.ACTIVE
 
     document.getElementsByClassName("edit-neighbourhood-controls-for-manager")[0].classList = "edit-neighbourhood-controls-for-manager";
-    document.getElementsByClassName("select-neighbourhood-controls-for-manager")[0].classList = "select-neighbourhood-controls-for-manager window-inactive";    
+    document.getElementsByClassName("select-neighbourhood-controls-for-manager")[0].classList = "select-neighbourhood-controls-for-manager window-inactive";   
+    
+    setNeighbourhoodToManagerCanvas(  )
 }
 
 const unsetNeighbourhoodForManager =  ( ) => {
