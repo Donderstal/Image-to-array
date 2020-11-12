@@ -91,6 +91,7 @@ const unsetNeighbourhoodForManager =  ( ) => {
 
     document.getElementsByClassName("edit-neighbourhood-controls-for-manager")[0].classList = "edit-neighbourhood-controls-for-manager window-inactive";
     document.getElementsByClassName("select-neighbourhood-controls-for-manager")[0].classList = "select-neighbourhood-controls-for-manager";    
+    document.getElementById("json-container").textContent = ""
 }
 
 const handleAddNeighbourhoodButton = ( ) => {
