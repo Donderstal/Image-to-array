@@ -150,7 +150,7 @@ const prepareMapmaker = ( ) => {
     const rows = document.getElementById('rows-input').value;
     const columns = document.getElementById('columns-input').value;
     const mapName = document.getElementById("mapname-label").value;
-    const neighbourhood = document.getElementById("neighbourhood-label").value;
+    const neighbourhood = document.getElementById("neighbourhood-select-tag").value;
 
     ON_MAPMAKER_PAGE = true;
 
