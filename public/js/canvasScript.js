@@ -93,3 +93,22 @@ const setMapJSON = ( JSON ) => {
     PREVIEW_MAP.setTileGrid( GRID_TO_LOAD );
     PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, PREVIEW_MAP.drawMapFromGridData );
 }
+
+const generatePNGCanvasElements = ( ) => {
+    const wrapper = document.getElementById('pngs-div')
+
+    PNG_FILES["characters"].forEach( ( e ) => {
+        const image = new Image( );
+        image.src = "/png-files/sprites/" + e;
+        image.onload = ( ) => {
+            const canvas = document.createElement('canvas');
+            canvas.className = "visible-canvas"
+            canvas.width = 64;
+            canvas.height = 112;
+            const ctx = canvas.getContext("2d")
+            ctx.drawImage( image, 0, 0, 64, 112, 0, 0, 64, 112)
+            wrapper.append(canvas)            
+        }
+
+    })
+}

@@ -117,7 +117,8 @@ const MapCallback = ( data ) => {
 
         PNG_FILES["characters"] = Object.values(responseJSON["characters"]);
         PNG_FILES["objects"] = Object.values(responseJSON["objects"]);
-        setUserMapsToPreview( )
+        setUserMapsToPreview( );
+        generatePNGCanvasElements( );
     } else if ( !responseJSON["get-user-maps-success"] ) {
         alert(responseJSON["error-message"])
     } 
