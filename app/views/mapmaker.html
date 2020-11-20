@@ -27,7 +27,7 @@
                         <label for="map-objects-mode">Map objects</label>
                       </div>
                 </div>
-                <div class="mb-3">
+                <div id="selected-tile-div" class="mb-3">
                     <h3>Selected tile:</h3>
                     <div>
                         <img id="arrow-flip-left" src="/png-files/curved-arrow.png" title="Click or press the Q key to flip the tile to the left" class='flip-tile-png arrow-left'/>
@@ -46,6 +46,12 @@
 
                     <br>  
                 </div>   
+                <div id="selected-sprite-div" class="mb-3"> 
+                    <h3>Selected sprite:</h3>
+                    <canvas id="selected-sprite-canvas" class="selected-tile-canvas visible-canvas">
+
+                    </canvas>
+                </div>
                 <form id="save-map-form" class="pt-3 mb-3">
                     <button id="save-map-button" class="btn btn-outline-success">Save map</button>
                 </form>             

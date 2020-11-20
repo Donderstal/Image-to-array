@@ -60,6 +60,9 @@ let PNG_FILES = {
     "objects": null
 };
 
+let MAPMAKER_IN_TILE_MODE = true;
+let MAPMAKER_IN_OBJECT_MODE = false;
+
 const TILE_SIZE = 32;
 
 const MAX_ROWS = 16;

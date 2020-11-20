@@ -140,3 +140,35 @@ document.addEventListener('keydown', ( e ) => {
 })
 
 document.getElementById("return-to-hood-selection").addEventListener( 'click', unsetNeighbourhoodForManager)
+
+document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
+    MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
+    MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
+
+    document.getElementById("pngs-div").style.visibility = "hidden";
+    document.getElementById("pngs-div").style.display = "none";
+
+    document.getElementById("selected-sprite-div").style.visibility = "hidden";
+    document.getElementById("selected-sprite-div").style.display = "none";
+
+    document.getElementById("selected-tile-div").style.visibility = "visible";
+    document.getElementById("selected-tile-div").style.display = "block";
+    
+    document.getElementById("tilesheet-div").style.visibility = "visible";
+    document.getElementById("tilesheet-div").style.display = "block";
+}, true )
+
+document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
+    MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
+    MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
+
+    document.getElementById("tilesheet-div").style.visibility = "hidden";
+    document.getElementById("tilesheet-div").style.display = "none";
+    document.getElementById("selected-tile-div").style.visibility = "hidden";
+    document.getElementById("selected-tile-div").style.display = "none";
+
+    document.getElementById("selected-sprite-div").style.visibility = "visible";
+    document.getElementById("selected-sprite-div").style.display = "block";
+    document.getElementById("pngs-div").style.visibility = "visible";
+    document.getElementById("pngs-div").style.display = "block";
+}, true )
