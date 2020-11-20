@@ -39,6 +39,14 @@
         }
     }
 
+    function getCharacterSprites( ) {
+        return array_diff( scandir($_SERVER['DOCUMENT_ROOT'].'/png-files'.'/sprites'), array('..', '.') );
+    }
+
+    function getMapObjects( ) {
+        return array_diff( scandir($_SERVER['DOCUMENT_ROOT'].'/png-files'.'/sprite-assets'), array('..', '.') );
+    }
+
     function GetUserJSONFilesIfLoggedIn( ) {
         $neighbourhoods_path = '/user-folders' . '/' .$_SESSION["username"]. '/neighbourhoods';
         $maps_path = '/user-folders'  . '/' .str_replace( " ", "_", $_SESSION["username"] ). '/maps';
@@ -85,6 +93,8 @@
 
         $Return_Arr["neighbourhoods"] = $neighbourhoods;
         $Return_Arr["maps"] = $maps;
+        $Return_Arr["characters"] = getCharacterSprites( );
+        $Return_Arr["objects"] = getMapObjects( );
         echo json_encode($Return_Arr);
     }
 ?>

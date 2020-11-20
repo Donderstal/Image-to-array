@@ -55,6 +55,11 @@ let MAP_STORAGE = {
     "maps": null
 };
 
+let PNG_FILES = { 
+    "characters": null,
+    "objects": null
+};
+
 const TILE_SIZE = 32;
 
 const MAX_ROWS = 16;
