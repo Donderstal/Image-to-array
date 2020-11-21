@@ -94,8 +94,39 @@ const setMapJSON = ( JSON ) => {
     PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, PREVIEW_MAP.drawMapFromGridData );
 }
 
+const drawSpriteFromCanvasToSelectedSpriteCanvas = ( ) => {
+    const currentSpriteCtx = document.getElementById('selected-sprite-canvas').getContext('2d')
+    currentSpriteCtx.clearRect( 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT );    
+    let sourceY
+    
+    switch( SELECTED_SPRITE_POSITION ) {
+        case 'FACING_DOWN':
+            sourceY = 0;
+            break;
+        case 'FACING_LEFT':
+            sourceY = STRD_SPRITE_HEIGHT
+            break;
+        case 'FACING_RIGHT':
+            sourceY = STRD_SPRITE_HEIGHT *  2
+            break;
+        case 'FACING UP':
+            sourceY = STRD_SPRITE_HEIGHT * 3
+            break;
+    }
+
+    currentSpriteCtx.drawImage( 
+        document.getElementById(SELECTED_SPRITE).image, 
+        0, sourceY, 
+        STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, 
+        0, 0, 
+        STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT
+    )
+}
+
 const generatePNGCanvasElements = ( ) => {
     const wrapper = document.getElementById('pngs-div')
+    document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
+    document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
 
     PNG_FILES["characters"].forEach( ( e ) => {
         const image = new Image( );
@@ -103,10 +134,21 @@ const generatePNGCanvasElements = ( ) => {
         image.onload = ( ) => {
             const canvas = document.createElement('canvas');
             canvas.className = "visible-canvas"
-            canvas.width = 64;
-            canvas.height = 112;
+            canvas.id = e
+            canvas.width = STRD_SPRITE_WIDTH;
+            canvas.height = STRD_SPRITE_HEIGHT;
+            canvas.image = image;
+            
             const ctx = canvas.getContext("2d")
-            ctx.drawImage( image, 0, 0, 64, 112, 0, 0, 64, 112)
+            ctx.drawImage( image, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT)
+
+            canvas.addEventListener( 'click', ( e ) => {
+                SELECTED_SPRITE = e.target.id;
+                SELECTED_SPRITE_POSITION = 'FACING_DOWN';
+
+                drawSpriteFromCanvasToSelectedSpriteCanvas( );
+            })
+
             wrapper.append(canvas)            
         }
 

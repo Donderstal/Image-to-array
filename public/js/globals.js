@@ -16,6 +16,11 @@ const OVERVIEW_CANVAS_WRAPPER =  document.querySelector('.map-overview-canvas-wr
 const OVERVIEW_INFO_WRAPPER = document.querySelector('.map-overview-info-wrapper');
 const OVERVIEW_BUTTONS_WRAPPER = document.querySelector('.map-overview-buttons-wrapper');
 
+const STRD_SPRITE_WIDTH = 64;
+const STRD_SPRITE_HEIGHT = 112;
+let SELECTED_SPRITE;
+let SELECTED_SPRITE_POSITION;
+
 let SHEET;
 let MAP;
 let PREVIEW_MAP;
