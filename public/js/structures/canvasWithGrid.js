@@ -165,11 +165,9 @@ class ObjectsGrid extends CanvasWithGrid {
     };
     setCharacters( characters ) {
         this.characters = characters;
-        console.log(characters)
     }
     setObjects( objects ) {
         this.objects = objects;
-        console.log(objects)
     }
     placeSpriteAtXY(x, y) {
         console.log(this)
@@ -183,5 +181,67 @@ class ObjectsGrid extends CanvasWithGrid {
         if ( this.objects ) {
             this.drawObjects( );            
         }
+    }
+    drawCharacters( ) {
+        this.characters.forEach( ( e ) => {
+            if ( e.type == "walking") {
+                const cell = { 'row': e.lastPosition.row, 'col': e.lastPosition.col }
+                
+            }
+            else if ( e.type == "idle") {
+                const cell = { 'row': e.row, 'col': e.col }
+                const destinationX = ( cell.col * TILE_SIZE );
+                const destinationY = ( cell.row * TILE_SIZE ) - TILE_SIZE;
+
+                let sourceY;        
+                switch( e.direction ) {
+                    case 'FACING_DOWN':
+                        sourceY = 0;
+                        break;
+                    case 'FACING_LEFT':
+                        sourceY = STRD_SPRITE_HEIGHT
+                        break;
+                    case 'FACING_RIGHT':
+                        sourceY = STRD_SPRITE_HEIGHT *  2
+                        break;
+                    case 'FACING_UP':
+                        sourceY = STRD_SPRITE_HEIGHT * 3
+                        break;
+                }
+                const image = new Image( );
+                image.src = '/png-files/sprites/' + e.sprite
+                console.log(image.src)
+                image.onload = ( ) => {
+                    console.log('loaded ' + image.src )
+                    this.ctx.drawImage( 
+                        image, 
+                        0, sourceY, 
+                        STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
+                        destinationX, destinationY, 
+                        STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
+                    )
+                }
+            }
+        })
+    }
+    drawObjects( ) {
+        this.objects.forEach( ( e ) => {
+            console.log(e)
+            const destinationX = ( e.col * TILE_SIZE );
+            const destinationY = ( e.row * TILE_SIZE );
+            const image = new Image( );
+            image.src = '/png-files/sprite-assets/' + e.type + '.png'
+            console.log(image.src)
+            image.onload = ( ) => {
+                console.log('loaded ' + image.src )
+                this.ctx.drawImage( 
+                    image, 
+                    0, 0, 
+                    image.width, image.height,
+                    destinationX, destinationY - (image.height / 2), 
+                    image.width / 2, image.height / 2
+                )
+            }
+        })
     }
 }

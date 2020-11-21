@@ -87,13 +87,12 @@ const loadMapToMapmaker = ( ) => {
     makeHiddenCanvasVisible( MAP_CANVAS );
     ON_MAPMAKER_PAGE = true;
 
+    MAP_FOREGROUND.setCharacters( CHARACTERS_TO_LOAD );
+    MAP_FOREGROUND.setObjects( OBJECTS_TO_LOAD );
     initMapCanvas( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
 
     MAP.setNeighbourhood( NEIGHBOURHOOD_TO_LOAD );
     MAP.setMapName( MAPNAME_TO_LOAD );
-
-    MAP_FOREGROUND.setCharacters( CHARACTERS_TO_LOAD );
-    MAP_FOREGROUND.setObjects( OBJECTS_TO_LOAD );
     
     setTextContentOfElements( { 
         "mapname-span": MAPNAME_TO_LOAD, "neighbourhood-span": NEIGHBOURHOOD_TO_LOAD, 
