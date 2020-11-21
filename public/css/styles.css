@@ -71,6 +71,8 @@ h1 {
 .mapmaker-column {
     height: 90vh;
     overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .load-map-modal {
@@ -118,6 +120,8 @@ h1 {
 
 .load-maps-names-div {
     overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
     max-height: 80vh;
 }
 
@@ -127,6 +131,8 @@ h1 {
 
 .map-overview-canvas-wrapper, .map-overview-info-wrapper, .map-overview-buttons-wrapper {
     overflow: hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
     white-space: nowrap;
 }
 
@@ -160,6 +166,8 @@ h1 {
 
 body {
     overflow: hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .flip-tile-png, .mirror-tile {
