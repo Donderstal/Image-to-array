@@ -24,7 +24,17 @@
                       </div>
                       <div>
                         <input type="radio" id="map-objects-mode" name="mapmaker-mode" value="map-objects-mode">
-                        <label for="map-objects-mode">Map objects</label>
+                        <label for="map-objects-mode">Sprite mode</label>
+                        <div id="map-objects-options-div"> 
+                            <div>
+                                <input type="radio" id="show-map-objects" name="map-objects-options" value="show-maps-mode" checked>
+                                <label for="show-maps-mode">Object sprites</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="show-character-sprites" name="map-objects-options" value="show-character-sprites">
+                                <label for="show-character-sprites">Character sprites</label>
+                            </div>
+                        </div>
                       </div>
                 </div>
                 <div id="selected-tile-div" class="mb-3">
@@ -78,7 +88,10 @@
             <div id="tilesheet-div" class="list-container">
                 <canvas id="tilesheet-canvas" class="border border-info invisible-canvas"></canvas>
             </div>  
-            <div id="pngs-div" class="list-container">
+            <div id="character-sprite-pngs-div" class="list-container">
+                
+            </div>
+            <div id="map-objects-pngs-div" class="list-container">
                 
             </div>
         </div> 

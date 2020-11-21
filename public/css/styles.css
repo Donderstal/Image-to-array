@@ -3,6 +3,11 @@
     margin: 0 auto;
 }
 
+#map-objects-options-div, #map-objects-pngs-div, #character-sprite-pngs-div {
+    display: none;
+    visibility: hidden;
+}
+
 .header-inner {
     margin-top: 1vh;
     margin-bottom: 1vh;
