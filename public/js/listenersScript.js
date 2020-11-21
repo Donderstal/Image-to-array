@@ -137,7 +137,7 @@ document.addEventListener('keydown', ( e ) => {
             flipTile("Clockwise")
         }
     }
-    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE ) {
+    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE && IN_SHOW_CHARACTER_SPRITES_MODE ) {
         // q
         if ( e.keyCode == 81 ){
             turnSelectedSprite("FACING_LEFT")
@@ -159,8 +159,13 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
     MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
     MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
 
-    document.getElementById("pngs-div").style.visibility = "hidden";
-    document.getElementById("pngs-div").style.display = "none";
+    document.getElementById("map-objects-options-div").style.visibility = "hidden";
+    document.getElementById("map-objects-options-div").style.display = "none";
+    
+    document.getElementById("character-sprite-pngs-div").style.visibility = "hidden";
+    document.getElementById("character-sprite-pngs-div").style.display = "none";
+    document.getElementById("map-objects-pngs-div").style.visibility = "hidden";
+    document.getElementById("map-objects-pngs-div").style.display = "none";
 
     document.getElementById("selected-sprite-div").style.visibility = "hidden";
     document.getElementById("selected-sprite-div").style.display = "none";
@@ -176,6 +181,12 @@ document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
     MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
     MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
 
+    IN_SHOW_CHARACTER_SPRITES_MODE = false;
+    IN_SHOW_MAP_OBJECTS_MODE = true;
+
+    document.getElementById("map-objects-options-div").style.visibility = "visible";
+    document.getElementById("map-objects-options-div").style.display = "block";
+
     document.getElementById("tilesheet-div").style.visibility = "hidden";
     document.getElementById("tilesheet-div").style.display = "none";
     document.getElementById("selected-tile-div").style.visibility = "hidden";
@@ -183,6 +194,40 @@ document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
 
     document.getElementById("selected-sprite-div").style.visibility = "visible";
     document.getElementById("selected-sprite-div").style.display = "block";
-    document.getElementById("pngs-div").style.visibility = "visible";
-    document.getElementById("pngs-div").style.display = "block";
+    document.getElementById("map-objects-pngs-div").style.visibility = "visible";
+    document.getElementById("map-objects-pngs-div").style.display = "block";
+}, true )
+
+document.getElementById("show-character-sprites").addEventListener( 'click', ( ) => {
+    if ( !IN_SHOW_CHARACTER_SPRITES_MODE ) {
+        IN_SHOW_CHARACTER_SPRITES_MODE = !IN_SHOW_CHARACTER_SPRITES_MODE;
+        IN_SHOW_MAP_OBJECTS_MODE = !IN_SHOW_MAP_OBJECTS_MODE;
+
+        const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
+        const currentSpriteCtx = currentSpriteCanvas.getContext('2d')      
+        currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
+            
+        document.getElementById("character-sprite-pngs-div").style.visibility = "visible";
+        document.getElementById("character-sprite-pngs-div").style.display = "block";
+
+        document.getElementById("map-objects-pngs-div").style.visibility = "hidden";
+        document.getElementById("map-objects-pngs-div").style.display = "none";
+    }
+}, true )
+
+document.getElementById("show-map-objects").addEventListener( 'click', ( ) => {
+    if ( !IN_SHOW_MAP_OBJECTS_MODE ) {
+        IN_SHOW_CHARACTER_SPRITES_MODE = !IN_SHOW_CHARACTER_SPRITES_MODE;
+        IN_SHOW_MAP_OBJECTS_MODE = !IN_SHOW_MAP_OBJECTS_MODE;
+
+        const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
+        const currentSpriteCtx = currentSpriteCanvas.getContext('2d')        
+        currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
+
+        document.getElementById("map-objects-pngs-div").style.visibility = "visible";
+        document.getElementById("map-objects-pngs-div").style.display = "block";
+            
+        document.getElementById("character-sprite-pngs-div").style.visibility = "hidden";
+        document.getElementById("character-sprite-pngs-div").style.display = "none";
+    }
 }, true )
