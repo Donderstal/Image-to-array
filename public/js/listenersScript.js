@@ -123,7 +123,7 @@ document.getElementById('arrow-flip-right').addEventListener( 'click', ( ) => { 
 document.getElementById('mirror-hori-icon').addEventListener( 'click', ( ) => { mirrorTile( ) }, true )
 
 document.addEventListener('keydown', ( e ) => {
-    if ( ON_MAPMAKER_PAGE ) {
+    if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_TILE_MODE ) {
         // q
         if ( e.keyCode == 81 ){
             flipTile("Counter-clockwise")
@@ -135,6 +135,20 @@ document.addEventListener('keydown', ( e ) => {
         // e
         else if ( e.keyCode == 69 ){
             flipTile("Clockwise")
+        }
+    }
+    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE ) {
+        // q
+        if ( e.keyCode == 81 ){
+            turnSelectedSprite("FACING_LEFT")
+        }
+        // w
+        else if ( e.keyCode == 87 ) {
+            turnSelectedSprite( SELECTED_SPRITE_POSITION == "FACING_UP" ? "FACING_DOWN" : "FACING_UP" )
+        }
+        // e
+        else if ( e.keyCode == 69 ){
+            turnSelectedSprite('FACING_RIGHT')
         }
     }
 })

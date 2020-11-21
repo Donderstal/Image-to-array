@@ -109,7 +109,7 @@ const drawSpriteFromCanvasToSelectedSpriteCanvas = ( ) => {
         case 'FACING_RIGHT':
             sourceY = STRD_SPRITE_HEIGHT *  2
             break;
-        case 'FACING UP':
+        case 'FACING_UP':
             sourceY = STRD_SPRITE_HEIGHT * 3
             break;
     }
@@ -121,6 +121,11 @@ const drawSpriteFromCanvasToSelectedSpriteCanvas = ( ) => {
         0, 0, 
         STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT
     )
+}
+
+const turnSelectedSprite = ( direction ) => {
+    SELECTED_SPRITE_POSITION = direction;
+    drawSpriteFromCanvasToSelectedSpriteCanvas( );
 }
 
 const generatePNGCanvasElements = ( ) => {
