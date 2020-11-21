@@ -128,10 +128,25 @@ const turnSelectedSprite = ( direction ) => {
     drawSpriteFromCanvasToSelectedSpriteCanvas( );
 }
 
+const drawMapObjectFromCanvasToSelectedSpriteCanvas = ( ) => {
+    const imageWidth = document.getElementById(SELECTED_SPRITE).width;
+    const imageHeight = document.getElementById(SELECTED_SPRITE).height;
+    const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
+    const currentSpriteCtx = currentSpriteCanvas.getContext('2d')
+    currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
+  
+    currentSpriteCtx.drawImage( 
+        document.getElementById(SELECTED_SPRITE).image, 
+        0, 0, 
+        imageWidth, imageHeight, 
+        0, 0, 
+        imageWidth, imageHeight
+    )
+}
+
 const generatePNGCanvasElements = ( ) => {
-    const wrapper = document.getElementById('pngs-div')
-    document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
-    document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
+    const charactersWrapper = document.getElementById('character-sprite-pngs-div');
+    const objectsWrapper = document.getElementById('map-objects-pngs-div');
 
     PNG_FILES["characters"].forEach( ( e ) => {
         const image = new Image( );
@@ -148,14 +163,39 @@ const generatePNGCanvasElements = ( ) => {
             ctx.drawImage( image, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT)
 
             canvas.addEventListener( 'click', ( e ) => {
+                document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
+                document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
                 SELECTED_SPRITE = e.target.id;
                 SELECTED_SPRITE_POSITION = 'FACING_DOWN';
 
                 drawSpriteFromCanvasToSelectedSpriteCanvas( );
-            })
+            });
+            charactersWrapper.append(canvas)            
+        };
+    });
 
-            wrapper.append(canvas)            
-        }
+    PNG_FILES["objects"].forEach( ( e ) => {
+        const image = new Image( );
+        image.src = "/png-files/sprite-assets/" + e;
+        image.onload =( ) => {
+            const canvas = document.createElement('canvas');
+            canvas.className = "visible-canvas mb-2"
+            canvas.id = e
+            canvas.width = image.width;
+            canvas.height = image.height;
+            canvas.image = image;
+            
+            const ctx = canvas.getContext("2d")
+            ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height)
 
-    })
+            canvas.addEventListener( 'click', ( e ) => {
+                SELECTED_SPRITE = e.target.id;
+
+                drawMapObjectFromCanvasToSelectedSpriteCanvas( );
+            });
+            objectsWrapper.append(canvas)            
+        };
+    });
+
+    document.getElementById('character-sprite-pngs-div')
 }
