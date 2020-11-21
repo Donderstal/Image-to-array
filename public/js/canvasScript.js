@@ -140,6 +140,8 @@ const drawMapObjectFromCanvasToSelectedSpriteCanvas = ( ) => {
     const imageHeight = document.getElementById(SELECTED_SPRITE).height;
     const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
     const currentSpriteCtx = currentSpriteCanvas.getContext('2d')
+    currentSpriteCanvas.height = imageHeight;
+    currentSpriteCanvas.width = imageWidth;
     currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
   
     currentSpriteCtx.drawImage( 
@@ -147,7 +149,7 @@ const drawMapObjectFromCanvasToSelectedSpriteCanvas = ( ) => {
         0, 0, 
         imageWidth, imageHeight, 
         0, 0, 
-        imageWidth, imageHeight
+        currentSpriteCanvas.width, currentSpriteCanvas.height
     )
 }
 

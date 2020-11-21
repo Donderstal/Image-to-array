@@ -166,6 +166,9 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
     MAP_FOREGROUND_CANVAS.style.visibility = "hidden";
     MAP_FOREGROUND_CANVAS.style.display = "none";
     
+    document.getElementById("map-canvas").style.pointerEvents = "auto"
+    document.getElementById("map-foreground-canvas").style.pointerEvents = "none"
+    
     document.getElementById("map-objects-options-div").style.visibility = "hidden";
     document.getElementById("map-objects-options-div").style.display = "none";
     
@@ -193,6 +196,9 @@ document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
 
     MAP_FOREGROUND_CANVAS.style.visibility = "visible";
     MAP_FOREGROUND_CANVAS.style.display = "block";
+
+    document.getElementById("map-canvas").style.pointerEvents = "none"
+    document.getElementById("map-foreground-canvas").style.pointerEvents = "auto"
 
     document.getElementById("map-objects-options-div").style.visibility = "visible";
     document.getElementById("map-objects-options-div").style.display = "block";

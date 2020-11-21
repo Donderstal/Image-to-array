@@ -4,19 +4,14 @@
         <!-- Current map data -->
         <div class="col-sm-2 mapmaker-column">   
             <div style="position: fixed;">
-                <div>
-                    <h2>Current map data</h2>
-                    <hr/>
-                </div>
-                <div>
-                    <h3>Information:</h3>
+                <div style='display:none;visibility:hidden;'>
                     <p>Mapname: <span id="mapname-span"> null </span> </p>             
                     <p>Neighbourhood: <span id="neighbourhood-span"> null </span> </p>                     
                     <p>Rows: <span id="rows-span"> null </span> </p>             
                     <p>Columns: <span id="columns-span"> null </span> </p>                              
                 </div>
-                <div class="mb-3">
-                    <h3>Mode :</h3>
+                <div>
+                    <h5>Mode :</h5>
                     <div>
                         <input type="radio" id="tiles-mode" name="mapmaker-mode" value="tiles-mode"
                                checked>
@@ -37,8 +32,8 @@
                         </div>
                       </div>
                 </div>
-                <div id="selected-tile-div" class="mb-3">
-                    <h3>Selected tile:</h3>
+                <div id="selected-tile-div">
+                    <h5>Selected tile:</h5>
                     <div>
                         <img id="arrow-flip-left" src="/png-files/curved-arrow.png" title="Click or press the Q key to flip the tile to the left" class='flip-tile-png arrow-left'/>
                         <img id="arrow-flip-right" src="/png-files/curved-arrow.png" title="Click or press the E key to flip the tile to the right" class='flip-tile-png arrow-right'/>
@@ -56,10 +51,10 @@
 
                     <br>  
                 </div>   
-                <div id="selected-sprite-div" class="mb-3"> 
-                    <h3>Selected sprite:</h3>
+                <div id="selected-sprite-div"> 
+                    <h5>Selected sprite:</h5>
                     <p> Use Q, W and E to flip your sprite if possible </p>
-                    <canvas id="selected-sprite-canvas" class="selected-tile-canvas visible-canvas">
+                    <canvas id="selected-sprite-canvas" class="select-sprite-canvas visible-canvas">
 
                     </canvas>
                 </div>
