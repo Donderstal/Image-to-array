@@ -1,5 +1,6 @@
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
 MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
+MAP_FOREGROUND_CANVAS.addEventListener( 'click', captureForegroundClick, true)
 
 document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )
 
@@ -45,10 +46,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const mapY = MAP_CANVAS.getBoundingClientRect( ).y;
     const previewMapX = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
     const previewMapY = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
+    const mapForegroundY = MAP_FOREGROUND_CANVAS.getBoundingClientRect( ).y;;
+    const mapForegroundX = MAP_FOREGROUND_CANVAS.getBoundingClientRect( ).x;;
 
     PREVIEW_MAP = new Map( previewMapX, previewMapY, PREVIEW_MAP_CTX );
     SHEET = new Sheet( sheetX, sheetY, SHEET_CTX );
     MAP = new Map( mapX, mapY, MAP_CTX );
+    MAP_FOREGROUND =  new ObjectsGrid( mapForegroundX, mapForegroundY, MAP_FOREGROUND_CTX );
 });
 
 Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
@@ -159,6 +163,9 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
     MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
     MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
 
+    MAP_FOREGROUND_CANVAS.style.visibility = "hidden";
+    MAP_FOREGROUND_CANVAS.style.display = "none";
+    
     document.getElementById("map-objects-options-div").style.visibility = "hidden";
     document.getElementById("map-objects-options-div").style.display = "none";
     
@@ -183,6 +190,9 @@ document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
 
     IN_SHOW_CHARACTER_SPRITES_MODE = false;
     IN_SHOW_MAP_OBJECTS_MODE = true;
+
+    MAP_FOREGROUND_CANVAS.style.visibility = "visible";
+    MAP_FOREGROUND_CANVAS.style.display = "block";
 
     document.getElementById("map-objects-options-div").style.visibility = "visible";
     document.getElementById("map-objects-options-div").style.display = "block";

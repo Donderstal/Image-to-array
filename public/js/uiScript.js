@@ -90,7 +90,10 @@ const loadMapToMapmaker = ( ) => {
     initMapCanvas( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
 
     MAP.setNeighbourhood( NEIGHBOURHOOD_TO_LOAD );
-    MAP.setMapName( MAPNAME_TO_LOAD )
+    MAP.setMapName( MAPNAME_TO_LOAD );
+
+    MAP_FOREGROUND.setCharacters( CHARACTERS_TO_LOAD );
+    MAP_FOREGROUND.setObjects( OBJECTS_TO_LOAD );
     
     setTextContentOfElements( { 
         "mapname-span": MAPNAME_TO_LOAD, "neighbourhood-span": NEIGHBOURHOOD_TO_LOAD, 
@@ -143,6 +146,15 @@ const captureMapClick = ( event ) => {
     }
     else {
         MAP.drawTileAtXY(event.offsetX, event.offsetY);        
+    }
+}
+
+const captureForegroundClick = ( event ) => {
+    if ( event.shiftKey ) {
+        
+    }
+    else {
+        MAP_FOREGROUND.placeSpriteAtXY(event.offsetX, event.offsetY);        
     }
 }
 

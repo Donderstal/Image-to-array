@@ -62,6 +62,8 @@ const setLoadMapListeners = ( ) => {
             COLUMNS_TO_LOAD = map["columns"] + 1;
             ROWS_TO_LOAD = map["rows"] + 1;
             GRID_TO_LOAD = map["grid"].flat(1);
+            CHARACTERS_TO_LOAD = map["characters"];
+            OBJECTS_TO_LOAD = map["mapObjects"];
 
             loadMapToMapmaker( );
             document.getElementsByClassName('window-active')[0].className = "row window window-inactive";

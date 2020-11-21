@@ -33,6 +33,11 @@ const initMapCanvas = ( rows, cols ) => {
     MAP_CANVAS.height = rows * TILE_SIZE
 
     MAP.initGrid( rows, cols )
+
+    MAP_FOREGROUND_CANVAS.width = cols * TILE_SIZE
+    MAP_FOREGROUND_CANVAS.height = rows * TILE_SIZE
+
+    MAP_FOREGROUND.initGrid( rows, cols )
 }
 
 const clearMapGrid = ( ) => {
@@ -77,6 +82,8 @@ const setMapJSON = ( JSON ) => {
     TILESHEET_TO_LOAD = JSON["tileSet"];
     NEIGHBOURHOOD_TO_LOAD = JSON["mapName"].split('/')[0];
     MAPNAME_TO_LOAD = JSON["mapName"].split('/')[2];
+    CHARACTERS_TO_LOAD = JSON["characters"];
+    OBJECTS_TO_LOAD = JSON["mapObjects"];
 
     document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + NEIGHBOURHOOD_TO_LOAD
     document.getElementById("preview-map-tileset").innerText = "Tileset: " + TILESHEET_TO_LOAD

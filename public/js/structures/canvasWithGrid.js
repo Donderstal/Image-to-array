@@ -155,3 +155,33 @@ class Map extends CanvasWithGrid {
          };
     }
 };
+
+class ObjectsGrid extends CanvasWithGrid {
+    constructor( x, y, ctx ) {
+        super( x, y, ctx );
+        this.characters = false;
+        this.objects = false;
+        console.log("initializing objectsGrid!")
+    };
+    setCharacters( characters ) {
+        this.characters = characters;
+        console.log(characters)
+    }
+    setObjects( objects ) {
+        this.objects = objects;
+        console.log(objects)
+    }
+    placeSpriteAtXY(x, y) {
+        console.log(this)
+        console.log(x, y)
+    }
+    initGrid( rows, cols ) {
+        super.initGrid( rows, cols )
+        if ( this.characters ) {
+            this.drawCharacters( );
+        }
+        if ( this.objects ) {
+            this.drawObjects( );            
+        }
+    }
+}
