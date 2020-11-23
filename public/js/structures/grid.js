@@ -15,15 +15,20 @@ class Grid {
         const limit = this.rows * this.cols
         let tileX = ( this.isOverviewCanvas ) ? this.getXOffset( ) : 0;
         let tileY = ( this.isOverviewCanvas ) ? this.getYOffset( ) : 0;
+        let row = 1;
+        let col = 1;
 
         for( var i = 0; i < limit; i++ ) {
-            this.array.push( new Tile( i, tileX, tileY, this.ctx ) )
+            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col ) )
 
             if ( ( i + 1 ) % this.cols == 0 ) {
                 tileX = ( this.isOverviewCanvas ) ? this.getXOffset( ) : 0;
                 tileY += TILE_SIZE;
+                col = 1;
+                row += 1;
             } else {
                 tileX += TILE_SIZE
+                col += 1
             }
         };
     };
@@ -79,13 +84,15 @@ class Grid {
 }
 
 class Tile {
-    constructor( index, x, y, ctx ) {
+    constructor( index, x, y, ctx, row, col ) {
         this.x = x;
         this.y = y;
         this.ctx = ctx;
         this.index = index;  
         this.angle = 0;
         this.mirrored = false;
+        this.row = row;
+        this.col = col;
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
