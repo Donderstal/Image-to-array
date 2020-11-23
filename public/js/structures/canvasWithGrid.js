@@ -172,6 +172,29 @@ class ObjectsGrid extends CanvasWithGrid {
     placeSpriteAtXY(x, y) {
         console.log(this)
         console.log(x, y)
+        const tile = super.getTileAtXY(x,y)
+        let sourceY;
+        switch( SELECTED_SPRITE_POSITION ) {
+            case 'FACING_DOWN':
+                sourceY = 0;
+                break;
+            case 'FACING_LEFT':
+                sourceY = STRD_SPRITE_HEIGHT
+                break;
+            case 'FACING_RIGHT':
+                sourceY = STRD_SPRITE_HEIGHT *  2
+                break;
+            case 'FACING_UP':
+                sourceY = STRD_SPRITE_HEIGHT * 3
+                break;
+        }
+        this.ctx.drawImage(
+            document.getElementById(SELECTED_SPRITE).image,
+            0, sourceY,
+            document.getElementById(SELECTED_SPRITE).width, document.getElementById(SELECTED_SPRITE).height,
+            tile.x, tile.y - ( TILE_SIZE * 0.75 ),
+            STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
+        )
     }
     initGrid( rows, cols ) {
         super.initGrid( rows, cols )
