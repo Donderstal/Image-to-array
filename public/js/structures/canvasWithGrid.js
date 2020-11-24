@@ -169,9 +169,7 @@ class ObjectsGrid extends CanvasWithGrid {
     setObjects( objects ) {
         this.objects = objects;
     }
-    placeSpriteAtXY(x, y) {
-        console.log(this)
-        console.log(x, y)
+    placeCharacterSpriteAtXY(x, y) {
         const tile = super.getTileAtXY(x,y)
         let sourceY;
         switch( SELECTED_SPRITE_POSITION ) {
@@ -196,6 +194,31 @@ class ObjectsGrid extends CanvasWithGrid {
             STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
         )
     }
+    placeObjectSpriteAtXY(x, y){
+        const tile = super.getTileAtXY(x,y)
+        let sourceY;
+        switch( SELECTED_SPRITE_POSITION ) {
+            case 'FACING_DOWN':
+                sourceY = 0;
+                break;
+            case 'FACING_LEFT':
+                sourceY = STRD_SPRITE_HEIGHT
+                break;
+            case 'FACING_RIGHT':
+                sourceY = STRD_SPRITE_HEIGHT *  2
+                break;
+            case 'FACING_UP':
+                sourceY = STRD_SPRITE_HEIGHT * 3
+                break;
+        }
+        this.ctx.drawImage(
+            document.getElementById(SELECTED_SPRITE).image,
+            0, 0,
+            document.getElementById(SELECTED_SPRITE).width, document.getElementById(SELECTED_SPRITE).height,
+            tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(SELECTED_SPRITE).height / 2),
+            document.getElementById(SELECTED_SPRITE).width / 2, document.getElementById(SELECTED_SPRITE).height / 2
+        )
+    }
     initGrid( rows, cols ) {
         super.initGrid( rows, cols )
         if ( this.characters ) {
@@ -207,43 +230,42 @@ class ObjectsGrid extends CanvasWithGrid {
     }
     drawCharacters( ) {
         this.characters.forEach( ( e ) => {
+            let cell; 
             if ( e.type == "walking") {
-                const cell = { 'row': e.lastPosition.row, 'col': e.lastPosition.col }
-                
+                cell = { 'row': e.lastPosition.row, 'col': e.lastPosition.col }
             }
             else if ( e.type == "idle") {
-                const cell = { 'row': e.row, 'col': e.col }
-                const destinationX = ( cell.col * TILE_SIZE );
-                const destinationY = ( cell.row * TILE_SIZE ) - TILE_SIZE;
+                cell = { 'row': e.row, 'col': e.col }
+            }
 
-                let sourceY;        
-                switch( e.direction ) {
-                    case 'FACING_DOWN':
-                        sourceY = 0;
-                        break;
-                    case 'FACING_LEFT':
-                        sourceY = STRD_SPRITE_HEIGHT
-                        break;
-                    case 'FACING_RIGHT':
-                        sourceY = STRD_SPRITE_HEIGHT *  2
-                        break;
-                    case 'FACING_UP':
-                        sourceY = STRD_SPRITE_HEIGHT * 3
-                        break;
-                }
-                const image = new Image( );
-                image.src = '/png-files/sprites/' + e.sprite
-                console.log(image.src)
-                image.onload = ( ) => {
-                    console.log('loaded ' + image.src )
-                    this.ctx.drawImage( 
-                        image, 
-                        0, sourceY, 
-                        STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
-                        destinationX, destinationY, 
-                        STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
-                    )
-                }
+            const destinationX = ( cell.col * TILE_SIZE );
+            const destinationY = ( cell.row * TILE_SIZE ) - ( TILE_SIZE * 0.75 );
+
+            let sourceY;        
+            switch( e.direction ) {
+                case 'FACING_DOWN':
+                    sourceY = 0;
+                    break;
+                case 'FACING_LEFT':
+                    sourceY = STRD_SPRITE_HEIGHT
+                    break;
+                case 'FACING_RIGHT':
+                    sourceY = STRD_SPRITE_HEIGHT *  2
+                    break;
+                case 'FACING_UP':
+                    sourceY = STRD_SPRITE_HEIGHT * 3
+                    break;
+            }
+            const image = new Image( );
+            image.src = '/png-files/sprites/' + e.sprite
+            image.onload = ( ) => {
+                this.ctx.drawImage( 
+                    image, 
+                    0, sourceY, 
+                    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
+                    destinationX, destinationY, 
+                    STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
+                )
             }
         })
     }

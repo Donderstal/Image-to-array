@@ -152,8 +152,11 @@ const captureForegroundClick = ( event ) => {
     if ( event.shiftKey ) {
         
     }
-    else {
-        MAP_FOREGROUND.placeSpriteAtXY(event.offsetX, event.offsetY);        
+    else if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
+        MAP_FOREGROUND.placeCharacterSpriteAtXY(event.offsetX, event.offsetY);        
+    }
+    else if ( IN_SHOW_MAP_OBJECTS_MODE ) {
+        MAP_FOREGROUND.placeObjectSpriteAtXY(event.offsetX, event.offsetY);     
     }
 }
 
