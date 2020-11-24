@@ -93,6 +93,9 @@ class Tile {
         this.mirrored = false;
         this.row = row;
         this.col = col;
+        this.hasSprite = false;
+        this.spriteType;
+        this.spriteData = {};
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -157,6 +160,12 @@ class Tile {
             default:
                 alert('Error in flipping tile. Call the police!')
         }
+    }
+
+    setSpriteData( type, data ) {
+        this.hasSprite = false;
+        this.spriteType = type;
+        this.spriteData = data;
     }
 
     setSettings( settings ) {

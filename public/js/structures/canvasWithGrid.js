@@ -193,6 +193,15 @@ class ObjectsGrid extends CanvasWithGrid {
             tile.x, tile.y - ( TILE_SIZE * 0.75 ),
             STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
         )
+        this.characters.push(
+            { 
+                "type": "idle",
+                "row": tile.row,
+                "col": tile.col,
+                "sprite": SELECTED_SPRITE,
+                "direction": SELECTED_SPRITE_POSITION
+            }
+        )
     }
     placeObjectSpriteAtXY(x, y){
         const tile = super.getTileAtXY(x,y)
@@ -218,6 +227,19 @@ class ObjectsGrid extends CanvasWithGrid {
             tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(SELECTED_SPRITE).height / 2),
             document.getElementById(SELECTED_SPRITE).width / 2, document.getElementById(SELECTED_SPRITE).height / 2
         )
+        this.objects.push(
+            {  
+                "type"  : SELECTED_SPRITE.split('.')[0],
+                "row"   : tile.row,
+                "col"   : tile.col
+            }
+        )
+    }
+    clearCharacterSpriteAtXY(x, y) {
+        const tile = super.getTileAtXY(x,y);
+    }
+    clearObjectSpriteAtXY(x, y) {
+        const tile = super.getTileAtXY(x,y);
     }
     initGrid( rows, cols ) {
         super.initGrid( rows, cols )

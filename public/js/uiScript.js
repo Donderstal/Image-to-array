@@ -150,7 +150,12 @@ const captureMapClick = ( event ) => {
 
 const captureForegroundClick = ( event ) => {
     if ( event.shiftKey ) {
-        
+        if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
+            MAP_FOREGROUND.clearCharacterSpriteAtXY(event.offsetX, event.offsetY);        
+        }
+        else if ( IN_SHOW_MAP_OBJECTS_MODE ) {
+            MAP_FOREGROUND.clearObjectSpriteAtXY(event.offsetX, event.offsetY);         
+        }   
     }
     else if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
         MAP_FOREGROUND.placeCharacterSpriteAtXY(event.offsetX, event.offsetY);        
