@@ -59,8 +59,8 @@ const setLoadMapListeners = ( ) => {
             TILESHEET_TO_LOAD = map["tileSet"];
             NEIGHBOURHOOD_TO_LOAD = map["mapName"].split('-')[0];
             MAPNAME_TO_LOAD = map["mapName"].split('-')[2];
-            COLUMNS_TO_LOAD = map["columns"] + 1;
-            ROWS_TO_LOAD = map["rows"] + 1;
+            COLUMNS_TO_LOAD = map["columns"];
+            ROWS_TO_LOAD = map["rows"];
             GRID_TO_LOAD = map["grid"].flat(1);
             CHARACTERS_TO_LOAD = map["characters"];
             OBJECTS_TO_LOAD = map["mapObjects"];
@@ -151,7 +151,7 @@ const setButtonsDiv = ( buttonsDiv, mapData, index ) => {
 
 const setMapClass = ( mapClass, mapCanvas, mapData, canvasX, canvasY ) => {
     mapClass      = new Map( canvasX, canvasY, mapCanvas.getContext( "2d" ) );
-    mapClass.initGrid( mapData.rows + 1, mapData.columns + 1 );
+    mapClass.initGrid( mapData.rows, mapData.columns );
     mapClass.setTileGrid( mapData.grid.flat(1) );
     mapClass.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[mapData.tileSet].src, mapClass.drawMapFromGridData );
 }

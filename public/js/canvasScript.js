@@ -89,8 +89,8 @@ const setMapJSON = ( JSON ) => {
     document.getElementById("preview-map-tileset").innerText = "Tileset: " + TILESHEET_TO_LOAD
     document.getElementById("preview-map-name").innerText = "Map name: " + MAPNAME_TO_LOAD
 
-    ROWS_TO_LOAD = JSON.rows + 1;
-    COLUMNS_TO_LOAD = JSON.columns + 1;
+    ROWS_TO_LOAD = JSON.rows;
+    COLUMNS_TO_LOAD = JSON.columns;
     GRID_TO_LOAD = ( typeof JSON.grid[0] == 'string' || JSON.grid[0] == 'number' ) ? JSON.grid : JSON.grid.flat()
 
 

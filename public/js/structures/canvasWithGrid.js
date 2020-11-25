@@ -239,7 +239,7 @@ class ObjectsGrid extends CanvasWithGrid {
                         document.getElementById(currentSprite).image,
                         0, sourceY,
                         document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, tile.y + ( TILE_SIZE * 0.25 ),
+                        tile.x, tile.y - ( TILE_SIZE * 0.75 ),
                         STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
                     )
                 }
