@@ -163,7 +163,7 @@ class Tile {
     }
 
     setSpriteData( type, data ) {
-        this.hasSprite = false;
+        this.hasSprite = true;
         this.spriteType = type;
         this.spriteData = data;
     }

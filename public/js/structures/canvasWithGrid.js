@@ -164,36 +164,28 @@ class ObjectsGrid extends CanvasWithGrid {
         console.log("initializing objectsGrid!")
     };
     setCharacters( characters ) {
-        this.characters = characters;
+        characters.forEach( ( character ) => {
+            const col = character.type == 'walking' ? character.lastPosition.col : character.col; 
+            const row = character.type == 'walking' ? character.lastPosition.row : character.row; 
+            this.grid.array.forEach( ( tile ) => {
+                if ( tile.row == row && tile.col == col ) {
+                    tile.setSpriteData( "character", character )
+                }
+            })
+        })
     }
     setObjects( objects ) {
-        this.objects = objects;
+        objects.forEach( ( object ) => {
+            this.grid.array.forEach( ( tile ) => {
+                if ( tile.row == object.row && tile.col == object.col ) {
+                    tile.setSpriteData( "object", object )
+                }
+            })
+        })
     }
     placeCharacterSpriteAtXY(x, y) {
         const tile = super.getTileAtXY(x,y)
-        let sourceY;
-        switch( SELECTED_SPRITE_POSITION ) {
-            case 'FACING_DOWN':
-                sourceY = 0;
-                break;
-            case 'FACING_LEFT':
-                sourceY = STRD_SPRITE_HEIGHT
-                break;
-            case 'FACING_RIGHT':
-                sourceY = STRD_SPRITE_HEIGHT *  2
-                break;
-            case 'FACING_UP':
-                sourceY = STRD_SPRITE_HEIGHT * 3
-                break;
-        }
-        this.ctx.drawImage(
-            document.getElementById(SELECTED_SPRITE).image,
-            0, sourceY,
-            document.getElementById(SELECTED_SPRITE).width, document.getElementById(SELECTED_SPRITE).height,
-            tile.x, tile.y - ( TILE_SIZE * 0.75 ),
-            STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
-        )
-        this.characters.push(
+        tile.setSpriteData( 'character', 
             { 
                 "type": "idle",
                 "row": tile.row,
@@ -202,38 +194,57 @@ class ObjectsGrid extends CanvasWithGrid {
                 "direction": SELECTED_SPRITE_POSITION
             }
         )
+        this.drawSpritesInGrid( )
     }
     placeObjectSpriteAtXY(x, y){
         const tile = super.getTileAtXY(x,y)
-        let sourceY;
-        switch( SELECTED_SPRITE_POSITION ) {
-            case 'FACING_DOWN':
-                sourceY = 0;
-                break;
-            case 'FACING_LEFT':
-                sourceY = STRD_SPRITE_HEIGHT
-                break;
-            case 'FACING_RIGHT':
-                sourceY = STRD_SPRITE_HEIGHT *  2
-                break;
-            case 'FACING_UP':
-                sourceY = STRD_SPRITE_HEIGHT * 3
-                break;
-        }
-        this.ctx.drawImage(
-            document.getElementById(SELECTED_SPRITE).image,
-            0, 0,
-            document.getElementById(SELECTED_SPRITE).width, document.getElementById(SELECTED_SPRITE).height,
-            tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(SELECTED_SPRITE).height / 2),
-            document.getElementById(SELECTED_SPRITE).width / 2, document.getElementById(SELECTED_SPRITE).height / 2
-        )
-        this.objects.push(
-            {  
-                "type"  : SELECTED_SPRITE.split('.')[0],
-                "row"   : tile.row,
-                "col"   : tile.col
+        tile.setSpriteData( 'object', {  
+            "type"  : SELECTED_SPRITE.split('.')[0],
+            "row"   : tile.row,
+            "col"   : tile.col
+        } )
+        this.drawSpritesInGrid( )
+    }
+    drawSpritesInGrid( ) {
+        this.grid.array.forEach( ( tile ) => {
+            if ( tile.hasSprite ) {
+                if ( tile.spriteType == 'object' ) {
+                    const currentSprite = tile.spriteData.type + '.png'
+                    this.ctx.drawImage(
+                        document.getElementById(currentSprite).image,
+                        0, 0,
+                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
+                        tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(currentSprite).height / 2),
+                        document.getElementById(currentSprite).width / 2, document.getElementById(currentSprite).height / 2
+                    )
+                }
+                else if ( tile.spriteType == 'character' ) {
+                    const currentSprite = tile.spriteData.sprite
+                    let sourceY;
+                    switch( tile.spriteData.direction ) {
+                        case 'FACING_DOWN':
+                            sourceY = 0;
+                            break;
+                        case 'FACING_LEFT':
+                            sourceY = STRD_SPRITE_HEIGHT
+                            break;
+                        case 'FACING_RIGHT':
+                            sourceY = STRD_SPRITE_HEIGHT *  2
+                            break;
+                        case 'FACING_UP':
+                            sourceY = STRD_SPRITE_HEIGHT * 3
+                            break;
+                    }
+                    this.ctx.drawImage(
+                        document.getElementById(currentSprite).image,
+                        0, sourceY,
+                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
+                        tile.x, tile.y + ( TILE_SIZE * 0.25 ),
+                        STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
+                    )
+                }
             }
-        )
+        })
     }
     clearCharacterSpriteAtXY(x, y) {
         const tile = super.getTileAtXY(x,y);
