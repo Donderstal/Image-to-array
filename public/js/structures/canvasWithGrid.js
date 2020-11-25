@@ -206,7 +206,9 @@ class ObjectsGrid extends CanvasWithGrid {
         this.drawSpritesInGrid( )
     }
     drawSpritesInGrid( ) {
+        this.ctx.clearRect(0, 0, MAP_FOREGROUND_CANVAS.width, MAP_FOREGROUND_CANVAS.height);
         this.grid.array.forEach( ( tile ) => {
+            tile.drawTileBorders( )
             if ( tile.hasSprite ) {
                 if ( tile.spriteType == 'object' ) {
                     const currentSprite = tile.spriteData.type + '.png'
@@ -246,10 +248,9 @@ class ObjectsGrid extends CanvasWithGrid {
             }
         })
     }
-    clearCharacterSpriteAtXY(x, y) {
+    clearSpriteFromTile(x, y) {
         const tile = super.getTileAtXY(x,y);
-    }
-    clearObjectSpriteAtXY(x, y) {
-        const tile = super.getTileAtXY(x,y);
+        tile.clearSpriteData( );
+        this.drawSpritesInGrid( );
     }
 }

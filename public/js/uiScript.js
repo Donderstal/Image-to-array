@@ -30,7 +30,6 @@ const switchView = ( event ) => {
                 let option = document.createElement('option')
                 option.setAttribute( 'value', key)
                 option.appendChild(document.createTextNode(key))
-                console.log(key)
                 document.getElementById('neighbourhood-select-tag').append(option)
             })
             
@@ -151,12 +150,7 @@ const captureMapClick = ( event ) => {
 
 const captureForegroundClick = ( event ) => {
     if ( event.shiftKey ) {
-        if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
-            MAP_FOREGROUND.clearCharacterSpriteAtXY(event.offsetX, event.offsetY);        
-        }
-        else if ( IN_SHOW_MAP_OBJECTS_MODE ) {
-            MAP_FOREGROUND.clearObjectSpriteAtXY(event.offsetX, event.offsetY);         
-        }   
+        MAP_FOREGROUND.clearSpriteFromTile(event.offsetX, event.offsetY);      
     }
     else if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
         MAP_FOREGROUND.placeCharacterSpriteAtXY(event.offsetX, event.offsetY);        

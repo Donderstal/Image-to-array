@@ -168,6 +168,12 @@ class Tile {
         this.spriteData = data;
     }
 
+    clearSpriteData( ) {
+        this.hasSprite = false;
+        this.spriteType = null;
+        this.spriteData = null;
+    }
+
     setSettings( settings ) {
         this.mirrored = settings['mirrored'];
         this.angle = settings['angle'];
