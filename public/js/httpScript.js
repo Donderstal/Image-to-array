@@ -41,7 +41,7 @@ const initHTTPListeners = ( ) => {
         new FormData(document.getElementById("restore-password-form"))
     }, true );
 
-    document.getElementById("save-map-button").addEventListener( 'click', ( event ) => {
+    document.getElementById("post-save-map-button").addEventListener( 'click', ( event ) => {
         event.preventDefault()
         new FormData(document.getElementById("save-map-form"))
     }, true );
@@ -176,6 +176,5 @@ document.getElementById("restore-password-form").addEventListener( 'formdata', (
 
 document.getElementById("save-map-form").addEventListener( 'formdata', ( event ) => {
     event.formData.append( "map_json", JSON.stringify(MAP.exportMapData( )) )
-    event.formData.append( "map_name", MAP.mapName )
     prepareHTTPRequest( "POST", "catch_http_request.php", event.formData, SaveMapHTTPCallback )
 }, true )

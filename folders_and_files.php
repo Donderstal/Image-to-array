@@ -29,10 +29,10 @@
         if ( !file_exists($file_path) ) {
             try {
                 file_put_contents( $file_path, $json_map); 
-                echo json_encode('{"save-map-succes": true, "path": ' . $file_path . '}', true);            
+                echo json_encode('{"save-map-succes": true}', true);            
             }
             catch ( Exception $ex ) {
-                echo json_encode('{"save-map-succes": false}, "path": ' . $file_path . '}', true );  
+                echo json_encode('{"save-map-succes": false}', true );  
                 die( $e->getMessage( ) );  
             }
         } else {
