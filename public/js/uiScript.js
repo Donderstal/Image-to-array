@@ -97,8 +97,14 @@ const loadMapToMapmaker = ( ) => {
     } );
 
     MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD )
-    MAP_FOREGROUND.setCharacters( CHARACTERS_TO_LOAD );
-    MAP_FOREGROUND.setObjects( OBJECTS_TO_LOAD );
+    
+    if ( CHARACTERS_TO_LOAD != undefined && CHARACTERS_TO_LOAD != null ) {
+        MAP_FOREGROUND.setCharacters( CHARACTERS_TO_LOAD );
+    }
+    if ( OBJECTS_TO_LOAD != undefined && OBJECTS_TO_LOAD != null ) {
+        MAP_FOREGROUND.setObjects( OBJECTS_TO_LOAD );   
+    }
+
     MAP_FOREGROUND.drawSpritesInGrid( );
     MAP.setTileGrid( GRID_TO_LOAD );
     MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, MAP.drawMapFromGridData )

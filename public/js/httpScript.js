@@ -5,7 +5,7 @@ const prepareHTTPRequest = ( method, url, data, callback ) => {
         method: method,
         body: data
     } ).then( response => { 
-        return response.json()   
+        return response.json()
         }
     ).then( 
         result => callback(result)
@@ -176,6 +176,6 @@ document.getElementById("restore-password-form").addEventListener( 'formdata', (
 
 document.getElementById("save-map-form").addEventListener( 'formdata', ( event ) => {
     event.formData.append( "map_json", JSON.stringify(MAP.exportMapData( )) )
-    event.formData.append( "map_name", document.getElementById("mapname-label").value )
+    event.formData.append( "map_name", MAP.mapName )
     prepareHTTPRequest( "POST", "catch_http_request.php", event.formData, SaveMapHTTPCallback )
 }, true )

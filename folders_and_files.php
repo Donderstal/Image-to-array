@@ -22,20 +22,21 @@
     }
 
     function StoreJSONMapAsFile( $json_map, $map_name ) {
-        $folder_name = "user-folders/" . $_SESSION["username"] . "/" . "maps/";
+        $userdir = 'user-folders/' . str_replace( " ", "_", $_SESSION["username"] ) . "/";
+        $folder_name = $userdir . "maps/";
         $file_path = $folder_name . $map_name . ".json";
 
         if ( !file_exists($file_path) ) {
             try {
                 file_put_contents( $file_path, $json_map); 
-                echo json_encode('{"save-map-succes": true}' );            
+                echo json_encode('{"save-map-succes": true, "path": ' . $file_path . '}', true);            
             }
             catch ( Exception $ex ) {
-                die( $e->getMessage( ) );
-                echo json_encode('{"save-map-succes": false}' );     
+                echo json_encode('{"save-map-succes": false}, "path": ' . $file_path . '}', true );  
+                die( $e->getMessage( ) );  
             }
         } else {
-            echo json_encode('{"save-map-succes": false, "error-message": "File with that name already exists"}' );     
+            echo json_encode('{"save-map-succes": false, "error-message": "File with that name already exists", "path": ' . $file_path . '}', true );     
         }
     }
 
