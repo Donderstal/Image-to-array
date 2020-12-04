@@ -47,8 +47,15 @@ class Sheet extends CanvasWithGrid {
         console.log("initializing sheet!");
     };
 
-    setSheet( sheetName ) {
-        this.sheetName = sheetName;
+    setSheet( src ) {
+        this.src = src
+        const splitSrc = src.split('/')
+        const png = splitSrc[splitSrc.length - 1];
+        Object.keys( TILESHEETS ).forEach( ( e ) => {
+            if ( TILESHEETS[e].src == png ) {
+                this.sheetName = e;
+            }
+        })
     };
 
     clearGrid( ) {
@@ -139,17 +146,19 @@ class Map extends CanvasWithGrid {
             exportArray.push(e.ID)
         })
 
+        const sprites = MAP_FOREGROUND.exportAllSprites( );
+
         return {
-            'mapName' : this.neighbourhood + '/' + this.mapName,
+            'mapName' : this.mapName,
             'tileSet' : SHEET.sheetName,
             'outdoors' : null,
             'music' : null,
             'neighbours' : { },
-            'rows' : this.grid.rows - 1,
-            'cols' : this.grid.cols - 1,
+            'rows' : this.grid.rows,
+            'columns' : this.grid.cols,
             'grid' : exportArray,
-            'mapObjects' : [],            
-            'characters' : [],
+            'mapObjects' : sprites.mapObjects,            
+            'characters' : sprites.characters,
             'actions' : [],
             'doors' : []
          };
@@ -252,5 +261,24 @@ class ObjectsGrid extends CanvasWithGrid {
         const tile = super.getTileAtXY(x,y);
         tile.clearSpriteData( );
         this.drawSpritesInGrid( );
+    }
+    exportAllSprites( ) {
+        let allSprites = {
+            "characters": [ ],
+            "mapObjects": [ ]
+        }
+        this.grid.array.forEach( ( tile ) => {
+            tile.drawTileBorders( )
+            if ( tile.hasSprite ) {
+                if ( tile.spriteType == 'object' ) {
+                    allSprites.mapObjects.push( tile.spriteData )
+                }
+                else if ( tile.spriteType == 'character' ) {
+                    allSprites.characters.push( tile.spriteData )
+                }
+            }
+        })
+
+        return allSprites;
     }
 }

@@ -26,17 +26,13 @@
         $folder_name = $userdir . "maps/";
         $file_path = $folder_name . $map_name . ".json";
 
-        if ( !file_exists($file_path) ) {
-            try {
-                file_put_contents( $file_path, $json_map); 
-                echo json_encode('{"save-map-succes": true}', true);            
-            }
-            catch ( Exception $ex ) {
-                echo json_encode('{"save-map-succes": false}', true );  
-                die( $e->getMessage( ) );  
-            }
-        } else {
-            echo json_encode('{"save-map-succes": false, "error-message": "File with that name already exists", "path": ' . $file_path . '}', true );     
+        try {
+            file_put_contents( $file_path, $json_map); 
+            echo json_encode('{"save-map-succes": true}', true);            
+        }
+        catch ( Exception $ex ) {
+            echo json_encode('{"save-map-succes": false}', true );  
+            die( $e->getMessage( ) );  
         }
     }
 
