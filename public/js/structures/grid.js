@@ -89,6 +89,7 @@ class Tile {
         this.y = y;
         this.ctx = ctx;
         this.index = index;  
+        this.hasSettings = false;
         this.angle = 0;
         this.mirrored = false;
         this.row = row;
@@ -175,6 +176,7 @@ class Tile {
     }
 
     setSettings( settings ) {
+        this.hasSettings = true;
         this.mirrored = settings['mirrored'];
         this.angle = settings['angle'];
     }

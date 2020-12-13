@@ -143,7 +143,12 @@ class Map extends CanvasWithGrid {
     exportMapData( ) {
         let exportArray = [];
         this.grid.array.forEach( ( e ) => {
-            exportArray.push(e.ID)
+            if ( e.hasSettings ) {
+                exportArray.push( { 'id': e.ID, 'angle': e.angle, 'mirrored': e.mirrored } )
+            }
+            else {
+                exportArray.push(e.ID)
+            }
         })
 
         const sprites = MAP_FOREGROUND.exportAllSprites( );
