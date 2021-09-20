@@ -91,6 +91,10 @@ const TILESHEETS = {
         "src": "city1big_tiles.png",
         "tiles": 590
     },
+    "my_neighbourhood_2" : {
+        "src": "City4_Tiles.png",
+        "tiles": 800
+    },
     "my_house" : {
         "src": "Bed_Room.png",
         "tiles": 31
@@ -99,9 +103,17 @@ const TILESHEETS = {
         "src": "Generic_Room_A_Tile_Set.png",
         "tiles": 83
     },
+    "Generic_Room_AX" : {
+        "src": "Generic_Room_AX_Tile_Sheet.png",
+        "tiles": 83
+    },
     "Generic_Room_B_Tile_Set" : {
         "src": "Generic_Room_B_Tile_Set.png",
         "tiles": 112
+    },
+    "Generic_Room_BX" : {
+        "src": "Generic_Room_BX.png",
+        "tiles": 83
     },
     "Generic_Room_C_Tile_Set" : {
         "src": "Generic_Room_C_Tile_Set.png",
@@ -112,8 +124,16 @@ const TILESHEETS = {
         "tiles": 79
     },
     "downtown" : {
-        "src": "city2_modern.png",
+        "src": "city2modern_TILES.png",
         "tiles": 608
+    },
+    "downtown_2" : {
+        "src": "City5_Tiles.png",
+        "tiles": 608
+    },
+    "battle_downtown" : {
+        "src": "battle_tiles.png",
+        "tiles": 150
     }
 };
 
@@ -133,5 +153,5 @@ const setSheetXyValues = ( tilesInSheet ) => {
     return tilesheetXyValues;
 }
 
-const SHEET_XY_VALUES = setSheetXyValues( 608 );
+const SHEET_XY_VALUES = setSheetXyValues( 800 );
 
