@@ -45,6 +45,22 @@ h1 {
     text-align: center;
 }
 
+hr {
+    border-top: 1px solid white;
+}
+
+.map-canvas-buttons-div {
+    text-align:justify;
+}
+
+.map-canvas-buttons-div::after {
+    content:' '; display:inline-block; width: 100%; height: 0
+}
+
+.btn-outline-success {
+    display:inline-block
+}
+
 .list-container {
     padding: 0 1vw;
 }

@@ -1,15 +1,18 @@
 <div id="mapmaker-div"  class="window window-inactive"> 
+    <hr>
     <!-- Map row -->
     <div class="row">
         <!-- Current map data -->
         <div class="col-sm-2 mapmaker-column">   
             <div style="position: fixed;">
-                <div style='display:none;visibility:hidden;'>
-                    <p>Mapname: <span id="mapname-span"> null </span> </p>             
-                    <p>Neighbourhood: <span id="neighbourhood-span"> null </span> </p>                     
-                    <p>Rows: <span id="rows-span"> null </span> </p>             
-                    <p>Columns: <span id="columns-span"> null </span> </p>                              
+                <div>
+                    <h5>Map information :</h5>
+                    <p>Mapname: <br><input id="mapname-span" type="text" /> </p>             
+                    <p>Neighbourhood: <br><input id="neighbourhood-span" type="text" /> </p>                     
+                    <p>Rows: <br><input id="rows-span" type="text" disabled /> </p>             
+                    <p>Columns: <br><input id="columns-span" type="text" disabled /> </p>                              
                 </div>
+                <hr>
                 <div>
                     <h5>Mode :</h5>
                     <div>
@@ -32,6 +35,7 @@
                         </div>
                       </div>
                 </div>
+                <hr>
                 <div id="selected-tile-div">
                     <h5>Selected tile:</h5>
                     <div>
@@ -58,18 +62,7 @@
 
                     </canvas>
                 </div>
-                <div class="pt-3 mb-3">
-                    <button id="save-map-button" data-toggle="modal" data-target="#saveMapModal" class="btn btn-outline-success">Save map</button>
-                </div>             
-                <div class="mb-3">
-                    <button id="export-map-button" class="btn btn-outline-success">Export map data</button>
-                </div>    
-                <div class="mb-3">
-                    <button id="clear-grid-button" class="btn btn-outline-success">Clear grid</button>
-                </div>
-                <div class="mb-3">
-                    <button id="back-to-map-menu-button" class="btn btn-outline-success navigation-button">Back to New map screen</button>
-                </div>
+                <hr>
             </div>
         </div>
         <!-- Current map grid -->
@@ -78,6 +71,13 @@
                 <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
                 <canvas id="map-foreground-canvas" class="border border-info foreground-canvas invisible-canvas"></canvas>
             </div>  
+            <hr>
+            <div class="map-canvas-buttons-div" >
+                <button id="save-map-button" data-toggle="modal" data-target="#saveMapModal" class="btn btn-outline-success">Save map</button>          
+                <button id="export-map-button" class="btn btn-outline-success">Export map data</button>                    
+                <button id="clear-grid-button" class="btn btn-outline-success">Clear grid</button>
+                <button id="back-to-map-menu-button" class="btn btn-outline-success navigation-button">Back to New map screen</button>
+            </div>
         </div> 
         <!-- Active map idea -->
         <div class="col-sm-2 mapmaker-column">   
