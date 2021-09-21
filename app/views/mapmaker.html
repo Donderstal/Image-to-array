@@ -73,7 +73,7 @@
             </div>  
             <hr>
             <div class="map-canvas-buttons-div" >
-                <button id="save-map-button" data-toggle="modal" data-target="#saveMapModal" class="btn btn-outline-success">Save map</button>          
+                <form id="save-map-form" style="display:inline-block"> <button id="post-save-map-button" class="btn btn-outline-success">Save map</button> </form>    
                 <button id="export-map-button" class="btn btn-outline-success">Export map data</button>                    
                 <button id="clear-grid-button" class="btn btn-outline-success">Clear grid</button>
                 <button id="back-to-map-menu-button" class="btn btn-outline-success navigation-button">Back to New map screen</button>
@@ -93,37 +93,3 @@
         </div> 
     </div>       
 </div>
-
-<div class="modal fade" id="saveMapModal" tabindex="-1" role="dialog" aria-labelledby="saveMapModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title text-muted" id="saveMapModalLabel">Choose a name and neighbourhood for your map. Please take notice that you will overwrite any old maps with the same name.</h5>
-            <button id="save-map-dismiss" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>                
-        </div>
-        
-        <div class="modal-body">
-            <form id="save-map-form" class="account-form active-form">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="save-map-name-label">Mapname: </span>
-                    </div>
-                    <input id="save-map-name-input" type="text" class="form-control" placeholder="Please fill in a username" aria-label="save-map-name" name="map_name">                        
-                </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="save-map-neighbourhood-label">Neighbourhood: </span>
-                    </div>
-                    <input id="save-map-neighbourhood-input" type="email" class="form-control" disabled placeholder="Coming soon..." aria-label="save-map-neighbourhood" name="map_neighbourhood">                        
-                </div>
-
-                <button id="post-save-map-button" type="button" class="btn btn-info center-in-div"> Save map </button>
-            </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
