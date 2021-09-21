@@ -102,8 +102,10 @@ const RestorePasswordHTTPCallback = ( data ) => {
 const SaveMapHTTPCallback = ( data ) => {
     const responseJSON = JSON.parse(data)
     if ( responseJSON["save-map-succes"] ) {
-        alert('This map has been successfully saved!.')
-        location.reload(); 
+        const confirmReloadOnMapSave = confirm('This map has been successfully saved! Do you want to return to the main menu?')
+        if ( confirmReloadOnMapSave ) {
+            location.reload( );
+        }
     } else if ( !responseJSON["save-map-succes"] ) {
         alert(responseJSON["error-message"])
     } 

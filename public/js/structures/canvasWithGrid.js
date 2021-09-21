@@ -160,8 +160,8 @@ class Map extends CanvasWithGrid {
             'outdoors' : null,
             'music' : null,
             'neighbours' : { },
-            'rows' : this.grid.rows,
-            'columns' : this.grid.cols,
+            'rows' : parseInt(this.grid.rows),
+            'columns' : parseInt(this.grid.cols),
             'grid' : exportArray,
             'mapObjects' : sprites.mapObjects,            
             'characters' : sprites.characters,
@@ -202,7 +202,7 @@ class ObjectsGrid extends CanvasWithGrid {
         const tile = super.getTileAtXY(x,y)
         tile.setSpriteData( 'character', 
             { 
-                "type": "idle",
+                "anim_type": "NPC_ANIM_TYPE_IDLE",
                 "row": tile.row,
                 "col": tile.col,
                 "sprite": SELECTED_SPRITE,
