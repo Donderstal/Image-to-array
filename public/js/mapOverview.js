@@ -57,8 +57,8 @@ const setLoadMapListeners = ( ) => {
             const map = activeMaps[keysList[mapName]]
 
             TILESHEET_TO_LOAD = map["tileSet"];
-            NEIGHBOURHOOD_TO_LOAD = map["mapName"].split('-')[0];
-            MAPNAME_TO_LOAD = map["mapName"].split('-')[2];
+            NEIGHBOURHOOD_TO_LOAD = map["neighbourhood"]
+            MAPNAME_TO_LOAD = map["mapName"]
             COLUMNS_TO_LOAD = map["columns"];
             ROWS_TO_LOAD = map["rows"];
             GRID_TO_LOAD = map["grid"].flat(1);

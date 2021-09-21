@@ -20,7 +20,7 @@ const setValueOfReadOnlyElement = ( elementID, value ) => {
 
 const setTextContentOfElements = ( keyValuePairs ) => {
     for ( const key in keyValuePairs ) {
-        getNodeWithID( key ).textContent = keyValuePairs[key];
+        getNodeWithID( key ).value = keyValuePairs[key];
     }
 }
 

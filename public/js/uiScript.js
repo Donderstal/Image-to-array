@@ -186,14 +186,14 @@ const unsetMapMaker = ( ) => {
 }
 
 const unsetMapInformation = ( ) => {
-    setTextContentOfElements( { "mapname-span": null, "neighbourhood-span": null } )
+    setTextContentOfElements( { "mapname-span": "", "neighbourhood-span": "" } )
 
-    MAP.setNeighbourhood( null );
-    MAP.setMapName( null )
+    MAP.setNeighbourhood( "" );
+    MAP.setMapName( "" )
 }
 
 const unsetMapGrid = ( ) => {
-    setTextContentOfElements( { "rows-span": null, "columns-span": null } )
+    setTextContentOfElements( { "rows-span": "", "columns-span": "" } )
     hideVisibleCanvas( MAP_CANVAS );
 
     MAP.clearGrid( );
@@ -206,10 +206,6 @@ const unselectTileSheet = ( ) =>{
 
 const setMapGrid = ( rows, columns ) => {
     makeHiddenCanvasVisible( MAP_CANVAS );
-
-    document.getElementById('rows-input').value = null;
-    document.getElementById('columns-input').value = null;
-
     setTextContentOfElements( { "rows-span": rows, "columns-span": columns } )
     initMapCanvas( rows, columns );
 }

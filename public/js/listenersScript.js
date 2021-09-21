@@ -248,3 +248,13 @@ document.getElementById("show-map-objects").addEventListener( 'click', ( ) => {
         document.getElementById("character-sprite-pngs-div").style.display = "none";
     }
 }, true )
+
+let mapNameInput = document.getElementById( "mapname-span" );
+mapNameInput.addEventListener( "input", ( ) => { 
+    MAP.setMapName( mapNameInput.value.trim( ) )
+})
+
+let neighbourhoodNameInput = document.getElementById( "neighbourhood-span" );
+neighbourhoodNameInput.addEventListener( "input", ( ) => { 
+    MAP.setNeighbourhood( neighbourhoodNameInput.value.trim( ) )
+})

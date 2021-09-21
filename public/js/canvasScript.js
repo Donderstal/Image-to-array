@@ -80,8 +80,8 @@ const flipTile = ( direction ) => {
 
 const setMapJSON = ( JSON ) => {
     TILESHEET_TO_LOAD = JSON["tileSet"];
-    NEIGHBOURHOOD_TO_LOAD = JSON["mapName"].split('/')[0];
-    MAPNAME_TO_LOAD = JSON["mapName"].split('/')[2];
+    NEIGHBOURHOOD_TO_LOAD = JSON["neighbourhood"]
+    MAPNAME_TO_LOAD = JSON["mapName"]
     CHARACTERS_TO_LOAD = JSON["characters"];
     OBJECTS_TO_LOAD = JSON["mapObjects"];
 

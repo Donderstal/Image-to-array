@@ -154,7 +154,8 @@ class Map extends CanvasWithGrid {
         const sprites = MAP_FOREGROUND.exportAllSprites( );
 
         return {
-            'mapName' : this.mapName != undefined ? this.mapName : document.getElementById("save-map-name-input").value,
+            'mapName' : this.mapName,
+            'neighbourhood': this.neighbourhood,
             'tileSet' : SHEET.sheetName,
             'outdoors' : null,
             'music' : null,
