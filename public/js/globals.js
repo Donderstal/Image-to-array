@@ -86,6 +86,11 @@ const SHEET_COL_2_Y_POS = TILE_SIZE;
 const SHEET_COL_3_Y_POS = TILE_SIZE * 2;
 const SHEET_COL_4_Y_POS = TILE_SIZE * 3;
 
+const FACING_DOWN                   = 0
+const FACING_LEFT                   = 1
+const FACING_RIGHT                  = 2
+const FACING_UP                     = 3
+
 const TILESHEETS = {
     "my_neighbourhood" : {
         "src": "city1big_tiles.png",
