@@ -167,6 +167,7 @@ const generatePNGCanvasElements = ( ) => {
             canvas.height = STRD_SPRITE_HEIGHT;
             canvas.image = image;
             
+            canvas.setAttribute("draggable", true)
             const ctx = canvas.getContext("2d")
             ctx.drawImage( image, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT)
 
@@ -177,6 +178,16 @@ const generatePNGCanvasElements = ( ) => {
                 SELECTED_SPRITE_POSITION = 'FACING_DOWN';
 
                 drawSpriteFromCanvasToSelectedSpriteCanvas( );
+            });
+
+            canvas.addEventListener( 'dragstart', ( e ) => {
+                document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
+                document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
+                SELECTED_SPRITE = e.target.id;
+                SELECTED_SPRITE_POSITION = 'FACING_DOWN';
+
+                drawSpriteFromCanvasToSelectedSpriteCanvas( );
+                dragstart_handler( e )
             });
             charactersWrapper.append(canvas)            
         };
@@ -192,7 +203,9 @@ const generatePNGCanvasElements = ( ) => {
             canvas.width = image.width;
             canvas.height = image.height;
             canvas.image = image;
-            
+
+            canvas.setAttribute("draggable", true)
+           
             const ctx = canvas.getContext("2d")
             ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height)
 
@@ -201,6 +214,14 @@ const generatePNGCanvasElements = ( ) => {
 
                 drawMapObjectFromCanvasToSelectedSpriteCanvas( );
             });
+
+            canvas.addEventListener( 'dragstart', ( e ) => {
+                SELECTED_SPRITE = e.target.id;
+
+                drawMapObjectFromCanvasToSelectedSpriteCanvas( );
+                dragstart_handler( e )
+            });
+
             objectsWrapper.append(canvas)            
         };
     });
