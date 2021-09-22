@@ -37,3 +37,35 @@ const removeAllChildrenFromParent = ( elementID ) => {
         document.getElementById(elementID).removeChild(document.getElementById(elementID).firstChild);
     }
 }
+
+const clearSpriteCanvas = ( ) => {
+    const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
+    const currentSpriteCtx = currentSpriteCanvas.getContext('2d')        
+    currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
+} 
+
+const hideListContainersAndShowGiven = ( divId, activateNewDiv = true ) => {
+    const elementList = document.getElementsByClassName("right-list-container");
+    for (let item of elementList) {
+        console.log( item )
+        console.log( item.style.visibility )
+        item.style.visibility = "hidden";
+        item.style.display = "none";
+    }
+
+    if ( activateNewDiv ) {
+        document.getElementById(divId).style.visibility = "visible";
+        document.getElementById(divId).style.display = "block";        
+    }
+}
+
+const switchSpriteSettingMode = ( clickedElementId ) => {
+    let switchMode =
+    ( clickedElementId == "show-character-sprites" && !IN_SHOW_CHARACTER_SPRITES_MODE )
+    || IN_SHOW_CHARACTER_SPRITES_MODE;
+
+    if ( switchMode ) {
+        IN_SHOW_CHARACTER_SPRITES_MODE = !IN_SHOW_CHARACTER_SPRITES_MODE;
+        IN_SHOW_MAP_OBJECTS_MODE = !IN_SHOW_MAP_OBJECTS_MODE;
+    }
+}
