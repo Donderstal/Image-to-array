@@ -632,3 +632,69 @@ const spriteData = {
         ...BUS
     }
 }
+
+const getDoorsAndWindows = ( ) => {
+    let returner = { } 
+    Object.keys( spriteData ).forEach( ( e ) => { 
+        let object = spriteData[e]
+        object.key = e;
+        if ( object.door_or_window )
+            returner[e] = object
+    })
+    return returner;
+}
+
+const getBackgroundItems = ( ) => {
+    let returner = { } 
+    Object.keys( spriteData ).forEach( ( e ) => { 
+        let object = spriteData[e]
+        object.key = e;
+        if ( !object.door_or_window && object.on_background )
+            returner[e] = object
+    })
+    return returner;
+}
+
+const getGroundedAtBottomItems = ( ) => {
+    let returner = { } 
+    Object.keys( spriteData ).forEach( ( e ) => { 
+        let object = spriteData[e]
+        object.key = e;
+        if ( object.grounded_at_bottom )
+            returner[e] = object
+    })
+    return returner;
+}
+
+const getNotGroundedItems = ( ) => {
+    let returner = { } 
+    Object.keys( spriteData ).forEach( ( e ) => { 
+        let object = spriteData[e]
+        object.key = e;
+        if ( object.not_grounded )
+            returner[e] = object
+    })
+    return returner;
+}
+
+const getCars = ( ) => {
+    let returner = { } 
+    Object.keys( spriteData ).forEach( ( e ) => { 
+        let object = spriteData[e]
+        object.key = e;
+        if ( object.isCar )
+            returner[e] = object
+    })
+    return returner;
+}
+
+const getRestItems = ( ) => {
+    let returner = { } 
+    Object.keys( spriteData ).forEach( ( e ) => { 
+        let object = spriteData[e]
+        object.key = e;
+        if ( !object.not_grounded && !object.grounded_at_bottom && !object.door_or_window && !object.on_background && !object.isCar )
+            returner[e] = object
+    })
+    return returner;
+}
