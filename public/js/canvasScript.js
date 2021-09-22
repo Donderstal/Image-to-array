@@ -135,26 +135,24 @@ const turnSelectedSprite = ( direction ) => {
 }
 
 const drawMapObjectFromCanvasToSelectedSpriteCanvas = ( ) => {
-    const imageWidth = document.getElementById(SELECTED_SPRITE).width;
-    const imageHeight = document.getElementById(SELECTED_SPRITE).height;
+    let selectedCanvas = document.getElementById(SELECTED_SPRITE);
     const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
     const currentSpriteCtx = currentSpriteCanvas.getContext('2d')
-    currentSpriteCanvas.height = imageHeight;
-    currentSpriteCanvas.width = imageWidth;
+    currentSpriteCanvas.width = selectedCanvas.width;
+    currentSpriteCanvas.height = selectedCanvas.height;
     currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
   
     currentSpriteCtx.drawImage( 
         document.getElementById(SELECTED_SPRITE).image, 
         0, 0, 
-        imageWidth, imageHeight, 
+        selectedCanvas.width * 2, selectedCanvas.height * 2, 
         0, 0, 
-        currentSpriteCanvas.width, currentSpriteCanvas.height
+        selectedCanvas.width, selectedCanvas.height
     )
 }
 
 const generatePNGCanvasElements = ( ) => {
     const charactersWrapper = document.getElementById('character-sprite-pngs-div');
-    const objectsWrapper = document.getElementById('map-objects-pngs-div');
 
     PNG_FILES["characters"].forEach( ( e ) => {
         const image = new Image( );
@@ -182,28 +180,47 @@ const generatePNGCanvasElements = ( ) => {
         };
     });
 
-    PNG_FILES["objects"].forEach( ( e ) => {
-        const image = new Image( );
-        image.src = "/png-files/sprite-assets/" + e;
-        image.onload =( ) => {
-            const canvas = document.createElement('canvas');
-            canvas.className = "visible-canvas mb-2"
-            canvas.id = e
-            canvas.width = image.width;
-            canvas.height = image.height;
-            canvas.image = image;
-            
-            const ctx = canvas.getContext("2d")
-            ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height)
+    const spriteTypesList = [
+        [getDoorsAndWindows( ), document.getElementById("windows-doors-pngs-div")],
+        [getBackgroundItems( ), document.getElementById("background-items-pngs-div")],
+        [getGroundedAtBottomItems( ), document.getElementById("grounded-at-bottom-items-pngs-div")],
+        [getNotGroundedItems( ), document.getElementById("not-grounded-items-div")],
+        [getCars(), document.getElementById("cars-div")],
+        [getRestItems(), restWrapper = document.getElementById("rest-sprites-div")]
+    ]
 
-            canvas.addEventListener( 'click', ( e ) => {
-                SELECTED_SPRITE = e.target.id;
+    spriteTypesList.forEach( ( e ) => {
+        const dataList = e[0];
+        const element = e[1];
 
-                drawMapObjectFromCanvasToSelectedSpriteCanvas( );
-            });
-            objectsWrapper.append(canvas)            
-        };
+        element.dataList = dataList;
+        Object.keys( dataList ).forEach( ( x ) => {
+            const image = new Image( );
+            image.src = "/png-files/sprite-assets/" + dataList[x].src;
+    
+            image.onload = ( ) => {
+                let dataObject = dataList[x]
+                const canvas = document.createElement('canvas');
+                canvas.className = "visible-canvas mb-2"
+                canvas.dataObject = dataObject
+                canvas.id = x
+                canvas.width = dataObject.width_blocks * TILE_SIZE;
+                canvas.height = dataObject.height_blocks * TILE_SIZE
+                canvas.image = image;
+
+                const ctx = canvas.getContext("2d")                
+                ctx.drawImage( 
+                    image, 0, 0, 
+                    (dataObject.width_blocks * TILE_SIZE) * 2, (dataObject.height_blocks * TILE_SIZE) * 2, 
+                    0, 0, canvas.width, canvas.height
+                );
+    
+                canvas.addEventListener( 'click', ( e ) => {
+                    SELECTED_SPRITE = e.target.id;
+                    drawMapObjectFromCanvasToSelectedSpriteCanvas( );
+                });
+                element.append(canvas)            
+            };
+        } )
     });
-
-    document.getElementById('character-sprite-pngs-div')
 }

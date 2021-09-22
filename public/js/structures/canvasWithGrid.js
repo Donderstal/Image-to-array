@@ -226,13 +226,14 @@ class ObjectsGrid extends CanvasWithGrid {
             tile.drawTileBorders( )
             if ( tile.hasSprite ) {
                 if ( tile.spriteType == 'object' ) {
-                    const currentSprite = tile.spriteData.type + '.png'
+                    const currentSprite = tile.spriteData.type
+                    const element = document.getElementById(currentSprite)
                     this.ctx.drawImage(
-                        document.getElementById(currentSprite).image,
+                        element.image,
                         0, 0,
-                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(currentSprite).height / 2),
-                        document.getElementById(currentSprite).width / 2, document.getElementById(currentSprite).height / 2
+                        element.width * 2, element.height * 2,
+                        tile.x, element.dataObject.height_blocks > 1 ? tile.y -  ( (element.dataObject.height_blocks - 1) * TILE_SIZE ) : tile.y,
+                        element.width, element.height
                     )
                 }
                 else if ( tile.spriteType == 'character' ) {

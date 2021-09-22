@@ -21,8 +21,8 @@ const getGroundedAtBottom = ( width, height ) => {
     return {
         "dimensional_alignment": "STANDARD",
         "grounded_at_bottom": true,
-        "height_blocks": width,
-        "width_blocks": height
+        "height_blocks": height,
+        "width_blocks": width
     }
 }
 
