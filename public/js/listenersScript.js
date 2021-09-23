@@ -161,9 +161,9 @@ document.addEventListener('keydown', ( e ) => {
 document.getElementById("return-to-hood-selection").addEventListener( 'click', unsetNeighbourhoodForManager)
 
 document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
-    MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
-    MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
-
+    MAPMAKER_IN_TILE_MODE = true;
+    MAPMAKER_IN_OBJECT_MODE = false;
+    
     MAP_FOREGROUND_CANVAS.style.visibility = "hidden";
     MAP_FOREGROUND_CANVAS.style.display = "none";
     
@@ -186,8 +186,9 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
 }, true )
 
 document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
-    MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
-    MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
+    console.log('clikc')
+    MAPMAKER_IN_TILE_MODE = false;
+    MAPMAKER_IN_OBJECT_MODE = true;
 
     IN_SHOW_CHARACTER_SPRITES_MODE = true;
     IN_SHOW_MAP_OBJECTS_MODE = false;

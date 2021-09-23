@@ -62,7 +62,7 @@ const STANDARD_CAR = {
 
 const BUS = {
     "dimensional_alignment": "HORI_VERT", "isCar" : true,
-    "hori_height_blocks": 3, "hori_width_blocks": 4,
+    "hori_height_blocks": 3, "hori_width_blocks": 5,
     "vert_height_blocks": 4, "vert_width_blocks": 3,
     "movement_frames" : {
         [FACING_LEFT] : [
