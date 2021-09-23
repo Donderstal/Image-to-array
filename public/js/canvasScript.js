@@ -202,7 +202,7 @@ const generatePNGCanvasElements = ( ) => {
                 let dataObject = dataList[x]
                 const canvas = document.createElement('canvas');
                 canvas.className = "visible-canvas mb-2"
-                canvas.dataObject = dataObject
+                canvas.dataObject = new DataObject( dataObject )
                 canvas.id = x
                 canvas.width = dataObject.width_blocks * TILE_SIZE;
                 canvas.height = dataObject.height_blocks * TILE_SIZE

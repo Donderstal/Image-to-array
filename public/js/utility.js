@@ -69,3 +69,40 @@ const switchSpriteSettingMode = ( clickedElementId ) => {
         IN_SHOW_MAP_OBJECTS_MODE = !IN_SHOW_MAP_OBJECTS_MODE;
     }
 }
+
+class DataObject{
+    constructor( data ) {
+        Object.keys( data ).forEach( ( key ) =>{
+            this[key] = Object.assign( {}, data[key]);
+        })
+    }
+
+    get width_blocks( ) {
+        if ( this["dimensional_alignment"] == "STANDARD") {
+            return this.width_blocks_inner
+        }
+        else if ( this["dimensional_alignment"] == "HORI_VERT" ) {
+            return this.hori_width_blocks
+        }
+        else if ( this["dimensional_alignment"] == "HORI_VERT" ) {
+            return this.vert_width_blocks
+        }
+    }
+    set width_blocks(width) {
+        this.width_blocks_inner = width;
+    }
+    get height_blocks( ) {
+        if ( this["dimensional_alignment"] == "STANDARD") {
+            return this.height_blocks_inner
+        }
+        else if ( this["dimensional_alignment"] == "HORI_VERT" ) {
+            return this.hori_height_blocks
+        }
+        else if ( this["dimensional_alignment"] == "HORI_VERT" ) {
+            return this.vert_height_blocks
+        }
+    }    
+    set height_blocks(height) {
+        this.height_blocks_inner = height;
+    }
+}
