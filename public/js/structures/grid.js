@@ -62,8 +62,8 @@ class Grid {
     }
 
     getTileAtXY( x, y ) {
-        const column = Math.floor(event.offsetX / TILE_SIZE);
-        const row = Math.floor(event.offsetY / TILE_SIZE);
+        const column = Math.floor(x / TILE_SIZE);
+        const row = Math.floor(y / TILE_SIZE);
 
         const tileIndex = (row * this.cols) + column;
 
@@ -181,6 +181,12 @@ class Tile {
         this.hasSettings = true;
         this.mirrored = settings['mirrored'];
         this.angle = settings['angle'];
+    }
+    
+    unSetSettings( ) {
+        this.hasSettings = false;
+        this.mirrored = false;
+        this.angle = 0;
     }
 
     setTileID( ID ) {

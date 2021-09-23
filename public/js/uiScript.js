@@ -147,7 +147,7 @@ const captureSheetClick = ( event ) => {
 
 const captureMapClick = ( event ) => {
     if ( event.shiftKey ) {
-        
+        MAP.clearTileAtXY(event.offsetX, event.offsetY);    
     }
     else {
         MAP.drawTileAtXY(event.offsetX, event.offsetY);        

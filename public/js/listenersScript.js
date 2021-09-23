@@ -106,11 +106,7 @@ MAP_CANVAS.addEventListener('mouseup', (event) => {
     
     MAP.grid.array.forEach( ( tile ) => {
         if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
-            tile.setTileID( SHEET.activeTile.index )
-            tile.setSettings( SHEET.activeTileSettings )
-            MAP_CTX.drawImage( 
-                SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE 
-            )
+            event.shiftKey ? MAP.clearTileAtXY( tile.x, tile.y ) : MAP.drawTileAtXY( tile.x, tile.y )
         }
     } )
 });
@@ -140,6 +136,18 @@ document.addEventListener('keydown', ( e ) => {
         // e
         else if ( e.keyCode == 69 ){
             flipTile("Clockwise")
+        }
+        else if ( parseInt( e.key ) >=1 && parseInt( e.key ) <= 9 && !document.getElementById("mapmaker-div").classList.contains('window-inactive') ) {
+            e.preventDefault( );
+            let canvas = document.getElementById("tile-canvas-" + e.key)
+            if ( e.ctrlKey ) {
+                canvas.activeTile = SHEET.activeTile;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage( SHEET_CANVAS.image, canvas.activeTile.x* 2, canvas.activeTile.y* 2, TILE_SIZE* 2, TILE_SIZE* 2, 0, 0, TILE_SIZE * 10, TILE_SIZE * 5 )  
+            }
+            else if ( canvas.activeTile != undefined ) {
+                SHEET.captureTileAtXY( canvas.activeTile.x, canvas.activeTile.y );
+            }
         }
     }
     else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE && ( IN_SHOW_CHARACTER_SPRITES_MODE || ( IN_SHOW_MAP_OBJECTS_MODE && IS_CAR ) ) ) {
