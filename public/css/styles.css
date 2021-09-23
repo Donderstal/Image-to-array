@@ -239,3 +239,23 @@ body {
     display: none;
     visibility: hidden;
 }
+
+.stored-tile-canvas {
+    background-color: black;
+    width: 64px;
+    height:64px;
+}
+
+.stored-tile-canvas {
+    background-color: black;
+    width: 64px;
+    height:64px;
+}
+
+.stored-tile-title {
+    text-align: center;
+}
+
+.stored-tile-div {
+    display: inline-block;
+}
