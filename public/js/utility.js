@@ -73,7 +73,7 @@ const switchSpriteSettingMode = ( clickedElementId ) => {
 class DataObject{
     constructor( data ) {
         Object.keys( data ).forEach( ( key ) =>{
-            this[key] = Object.assign( {}, data[key]);
+            this[key] = data[key]
         })
     }
 

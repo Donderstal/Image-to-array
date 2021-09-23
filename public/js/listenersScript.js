@@ -142,7 +142,7 @@ document.addEventListener('keydown', ( e ) => {
             flipTile("Clockwise")
         }
     }
-    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE && IN_SHOW_CHARACTER_SPRITES_MODE ) {
+    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE && ( IN_SHOW_CHARACTER_SPRITES_MODE || ( IN_SHOW_MAP_OBJECTS_MODE && IS_CAR ) ) ) {
         // q
         if ( e.keyCode == 81 ){
             turnSelectedSprite("FACING_LEFT")

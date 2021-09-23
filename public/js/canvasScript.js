@@ -199,10 +199,10 @@ const generatePNGCanvasElements = ( ) => {
             image.src = "/png-files/sprite-assets/" + dataList[x].src;
     
             image.onload = ( ) => {
-                let dataObject = dataList[x]
+                let dataObject = new DataObject( dataList[x] )
                 const canvas = document.createElement('canvas');
                 canvas.className = "visible-canvas mb-2"
-                canvas.dataObject = new DataObject( dataObject )
+                canvas.dataObject = dataObject
                 canvas.id = x
                 canvas.width = dataObject.width_blocks * TILE_SIZE;
                 canvas.height = dataObject.height_blocks * TILE_SIZE
@@ -217,6 +217,13 @@ const generatePNGCanvasElements = ( ) => {
     
                 canvas.addEventListener( 'click', ( e ) => {
                     SELECTED_SPRITE = e.target.id;
+                    if ( e.target.dataObject.isCar ) {
+                        IS_CAR = true;
+                        SELECTED_SPRITE_POSITION = 'FACING_DOWN'
+                    }
+                    else {
+                        IS_CAR = false;
+                    }
                     drawMapObjectFromCanvasToSelectedSpriteCanvas( );
                 });
                 element.append(canvas)            
