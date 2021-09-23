@@ -87,10 +87,10 @@ const SHEET_COL_2_Y_POS = TILE_SIZE;
 const SHEET_COL_3_Y_POS = TILE_SIZE * 2;
 const SHEET_COL_4_Y_POS = TILE_SIZE * 3;
 
-const FACING_DOWN                   = 0
-const FACING_LEFT                   = 1
-const FACING_RIGHT                  = 2
-const FACING_UP                     = 3
+const FACING_DOWN                   = 'FACING_DOWN'
+const FACING_LEFT                   = 'FACING_LEFT'
+const FACING_RIGHT                  = 'FACING_RIGHT'
+const FACING_UP                     = 'FACING_UP'
 
 const TILESHEETS = {
     "my_neighbourhood" : {

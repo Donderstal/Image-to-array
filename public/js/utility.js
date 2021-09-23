@@ -75,6 +75,10 @@ class DataObject{
         Object.keys( data ).forEach( ( key ) =>{
             this[key] = data[key]
         })
+
+        if ( this.isCar ) {
+            this.setFrames( )
+        }
     }
 
     get width_blocks( ) {
@@ -104,5 +108,12 @@ class DataObject{
     }    
     set height_blocks(height) {
         this.height_blocks_inner = height;
+    }
+
+    setFrames( ) {
+        this[FACING_DOWN] = this.movement_frames[FACING_DOWN][0];
+        this[FACING_LEFT] = this.movement_frames[FACING_LEFT][0];
+        this[FACING_UP] = this.movement_frames[FACING_UP][0];
+        this[FACING_RIGHT] = this.movement_frames[FACING_RIGHT][0];
     }
 }
