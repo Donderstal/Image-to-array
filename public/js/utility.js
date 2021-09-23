@@ -116,4 +116,46 @@ class DataObject{
         this[FACING_UP] = this.movement_frames[FACING_UP][0];
         this[FACING_RIGHT] = this.movement_frames[FACING_RIGHT][0];
     }
+
+    getDimensionBlocks( direction ) {
+        if ( direction == FACING_DOWN || direction == FACING_UP ) {
+            return {
+                "width": this.vert_width_blocks,
+                "height": this.vert_height_blocks
+            } 
+        }
+        else if ( direction == FACING_LEFT || direction == FACING_RIGHT ) {
+            return {
+                "width": this.hori_width_blocks,
+                "height": this.hori_height_blocks
+            } 
+        }
+        else {
+            return {
+                "width": this.width_blocks,
+                "height": this.height_blocks
+            } 
+        }
+    }
+
+    getDimensions( direction ) {
+        if ( direction == FACING_DOWN || direction == FACING_UP ) {
+            return {
+                "width": this.vert_width_blocks * TILE_SIZE,
+                "height": this.vert_height_blocks * TILE_SIZE
+            } 
+        }
+        else if ( direction == FACING_LEFT || direction == FACING_RIGHT ) {
+            return {
+                "width": this.hori_width_blocks * TILE_SIZE,
+                "height": this.hori_height_blocks * TILE_SIZE
+            } 
+        } 
+        else {
+            return {
+                "width": this.width_blocks * TILE_SIZE,
+                "height": this.height_blocks * TILE_SIZE
+            } 
+        }
+    }
 }

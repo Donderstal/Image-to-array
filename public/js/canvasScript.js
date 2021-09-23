@@ -147,39 +147,18 @@ const drawMapObjectFromCanvasToSelectedSpriteCanvas = ( ) => {
     const currentSpriteCtx = currentSpriteCanvas.getContext('2d')    
     let dataObject = selectedCanvas.dataObject
 
-    if ( dataObject.dimensional_alignment == 'HORI_VERT' ) {
-        let dimensions = {};
-        if ( SELECTED_SPRITE_POSITION == FACING_DOWN || SELECTED_SPRITE_POSITION == FACING_UP ) {
-            dimensions.width = (dataObject.vert_width_blocks * TILE_SIZE) * 2
-            dimensions.height = (dataObject.vert_height_blocks * TILE_SIZE) * 2
-        }
-        else {
-            dimensions.width = (dataObject.hori_width_blocks * TILE_SIZE) * 2
-            dimensions.height = (dataObject.hori_height_blocks * TILE_SIZE) * 2
-        }
-        currentSpriteCanvas.width = dimensions.width
-        currentSpriteCanvas.height = dimensions.height;
-        currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
-        currentSpriteCtx.drawImage( 
-            document.getElementById(SELECTED_SPRITE).image, 
-            dataObject[SELECTED_SPRITE_POSITION].x, dataObject[SELECTED_SPRITE_POSITION].y, 
-            dimensions.width, dimensions.height, 
-            0, 0, 
-            dimensions.width / 2, dimensions.height / 2
-        )
-    }
-    else {
-        currentSpriteCanvas.width = selectedCanvas.width;
-        currentSpriteCanvas.height = selectedCanvas.height;
-        currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
-        currentSpriteCtx.drawImage( 
-            document.getElementById(SELECTED_SPRITE).image, 
-            0, 0, 
-            selectedCanvas.width * 2, selectedCanvas.height * 2, 
-            0, 0, 
-            currentSpriteCanvas.width, currentSpriteCanvas.height
-        )
-    }
+    let dimensions = dataObject.getDimensions( SELECTED_SPRITE_POSITION );
+    currentSpriteCanvas.width = dimensions.width
+    currentSpriteCanvas.height = dimensions.height;
+    currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
+    currentSpriteCtx.drawImage( 
+        document.getElementById(SELECTED_SPRITE).image, 
+        dataObject[SELECTED_SPRITE_POSITION] ? dataObject[SELECTED_SPRITE_POSITION].x : 0, 
+        dataObject[SELECTED_SPRITE_POSITION] ? dataObject[SELECTED_SPRITE_POSITION].y : 0, 
+        dimensions.width * 2, dimensions.height * 2, 
+        0, 0, 
+        dimensions.width, dimensions.height
+    )
 }
 
 const generatePNGCanvasElements = ( ) => {
@@ -235,25 +214,24 @@ const generatePNGCanvasElements = ( ) => {
                 canvas.className = "visible-canvas mb-2"
                 canvas.dataObject = dataObject
                 canvas.id = x
-                canvas.width = dataObject.width_blocks * TILE_SIZE;
-                canvas.height = dataObject.height_blocks * TILE_SIZE
+                let dimensions = dataObject.getDimensions( dataObject.isCar ? FACING_DOWN : "NO_DIRECTION" );
+                canvas.width = dimensions.width;
+                canvas.height = dimensions.height
                 canvas.image = image;
 
                 const ctx = canvas.getContext("2d")  
                 
                 if ( dataObject.isCar ) {
-                    canvas.width = dataObject.vert_width_blocks * TILE_SIZE;
-                    canvas.height = dataObject.vert_height_blocks * TILE_SIZE
                     ctx.drawImage( 
                         image, dataObject[FACING_DOWN].x, dataObject[FACING_DOWN].y, 
-                        (dataObject.vert_width_blocks * TILE_SIZE) * 2, (dataObject.vert_height_blocks * TILE_SIZE) * 2, 
+                        dimensions.width * 2, dimensions.height * 2, 
                         0, 0, canvas.width, canvas.height
                     );     
                 }
                 else {
                     ctx.drawImage( 
                         image, 0, 0, 
-                        (dataObject.width_blocks * TILE_SIZE) * 2, (dataObject.height_blocks * TILE_SIZE) * 2, 
+                        dimensions.width * 2, dimensions.height * 2, 
                         0, 0, canvas.width, canvas.height
                     );                    
                 }
@@ -266,6 +244,7 @@ const generatePNGCanvasElements = ( ) => {
                     }
                     else {
                         IS_CAR = false;
+                        SELECTED_SPRITE_POSITION = false;
                     }
                     drawMapObjectFromCanvasToSelectedSpriteCanvas( );
                 });
