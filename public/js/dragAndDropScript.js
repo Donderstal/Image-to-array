@@ -1,25 +1,18 @@
-function dragstart_handler(ev) {
-    console.log(ev)
-    console.log(ev.target.src)
-    console.log("dragStart");
-    // Set the drag's format and data. Use the event target's id for the data
+function handleDragStart(ev) {
     ev.dataTransfer.setData("text/plain", ev.target.id);
-    // Create an image and use it for the drag image
-    // NOTE: change "example.gif" to an existing image or the image will not
-    // be created and the default drag image will be used.
-    var img = new Image();
-    img.src = ev.srcElement.image.currentSrc;
-    ev.dataTransfer.setDragImage(img, 10, img.height);
+
+    setTimeout( ( ) => {
+        var image = new Image();
+        image.src = document.getElementById('selected-sprite-canvas').toDataURL();
+        ev.dataTransfer.setDragImage(image, TILE_SIZE, TILE_SIZE);
+    }, 250 )
    }
    
-   function dragover_handler(ev) {
-    console.log("dragOver");
+   function handleDragOver(ev) {
     ev.preventDefault();
    }
    
-   function drop_handler(ev) {
-    console.log("Drop");
+   function handleDragEnd(ev) {
     ev.preventDefault();
-    // Get the data, which is the id of the drop target
     captureForegroundClick(ev)
    }

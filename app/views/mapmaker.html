@@ -89,7 +89,7 @@
         <div class="col-sm-8 fixed-div">
             <div id="map-canvas-div" class="list-container">
                 <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
-                <canvas id="map-foreground-canvas" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="border border-info foreground-canvas invisible-canvas"></canvas>
+                <canvas id="map-foreground-canvas" ondrop="handleDragEnd(event);" ondragover="handleDragOver(event);" class="border border-info foreground-canvas invisible-canvas"></canvas>
             </div>  
             <hr>
             <div class="map-canvas-buttons-div" >
