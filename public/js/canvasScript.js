@@ -168,35 +168,11 @@ const generatePNGCanvasElements = ( ) => {
         const image = new Image( );
         image.src = "/png-files/sprites/" + e;
         image.onload = ( ) => {
-            const canvas = document.createElement('canvas');
-            canvas.className = "visible-canvas"
-            canvas.id = e
-            canvas.width = STRD_SPRITE_WIDTH;
-            canvas.height = STRD_SPRITE_HEIGHT;
-            canvas.image = image;
-            
-            canvas.setAttribute("draggable", true)
+            const canvas = createSpriteCanvas( e, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, image )
             const ctx = canvas.getContext("2d")
             ctx.drawImage( image, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT)
-
-            canvas.addEventListener( 'click', ( e ) => {
-                document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
-                document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
-                SELECTED_SPRITE = e.target.id;
-                SELECTED_SPRITE_POSITION = 'FACING_DOWN';
-
-                drawSpriteFromCanvasToSelectedSpriteCanvas( );
-            });
-
-            canvas.addEventListener( 'dragstart', ( e ) => {
-                document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
-                document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
-                SELECTED_SPRITE = e.target.id;
-                SELECTED_SPRITE_POSITION = 'FACING_DOWN';
-
-                drawSpriteFromCanvasToSelectedSpriteCanvas( );
-                dragstart_handler( e )
-            });
+            canvas.addEventListener( 'click', ( e ) => { characterListener( e, false ) });
+            canvas.addEventListener( 'dragstart', ( e ) => { characterListener( e, true ) });
             charactersWrapper.append(canvas)            
         };
     });
@@ -221,15 +197,9 @@ const generatePNGCanvasElements = ( ) => {
     
             image.onload = ( ) => {
                 let dataObject = new DataObject( dataList[x] )
-                const canvas = document.createElement('canvas');
-                canvas.className = "visible-canvas mb-2"
-                canvas.dataObject = dataObject
-                canvas.id = x
                 let dimensions = dataObject.getDimensions( dataObject.isCar ? FACING_DOWN : "NO_DIRECTION" );
-                canvas.width = dimensions.width;
-                canvas.height = dimensions.height
-                canvas.image = image;
-
+                const canvas = createSpriteCanvas( x, dimensions.width, dimensions.height, image )
+                canvas.dataObject = dataObject
                 const ctx = canvas.getContext("2d")  
                 
                 if ( dataObject.isCar ) {
@@ -246,21 +216,48 @@ const generatePNGCanvasElements = ( ) => {
                         0, 0, canvas.width, canvas.height
                     );                    
                 }
-    
-                canvas.addEventListener( 'click', ( e ) => {
-                    SELECTED_SPRITE = e.target.id;
-                    if ( e.target.dataObject.isCar ) {
-                        IS_CAR = true;
-                        SELECTED_SPRITE_POSITION = 'FACING_DOWN'
-                    }
-                    else {
-                        IS_CAR = false;
-                        SELECTED_SPRITE_POSITION = false;
-                    }
-                    drawMapObjectFromCanvasToSelectedSpriteCanvas( );
-                });
+
+                canvas.addEventListener( 'click', ( e ) => {mapObjectListener(e, true)});
+                canvas.addEventListener( 'dragstart', ( e ) => {mapObjectListener(e, true)});
                 element.append(canvas)            
             };
         } )
     });
+}
+
+const createSpriteCanvas = ( id, width, height, image ) => {
+    const canvas = document.createElement('canvas');
+    canvas.className = "visible-canvas mb-2"
+    canvas.id = id
+    canvas.width = width;
+    canvas.height = height
+    canvas.image = image;
+    canvas.setAttribute("draggable", true)
+    return canvas;
+}
+
+const characterListener = ( e, isDragStart ) => {
+    document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
+    document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
+    SELECTED_SPRITE = e.target.id;
+    SELECTED_SPRITE_POSITION = 'FACING_DOWN';
+
+    drawSpriteFromCanvasToSelectedSpriteCanvas( );
+    if ( isDragStart )
+        handleDragStart( e )
+}
+
+const mapObjectListener = ( e, isDragStart ) => {
+    SELECTED_SPRITE = e.target.id;
+    if ( e.target.dataObject.isCar ) {
+        IS_CAR = true;
+        SELECTED_SPRITE_POSITION = 'FACING_DOWN'
+    }
+    else {
+        IS_CAR = false;
+        SELECTED_SPRITE_POSITION = false;
+    }
+    drawMapObjectFromCanvasToSelectedSpriteCanvas( );
+    if ( isDragStart )
+        handleDragStart( e )
 }
