@@ -213,11 +213,15 @@ class ObjectsGrid extends CanvasWithGrid {
     }
     placeObjectSpriteAtXY(x, y){
         const tile = super.getTileAtXY(x,y)
-        tile.setSpriteData( 'object', {  
+        let objectData = {  
             "type"  : SELECTED_SPRITE.split('.')[0],
             "row"   : tile.row,
-            "col"   : tile.col
-        } )
+            "col"   : tile.col,
+        }
+        if ( IS_CAR )
+            objectData["direction"] = SELECTED_SPRITE_POSITION;
+        tile.setSpriteData( 'object', objectData )
+
         this.drawSpritesInGrid( )
     }
     drawSpritesInGrid( ) {
@@ -225,18 +229,27 @@ class ObjectsGrid extends CanvasWithGrid {
         this.grid.array.forEach( ( tile ) => {
             tile.drawTileBorders( )
             if ( tile.hasSprite ) {
-                if ( tile.spriteType == 'object' ) {
-                    const currentSprite = tile.spriteData.type + '.png'
+                const element = document.getElementById( tile.spriteType == 'object' ? tile.spriteData.type : tile.spriteData.sprite)
+                if ( tile.spriteType == 'object' && typeof tile.spriteData.direction != 'string' ) {
                     this.ctx.drawImage(
-                        document.getElementById(currentSprite).image,
+                        element.image,
                         0, 0,
-                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(currentSprite).height / 2),
-                        document.getElementById(currentSprite).width / 2, document.getElementById(currentSprite).height / 2
+                        element.width * 2, element.height * 2,
+                        tile.x, element.dataObject.height_blocks > 1 ? tile.y -  ( (element.dataObject.height_blocks - 1) * TILE_SIZE ) : tile.y,
+                        element.width, element.height
+                    )
+                }
+                else if ( tile.spriteType == 'object' && typeof tile.spriteData.direction == 'string' ) {
+                    let dimensions = element.dataObject.getDimensions( tile.direction );
+                    this.ctx.drawImage(
+                        element.image,
+                        element.dataObject[tile.direction].x, element.dataObject[tile.direction].y, 
+                        dimensions.width * 2, dimensions.height * 2,
+                        tile.x, (dimensions.height) > TILE_SIZE ? tile.y -  (dimensions.height - TILE_SIZE) : tile.y,
+                        dimensions.width, dimensions.height
                     )
                 }
                 else if ( tile.spriteType == 'character' ) {
-                    const currentSprite = tile.spriteData.sprite
                     let sourceY;
                     switch( tile.spriteData.direction ) {
                         case 'FACING_DOWN':
@@ -253,9 +266,9 @@ class ObjectsGrid extends CanvasWithGrid {
                             break;
                     }
                     this.ctx.drawImage(
-                        document.getElementById(currentSprite).image,
+                        element.image,
                         0, sourceY,
-                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
+                        element.width, element.height,
                         tile.x, tile.y - ( TILE_SIZE * 0.75 ),
                         STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
                     )

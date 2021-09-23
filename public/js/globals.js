@@ -22,6 +22,7 @@ const STRD_SPRITE_WIDTH = 64;
 const STRD_SPRITE_HEIGHT = 112;
 let SELECTED_SPRITE;
 let SELECTED_SPRITE_POSITION;
+let IS_CAR;
 
 let SHEET;
 let MAP;
@@ -85,6 +86,11 @@ const SHEET_COL_1_Y_POS = 0;
 const SHEET_COL_2_Y_POS = TILE_SIZE;
 const SHEET_COL_3_Y_POS = TILE_SIZE * 2;
 const SHEET_COL_4_Y_POS = TILE_SIZE * 3;
+
+const FACING_DOWN                   = 'FACING_DOWN'
+const FACING_LEFT                   = 'FACING_LEFT'
+const FACING_RIGHT                  = 'FACING_RIGHT'
+const FACING_UP                     = 'FACING_UP'
 
 const TILESHEETS = {
     "my_neighbourhood" : {

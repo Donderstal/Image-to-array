@@ -131,30 +131,38 @@ const drawSpriteFromCanvasToSelectedSpriteCanvas = ( ) => {
 
 const turnSelectedSprite = ( direction ) => {
     SELECTED_SPRITE_POSITION = direction;
-    drawSpriteFromCanvasToSelectedSpriteCanvas( );
+
+    if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
+        drawSpriteFromCanvasToSelectedSpriteCanvas( );
+    }
+    else if ( IN_SHOW_MAP_OBJECTS_MODE && document.getElementById(SELECTED_SPRITE).dataObject.dimensional_alignment == 'HORI_VERT' ) {
+        drawMapObjectFromCanvasToSelectedSpriteCanvas();
+    }
+
 }
 
 const drawMapObjectFromCanvasToSelectedSpriteCanvas = ( ) => {
-    const imageWidth = document.getElementById(SELECTED_SPRITE).width;
-    const imageHeight = document.getElementById(SELECTED_SPRITE).height;
+    let selectedCanvas = document.getElementById(SELECTED_SPRITE);
     const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
-    const currentSpriteCtx = currentSpriteCanvas.getContext('2d')
-    currentSpriteCanvas.height = imageHeight;
-    currentSpriteCanvas.width = imageWidth;
+    const currentSpriteCtx = currentSpriteCanvas.getContext('2d')    
+    let dataObject = selectedCanvas.dataObject
+
+    let dimensions = dataObject.getDimensions( SELECTED_SPRITE_POSITION );
+    currentSpriteCanvas.width = dimensions.width
+    currentSpriteCanvas.height = dimensions.height;
     currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
-  
     currentSpriteCtx.drawImage( 
         document.getElementById(SELECTED_SPRITE).image, 
+        dataObject[SELECTED_SPRITE_POSITION] ? dataObject[SELECTED_SPRITE_POSITION].x : 0, 
+        dataObject[SELECTED_SPRITE_POSITION] ? dataObject[SELECTED_SPRITE_POSITION].y : 0, 
+        dimensions.width * 2, dimensions.height * 2, 
         0, 0, 
-        imageWidth, imageHeight, 
-        0, 0, 
-        currentSpriteCanvas.width, currentSpriteCanvas.height
+        dimensions.width, dimensions.height
     )
 }
 
 const generatePNGCanvasElements = ( ) => {
     const charactersWrapper = document.getElementById('character-sprite-pngs-div');
-    const objectsWrapper = document.getElementById('map-objects-pngs-div');
 
     PNG_FILES["characters"].forEach( ( e ) => {
         const image = new Image( );
@@ -193,38 +201,66 @@ const generatePNGCanvasElements = ( ) => {
         };
     });
 
-    PNG_FILES["objects"].forEach( ( e ) => {
-        const image = new Image( );
-        image.src = "/png-files/sprite-assets/" + e;
-        image.onload =( ) => {
-            const canvas = document.createElement('canvas');
-            canvas.className = "visible-canvas mb-2"
-            canvas.id = e
-            canvas.width = image.width;
-            canvas.height = image.height;
-            canvas.image = image;
+    const spriteTypesList = [
+        [getDoorsAndWindows( ), document.getElementById("windows-doors-pngs-div")],
+        [getBackgroundItems( ), document.getElementById("background-items-pngs-div")],
+        [getGroundedAtBottomItems( ), document.getElementById("grounded-at-bottom-items-pngs-div")],
+        [getNotGroundedItems( ), document.getElementById("not-grounded-items-div")],
+        [getCars(), document.getElementById("cars-div")],
+        [getRestItems(), restWrapper = document.getElementById("rest-sprites-div")]
+    ]
 
-            canvas.setAttribute("draggable", true)
-           
-            const ctx = canvas.getContext("2d")
-            ctx.drawImage( image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height)
+    spriteTypesList.forEach( ( e ) => {
+        const dataList = e[0];
+        const element = e[1];
 
-            canvas.addEventListener( 'click', ( e ) => {
-                SELECTED_SPRITE = e.target.id;
+        element.dataList = dataList;
+        Object.keys( dataList ).forEach( ( x ) => {
+            const image = new Image( );
+            image.src = "/png-files/sprite-assets/" + dataList[x].src;
+    
+            image.onload = ( ) => {
+                let dataObject = new DataObject( dataList[x] )
+                const canvas = document.createElement('canvas');
+                canvas.className = "visible-canvas mb-2"
+                canvas.dataObject = dataObject
+                canvas.id = x
+                let dimensions = dataObject.getDimensions( dataObject.isCar ? FACING_DOWN : "NO_DIRECTION" );
+                canvas.width = dimensions.width;
+                canvas.height = dimensions.height
+                canvas.image = image;
 
-                drawMapObjectFromCanvasToSelectedSpriteCanvas( );
-            });
-
-            canvas.addEventListener( 'dragstart', ( e ) => {
-                SELECTED_SPRITE = e.target.id;
-
-                drawMapObjectFromCanvasToSelectedSpriteCanvas( );
-                dragstart_handler( e )
-            });
-
-            objectsWrapper.append(canvas)            
-        };
+                const ctx = canvas.getContext("2d")  
+                
+                if ( dataObject.isCar ) {
+                    ctx.drawImage( 
+                        image, dataObject[FACING_DOWN].x, dataObject[FACING_DOWN].y, 
+                        dimensions.width * 2, dimensions.height * 2, 
+                        0, 0, canvas.width, canvas.height
+                    );     
+                }
+                else {
+                    ctx.drawImage( 
+                        image, 0, 0, 
+                        dimensions.width * 2, dimensions.height * 2, 
+                        0, 0, canvas.width, canvas.height
+                    );                    
+                }
+    
+                canvas.addEventListener( 'click', ( e ) => {
+                    SELECTED_SPRITE = e.target.id;
+                    if ( e.target.dataObject.isCar ) {
+                        IS_CAR = true;
+                        SELECTED_SPRITE_POSITION = 'FACING_DOWN'
+                    }
+                    else {
+                        IS_CAR = false;
+                        SELECTED_SPRITE_POSITION = false;
+                    }
+                    drawMapObjectFromCanvasToSelectedSpriteCanvas( );
+                });
+                element.append(canvas)            
+            };
+        } )
     });
-
-    document.getElementById('character-sprite-pngs-div')
 }

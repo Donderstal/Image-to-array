@@ -23,14 +23,34 @@
                       <div>
                         <input type="radio" id="map-objects-mode" name="mapmaker-mode" value="map-objects-mode">
                         <label for="map-objects-mode">Sprite mode</label>
-                        <div id="map-objects-options-div"> 
+                        <div id="map-objects-options-div" class="pl-2"> 
                             <div>
-                                <input type="radio" id="show-map-objects" name="map-objects-options" value="show-maps-mode" checked>
-                                <label for="show-maps-mode">Object sprites</label>
+                                <input type="radio" id="show-character-sprites" name="map-objects-options" value="show-character-sprites" checked>
+                                <label for="show-character-sprites">Character sprites</label>
                             </div>
                             <div>
-                                <input type="radio" id="show-character-sprites" name="map-objects-options" value="show-character-sprites">
-                                <label for="show-character-sprites">Character sprites</label>
+                                <input type="radio" id="show-windows-doors" name="map-objects-options" value="show-windows-door">
+                                <label for="show-windows-door">Windows and doors</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="show-background-items" name="map-objects-options" value="show-background-items">
+                                <label for="show-background-items">Background items</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="show-grounded-at-bottom-items" name="map-objects-options" value="show-grounded-at-bottom-items">
+                                <label for="show-grounded-at-bottom-items">Poles, lamps etc.</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="show-not-grounded-items" name="map-objects-options" value="show-not-grounded-items">
+                                <label for="show-not-grounded-items">Posters and signs</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="show-cars" name="map-objects-options" value="show-cars">
+                                <label for="show-cars">Cars</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="show-rest-items" name="map-objects-options" value="show-rest-items">
+                                <label for="show-rest-items">Rest items</label>
                             </div>
                         </div>
                       </div>
@@ -81,13 +101,28 @@
         </div> 
         <!-- Active map idea -->
         <div class="col-sm-2 mapmaker-column">   
-            <div id="tilesheet-div" class="list-container">
+            <div id="tilesheet-div" class="list-container right-list-container">
                 <canvas id="tilesheet-canvas" class="border border-info invisible-canvas"></canvas>
             </div>  
-            <div id="character-sprite-pngs-div" class="list-container">
+            <div id="character-sprite-pngs-div" class="list-container right-list-container">
                 
             </div>
-            <div id="map-objects-pngs-div" class="list-container">
+            <div id="windows-doors-pngs-div" class="list-container right-list-container">
+                
+            </div>
+            <div id="background-items-pngs-div" class="list-container right-list-container">
+                
+            </div>
+            <div id="grounded-at-bottom-items-pngs-div" class="list-container right-list-container">
+                
+            </div>
+            <div id="not-grounded-items-div" class="list-container right-list-container">
+                
+            </div>
+            <div id="cars-div" class="list-container right-list-container">
+                
+            </div>
+            <div id="rest-sprites-div" class="list-container right-list-container">
                 
             </div>
         </div> 

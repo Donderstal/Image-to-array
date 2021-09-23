@@ -167,12 +167,14 @@ class Tile {
         this.hasSprite = true;
         this.spriteType = type;
         this.spriteData = data;
+        this.direction = data.direction;
     }
 
     clearSpriteData( ) {
         this.hasSprite = false;
         this.spriteType = null;
         this.spriteData = null;
+        this.direction = false;
     }
 
     setSettings( settings ) {

@@ -142,7 +142,7 @@ document.addEventListener('keydown', ( e ) => {
             flipTile("Clockwise")
         }
     }
-    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE && IN_SHOW_CHARACTER_SPRITES_MODE ) {
+    else if ( ON_MAPMAKER_PAGE && MAPMAKER_IN_OBJECT_MODE && ( IN_SHOW_CHARACTER_SPRITES_MODE || ( IN_SHOW_MAP_OBJECTS_MODE && IS_CAR ) ) ) {
         // q
         if ( e.keyCode == 81 ){
             turnSelectedSprite("FACING_LEFT")
@@ -161,9 +161,9 @@ document.addEventListener('keydown', ( e ) => {
 document.getElementById("return-to-hood-selection").addEventListener( 'click', unsetNeighbourhoodForManager)
 
 document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
-    MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
-    MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
-
+    MAPMAKER_IN_TILE_MODE = true;
+    MAPMAKER_IN_OBJECT_MODE = false;
+    
     MAP_FOREGROUND_CANVAS.style.visibility = "hidden";
     MAP_FOREGROUND_CANVAS.style.display = "none";
     
@@ -173,10 +173,7 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
     document.getElementById("map-objects-options-div").style.visibility = "hidden";
     document.getElementById("map-objects-options-div").style.display = "none";
     
-    document.getElementById("character-sprite-pngs-div").style.visibility = "hidden";
-    document.getElementById("character-sprite-pngs-div").style.display = "none";
-    document.getElementById("map-objects-pngs-div").style.visibility = "hidden";
-    document.getElementById("map-objects-pngs-div").style.display = "none";
+    hideListContainersAndShowGiven( "", false )
 
     document.getElementById("selected-sprite-div").style.visibility = "hidden";
     document.getElementById("selected-sprite-div").style.display = "none";
@@ -189,11 +186,12 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
 }, true )
 
 document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
-    MAPMAKER_IN_TILE_MODE = !MAPMAKER_IN_TILE_MODE;
-    MAPMAKER_IN_OBJECT_MODE = !MAPMAKER_IN_OBJECT_MODE;
+    console.log('clikc')
+    MAPMAKER_IN_TILE_MODE = false;
+    MAPMAKER_IN_OBJECT_MODE = true;
 
-    IN_SHOW_CHARACTER_SPRITES_MODE = false;
-    IN_SHOW_MAP_OBJECTS_MODE = true;
+    IN_SHOW_CHARACTER_SPRITES_MODE = true;
+    IN_SHOW_MAP_OBJECTS_MODE = false;
 
     MAP_FOREGROUND_CANVAS.style.visibility = "visible";
     MAP_FOREGROUND_CANVAS.style.display = "block";
@@ -211,43 +209,27 @@ document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
 
     document.getElementById("selected-sprite-div").style.visibility = "visible";
     document.getElementById("selected-sprite-div").style.display = "block";
-    document.getElementById("map-objects-pngs-div").style.visibility = "visible";
-    document.getElementById("map-objects-pngs-div").style.display = "block";
+
+    hideListContainersAndShowGiven( "character-sprite-pngs-div" )
 }, true )
 
-document.getElementById("show-character-sprites").addEventListener( 'click', ( ) => {
-    if ( !IN_SHOW_CHARACTER_SPRITES_MODE ) {
-        IN_SHOW_CHARACTER_SPRITES_MODE = !IN_SHOW_CHARACTER_SPRITES_MODE;
-        IN_SHOW_MAP_OBJECTS_MODE = !IN_SHOW_MAP_OBJECTS_MODE;
+let spriteSelectionIdList = [
+    [ "show-character-sprites", "character-sprite-pngs-div" ],
+    [ "show-windows-doors", "windows-doors-pngs-div" ],
+    [ "show-background-items", "background-items-pngs-div" ],
+    [ "show-grounded-at-bottom-items", "grounded-at-bottom-items-pngs-div" ],
+    [ "show-not-grounded-items", "not-grounded-items-div" ],
+    [ "show-cars", "cars-div" ],
+    [ "show-rest-items", "rest-sprites-div" ]
+]
 
-        const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
-        const currentSpriteCtx = currentSpriteCanvas.getContext('2d')      
-        currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
-            
-        document.getElementById("character-sprite-pngs-div").style.visibility = "visible";
-        document.getElementById("character-sprite-pngs-div").style.display = "block";
-
-        document.getElementById("map-objects-pngs-div").style.visibility = "hidden";
-        document.getElementById("map-objects-pngs-div").style.display = "none";
-    }
-}, true )
-
-document.getElementById("show-map-objects").addEventListener( 'click', ( ) => {
-    if ( !IN_SHOW_MAP_OBJECTS_MODE ) {
-        IN_SHOW_CHARACTER_SPRITES_MODE = !IN_SHOW_CHARACTER_SPRITES_MODE;
-        IN_SHOW_MAP_OBJECTS_MODE = !IN_SHOW_MAP_OBJECTS_MODE;
-
-        const currentSpriteCanvas = document.getElementById('selected-sprite-canvas');
-        const currentSpriteCtx = currentSpriteCanvas.getContext('2d')        
-        currentSpriteCtx.clearRect( 0, 0, currentSpriteCanvas.width, currentSpriteCanvas.height );
-
-        document.getElementById("map-objects-pngs-div").style.visibility = "visible";
-        document.getElementById("map-objects-pngs-div").style.display = "block";
-            
-        document.getElementById("character-sprite-pngs-div").style.visibility = "hidden";
-        document.getElementById("character-sprite-pngs-div").style.display = "none";
-    }
-}, true )
+spriteSelectionIdList.forEach( ( e ) => {
+    document.getElementById(e[0]).addEventListener( 'click', ( ) => {
+        switchSpriteSettingMode( e[0] )
+        clearSpriteCanvas( )
+        hideListContainersAndShowGiven( e[1] )
+    }, true )
+})
 
 let mapNameInput = document.getElementById( "mapname-span" );
 mapNameInput.addEventListener( "input", ( ) => { 
