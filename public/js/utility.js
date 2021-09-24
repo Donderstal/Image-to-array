@@ -20,7 +20,8 @@ const setValueOfReadOnlyElement = ( elementID, value ) => {
 
 const setTextContentOfElements = ( keyValuePairs ) => {
     for ( const key in keyValuePairs ) {
-        getNodeWithID( key ).value = keyValuePairs[key];
+        let element = getNodeWithID( key );
+        element.tagName == 'INPUT' ? element.value = keyValuePairs[key] : element.innerText = keyValuePairs[key] ;
     }
 }
 

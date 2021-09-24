@@ -9,20 +9,39 @@
                     <h5>Map information :</h5>
                     <p>Mapname: <br><input id="mapname-span" type="text" /> </p>             
                     <p>Neighbourhood: <br><input id="neighbourhood-span" type="text" /> </p>                     
-                    <p>Rows: <br><input id="rows-span" type="text" disabled /> </p>             
-                    <p>Columns: <br><input id="columns-span" type="text" disabled /> </p>                              
+                    <p style='display:inline-block;'>Rows: <span id="rows-span" style='font-weight: bold;'>  </span></p>             
+                    <p style='display:inline-block;'>Columns: <span id="columns-span" style='font-weight: bold;'>  </span> </p>                              
                 </div>
                 <hr>
                 <div>
                     <h5>Mode :</h5>
+                    <div >
+                        <div style="display: inline-block; width: 8vw;">
+                            <input type="radio" id="tiles-mode" name="edit-mode-toggle" class="mode-toggle-radio" checked>
+                            <label >Tile mode</label>
+                        </div>
+                        <div style="display: inline-block; width: 8vw;">
+                            <input type="radio" id="neighbours-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                            <label>Neighbours mode</label>
+                        </div>                   
+                    </div>
                     <div>
-                        <input type="radio" id="tiles-mode" name="mapmaker-mode" value="tiles-mode"
-                               checked>
-                        <label for="tiles-mode">Tile mode</label>
-                      </div>
-                      <div>
-                        <input type="radio" id="map-objects-mode" name="mapmaker-mode" value="map-objects-mode">
-                        <label for="map-objects-mode">Sprite mode</label>
+                        <div style="display: inline-block; width: 8vw;">
+                            <input type="radio" id="doors-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                            <label>Doors mode</label>
+                        </div>
+                        <div style="display: inline-block; width: 8vw;">
+                            <input type="radio" id="roads-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                            <label>Roads mode</label>
+                        </div>                  
+                    </div>
+                    <div style="width: 8vw;">
+                        <input type="radio" id="roads-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <label>Spawn mode</label>
+                    </div>
+                    <div style="width: 8vw;">
+                        <input type="radio" id="map-objects-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <label>Sprite mode</label>
                         <div id="map-objects-options-div" class="pl-2"> 
                             <div>
                                 <input type="radio" id="show-character-sprites" name="map-objects-options" value="show-character-sprites" checked>

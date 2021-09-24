@@ -172,8 +172,8 @@ const captureForegroundClick = ( event ) => {
 }
 
 const prepareMapmaker = ( ) => {
-    const rows = document.getElementById('rows-input').value;
-    const columns = document.getElementById('columns-input').value;
+    const rows = document.getElementById('rows-input').innerText;
+    const columns = document.getElementById('columns-input').innerText;
     const mapName = document.getElementById("mapname-label").value;
     const neighbourhood = document.getElementById("neighbourhood-select-tag").value;
 
