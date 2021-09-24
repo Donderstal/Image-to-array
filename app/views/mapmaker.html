@@ -3,16 +3,23 @@
     <!-- Map row -->
     <div class="row">
         <!-- Current map data -->
-        <div class="col-sm-2 mapmaker-column">   
+        <div class="col-sm-3 mapmaker-column">   
             <div style="position: fixed;">
-                <div>
-                    <h5>Map information :</h5>
-                    <p>Mapname: <br><input id="mapname-span" type="text" /> </p>             
-                    <p>Neighbourhood: <br><input id="neighbourhood-span" type="text" /> </p>                     
-                    <p style='display:inline-block;'>Rows: <span id="rows-span" style='font-weight: bold;'>  </span></p>             
-                    <p style='display:inline-block;'>Columns: <span id="columns-span" style='font-weight: bold;'>  </span> </p>                              
+                <div >
+                    <p style='display:inline-block;' class="pr-2 border-right">Hide map info input<input type="checkbox" id="show-map-info-div" class="ml-1"> </p>             
+                    <p style='display:inline-block;'>Show sprite grid<input type="checkbox" id="show-sprite-grid" class="ml-1"> </p>  
+                    <br>                                           
                 </div>
                 <hr>
+                <div id="map-information-input">
+                    <p style='display:inline-block;'><h5>Map information :</h5></p>
+                    <p style='display:inline-block;'>Mapname: <br><input id="mapname-span" type="text" /> </p>             
+                    <p style='display:inline-block;'>Neighbourhood: <br><input id="neighbourhood-span" type="text" /> </p>  
+                    <br>                   
+                    <p style='display:inline-block;'>Rows: <span id="rows-span" style='font-weight: bold;'>  </span></p>             
+                    <p style='display:inline-block;'>Columns: <span id="columns-span" style='font-weight: bold;'>  </span> </p>  
+                    <hr>                            
+                </div>
                 <div>
                     <h5>Mode :</h5>
                     <div >
@@ -49,7 +56,7 @@
                             </div>
                             <div>
                                 <input type="radio" id="show-windows-doors" name="map-objects-options" value="show-windows-door">
-                                <label for="show-windows-door">Windows and doors</label>
+                                <label for="show-windows-door">Windows & doors</label>
                             </div>
                             <div>
                                 <input type="radio" id="show-background-items" name="map-objects-options" value="show-background-items">
@@ -105,7 +112,7 @@
             </div>
         </div>
         <!-- Current map grid -->
-        <div class="col-sm-8 fixed-div">
+        <div class="col-sm-7 fixed-div">
             <div id="map-canvas-div" class="list-container">
                 <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
                 <canvas id="map-foreground-canvas" ondrop="handleDragEnd(event);" ondragover="handleDragOver(event);" class="border border-info foreground-canvas invisible-canvas"></canvas>

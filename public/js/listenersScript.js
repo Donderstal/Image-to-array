@@ -202,3 +202,25 @@ let neighbourhoodNameInput = document.getElementById( "neighbourhood-span" );
 neighbourhoodNameInput.addEventListener( "input", ( ) => { 
     MAP.setNeighbourhood( neighbourhoodNameInput.value.trim( ) )
 })
+
+document.getElementById("show-map-info-div").addEventListener( 'click', ( ) => {
+    if ( MAP_INFO_DIV_IS_HIDDEN ) {
+        showElementWithId("map-information-input" );
+        MAP_INFO_DIV_IS_HIDDEN = false;
+    }
+    else {
+        hideElementWithId( "map-information-input" );
+        MAP_INFO_DIV_IS_HIDDEN = true;
+    }
+}, true)
+
+document.getElementById("show-sprite-grid").addEventListener( 'click', ( ) => {
+    if ( SPRITE_GRID_IS_HIDDEN ) {
+        showElementWithId("map-foreground-canvas" );
+        SPRITE_GRID_IS_HIDDEN = false;
+    }
+    else {
+        hideElementWithId( "map-foreground-canvas" );
+        SPRITE_GRID_IS_HIDDEN = true;
+    }
+}, true)
