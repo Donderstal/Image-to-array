@@ -161,9 +161,14 @@ class Map extends CanvasWithGrid {
 
         const sprites = MAP_FOREGROUND.exportAllSprites( );
 
-        return {
+        const leftInput = document.getElementById("neighbours-input-left")
+        const upInput = document.getElementById("neighbours-input-up")
+        const rightInput = document.getElementById("neighbours-input-right")
+        const downInput = document.getElementById("neighbours-input-down")
+        let returner = {
             'mapName' : this.mapName,
             'neighbourhood': this.neighbourhood,
+            'neighbours' : {},
             'tileSet' : SHEET.sheetName,
             'outdoors' : null,
             'music' : null,
@@ -176,6 +181,13 @@ class Map extends CanvasWithGrid {
             'actions' : [],
             'doors' : []
          };
+
+         returner.neighbours.right = rightInput.options[rightInput.selectedIndex].value;
+         returner.neighbours.left = leftInput.options[leftInput.selectedIndex].value;
+         returner.neighbours.up = upInput.options[upInput.selectedIndex].value;
+         returner.neighbours.down = downInput.options[downInput.selectedIndex].value;
+
+         return returner;
     }
 };
 

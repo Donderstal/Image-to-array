@@ -84,6 +84,8 @@ const setMapJSON = ( JSON ) => {
     MAPNAME_TO_LOAD = JSON["mapName"]
     CHARACTERS_TO_LOAD = JSON["characters"];
     OBJECTS_TO_LOAD = JSON["mapObjects"];
+    
+    NEIGHBOURS_TO_LOAD = JSON["neighbours"];
 
     document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + NEIGHBOURHOOD_TO_LOAD
     document.getElementById("preview-map-tileset").innerText = "Tileset: " + TILESHEET_TO_LOAD

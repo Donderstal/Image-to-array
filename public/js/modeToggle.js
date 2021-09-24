@@ -20,16 +20,17 @@ const clearCurrentEditMode = ( ) => {
     HAS_SELECTED_SPRITE = false;
 
     document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
-    SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height )
+    SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height );
+    [ 
+        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tilesheet-div", "selected-tile-div" 
+    ].forEach( 
+        ( e ) => { hideElementWithId( e) }
+    );
 }
 
 const initTilesMode = ( ) => {
     MAPMAKER_IN_TILE_MODE = true;       
     hideListContainersAndShowGiven( "", false );    
-
-    [ "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div" ].forEach( 
-        ( e ) => { hideElementWithId( e) }
-    );
     [ "tilesheet-div", "selected-tile-div" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );  
@@ -46,19 +47,24 @@ const initMapObjectsMode = ( ) => {
     [ "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );
-
-    [ "tilesheet-div", "selected-tile-div"].forEach( 
-        ( e ) => { hideElementWithId( e) }
-    );
-
-    document.getElementById("map-canvas").style.pointerEvents = "none"
-    document.getElementById("map-foreground-canvas").style.pointerEvents = "auto"
+    
+    toggleForeGroundGrid( );
     hideListContainersAndShowGiven( "character-sprite-pngs-div" )
 }
 
 const initNeighboursMode = ( ) => {
-
+    MAPMAKER_IN_NEIGHBOURS_MODE = true;
+    hideListContainersAndShowGiven( "", false ); 
+    [ "map-foreground-canvas", "neighbour-options-div" ].forEach( 
+        ( e ) => { showElementWithId( e) }
+    );
+    toggleForeGroundGrid( );
 } 
+
+const toggleForeGroundGrid = ( ) => {
+    document.getElementById("map-canvas").style.pointerEvents = "none"
+    document.getElementById("map-foreground-canvas").style.pointerEvents = "auto"
+}
 
 const hideElementWithId = ( id ) => {
     document.getElementById(id).style.visibility = "hidden";

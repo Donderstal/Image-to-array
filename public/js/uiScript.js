@@ -96,6 +96,13 @@ const loadMapToMapmaker = ( ) => {
 
     initMapCanvas( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
 
+    if ( NEIGHBOURS_TO_LOAD != undefined ) {
+        appendOptionToSelect( NEIGHBOURS_TO_LOAD["left"], document.getElementById("neighbours-input-left"), true )
+        appendOptionToSelect( NEIGHBOURS_TO_LOAD["up"], document.getElementById("neighbours-input-up"), true )
+        appendOptionToSelect( NEIGHBOURS_TO_LOAD["right"], document.getElementById("neighbours-input-right"), true )
+        appendOptionToSelect( NEIGHBOURS_TO_LOAD["down"], document.getElementById("neighbours-input-down"), true )
+    }
+
     MAP.setNeighbourhood( NEIGHBOURHOOD_TO_LOAD );
     MAP.setMapName( MAPNAME_TO_LOAD );
     
@@ -230,12 +237,28 @@ const exportMapData = ( ) => {
     console.log(JSON.stringify(MAP.exportMapData( )));
 }
 
+const appendOptionToSelect = ( value, parent, isSelected = false ) => {
+    let element = document.createElement("option")
+    element.value = value;
+    element.innerText = value;
+    if ( isSelected )
+        element.selected = true;
+    parent.append( element )
+}
 
 const setUserMapsToPreview = ( ) => {
     const neighbourhoods = MAP_STORAGE["neighbourhoods"];
     const maps = MAP_STORAGE["maps"];
 
     const filesWrapper = document.getElementsByClassName("load-maps-names-div")[0];
+
+    let neighbourSelectList = document.getElementsByClassName( "neighbour-select" );
+    [ ...neighbourSelectList ].forEach( ( e ) => {
+        let parent = e;
+        Object.keys( maps).forEach( ( mapkey ) => {
+            appendOptionToSelect( maps[mapkey].neighbourhood + "/" + maps[mapkey].mapName, parent )
+        })
+    })
 
     addTitleElementToLoadMapMenu("Neighbourhoods", filesWrapper)
 
