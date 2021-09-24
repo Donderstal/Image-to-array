@@ -77,6 +77,10 @@ const switchView = ( event ) => {
 
     if ( nextScreen == 'mapmaker-div' ) {
         setTimeout( ( ) => { document.getElementById("tiles-mode").click( ) }, 100)
+        showElementWithId( "map-information-input" );
+    }
+    else {
+        hideElementWithId( "map-information-input")
     }
 
    document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
@@ -172,8 +176,8 @@ const captureForegroundClick = ( event ) => {
 }
 
 const prepareMapmaker = ( ) => {
-    const rows = document.getElementById('rows-input').innerText;
-    const columns = document.getElementById('columns-input').innerText;
+    const rows = document.getElementById('rows-span').innerText;
+    const columns = document.getElementById('columns-span').innerText;
     const mapName = document.getElementById("mapname-label").value;
     const neighbourhood = document.getElementById("neighbourhood-select-tag").value;
 

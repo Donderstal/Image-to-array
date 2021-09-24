@@ -3,82 +3,48 @@
     <!-- Map row -->
     <div class="row">
         <!-- Current map data -->
-        <div class="col-sm-3 mapmaker-column">   
-            <div style="position: fixed;">
-                <div >
-                    <p style='display:inline-block;' class="pr-2 border-right">Hide map info input<input type="checkbox" id="show-map-info-div" class="ml-1"> </p>             
-                    <p style='display:inline-block;'>Show sprite grid<input type="checkbox" id="show-sprite-grid" class="ml-1"> </p>  
-                    <br>                                           
-                </div>
+        <div class="col-sm-2 mapmaker-column">   
+            <div style="position: fixed;">  
+                <div >Show sprite grid<input type="checkbox" id="show-sprite-grid" style="float:right;"></div>  
                 <hr>
-                <div id="map-information-input">
-                    <p style='display:inline-block;'><h5>Map information :</h5></p>
-                    <p style='display:inline-block;'>Mapname: <br><input id="mapname-span" type="text" /> </p>             
-                    <p style='display:inline-block;'>Neighbourhood: <br><input id="neighbourhood-span" type="text" /> </p>  
-                    <br>                   
-                    <p style='display:inline-block;'>Rows: <span id="rows-span" style='font-weight: bold;'>  </span></p>             
-                    <p style='display:inline-block;'>Columns: <span id="columns-span" style='font-weight: bold;'>  </span> </p>  
-                    <hr>                            
-                </div>
                 <div>
-                    <h5>Mode :</h5>
+                    <h5>Editing mode :</h5>
                     <div >
-                        <div style="display: inline-block; width: 8vw;">
-                            <input type="radio" id="tiles-mode" name="edit-mode-toggle" class="mode-toggle-radio" checked>
-                            <label >Tile mode</label>
-                        </div>
-                        <div style="display: inline-block; width: 8vw;">
+                        <input type="radio" id="tiles-mode" name="edit-mode-toggle" class="mode-toggle-radio" checked>
+                        <label >Tile mode</label>
+                    </div>
+                        <div >
                             <input type="radio" id="neighbours-mode" name="edit-mode-toggle" class="mode-toggle-radio">
                             <label>Neighbours mode</label>
-                        </div>                   
+                        </div>  
+                    <div >
+                        <input type="radio" id="doors-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <label>Doors mode</label>
                     </div>
-                    <div>
-                        <div style="display: inline-block; width: 8vw;">
-                            <input type="radio" id="doors-mode" name="edit-mode-toggle" class="mode-toggle-radio">
-                            <label>Doors mode</label>
-                        </div>
-                        <div style="display: inline-block; width: 8vw;">
-                            <input type="radio" id="roads-mode" name="edit-mode-toggle" class="mode-toggle-radio">
-                            <label>Roads mode</label>
-                        </div>                  
-                    </div>
-                    <div style="width: 8vw;">
+                    <div >
+                        <input type="radio" id="roads-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <label>Roads mode</label>
+                    </div>       
+                    <div >
                         <input type="radio" id="roads-mode" name="edit-mode-toggle" class="mode-toggle-radio">
                         <label>Spawn mode</label>
                     </div>
-                    <div style="width: 8vw;">
+                    <div >
                         <input type="radio" id="map-objects-mode" name="edit-mode-toggle" class="mode-toggle-radio">
                         <label>Sprite mode</label>
-                        <div id="map-objects-options-div" class="pl-2"> 
-                            <div>
-                                <input type="radio" id="show-character-sprites" name="map-objects-options" value="show-character-sprites" checked>
-                                <label for="show-character-sprites">Character sprites</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="show-windows-doors" name="map-objects-options" value="show-windows-door">
-                                <label for="show-windows-door">Windows & doors</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="show-background-items" name="map-objects-options" value="show-background-items">
-                                <label for="show-background-items">Background items</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="show-grounded-at-bottom-items" name="map-objects-options" value="show-grounded-at-bottom-items">
-                                <label for="show-grounded-at-bottom-items">Poles, lamps etc.</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="show-not-grounded-items" name="map-objects-options" value="show-not-grounded-items">
-                                <label for="show-not-grounded-items">Posters and signs</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="show-cars" name="map-objects-options" value="show-cars">
-                                <label for="show-cars">Cars</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="show-rest-items" name="map-objects-options" value="show-rest-items">
-                                <label for="show-rest-items">Rest items</label>
-                            </div>
-                        </div>
+                        <select id="map-objects-options-div" class="pl-2">
+                            <optgroup label="Foreground sprites">
+                                <option id="show-character-sprites" value="show-character-sprites">Characters</option>
+                                <option id="show-cars" value="show-cars">Cars</option>
+                                <option id="show-grounded-at-bottom-items" value="show-grounded-at-bottom-items">Poles, lamps etc.</option>
+                                <option id="show-not-grounded-items" value="show-not-grounded-items">Posters and signs</option>
+                                <option id="show-rest-items" value="show-rest-items">Rest items</option>
+                            </optgroup>
+                            <optgroup label="Background sprites">
+                                <option id="show-windows-doors" value="show-windows-door">Windows & doors</option>
+                                <option id="show-background-items" value="show-background-items">Background items</option>
+                            </optgroup>
+                        </select>
                       </div>
                 </div>
                 <hr>
@@ -112,18 +78,11 @@
             </div>
         </div>
         <!-- Current map grid -->
-        <div class="col-sm-7 fixed-div">
+        <div class="col-sm-8 fixed-div">
             <div id="map-canvas-div" class="list-container">
                 <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
                 <canvas id="map-foreground-canvas" ondrop="handleDragEnd(event);" ondragover="handleDragOver(event);" class="border border-info foreground-canvas invisible-canvas"></canvas>
-            </div>  
-            <hr>
-            <div class="map-canvas-buttons-div" >
-                <form id="save-map-form" style="display:inline-block"> <button id="post-save-map-button" class="btn btn-outline-success">Save map</button> </form>    
-                <button id="export-map-button" class="btn btn-outline-success">Export map data</button>                    
-                <button id="clear-grid-button" class="btn btn-outline-success">Clear grid</button>
-                <button id="back-to-map-menu-button" class="btn btn-outline-success navigation-button">Back to New map screen</button>
-            </div>
+            </div>        
             <div class="map-canvas-buttons-div" >
                 <div class="stored-tile-div">
                     <h2 class="stored-tile-title"> 1 </h2>
@@ -138,8 +97,17 @@
                 <div class="stored-tile-div"><h2 class="stored-tile-title"> 8 </h2><canvas id="tile-canvas-8" class="stored-tile-canvas visible-canvas"></canvas></div>
                 <div class="stored-tile-div"><h2 class="stored-tile-title"> 9 </h2><canvas id="tile-canvas-9" class="stored-tile-canvas visible-canvas"></canvas></div>
             </div>
+            <hr>      
+            <div class="map-canvas-buttons-div" >
+                <form id="save-map-form" style="display:inline-block"> <button id="post-save-map-button" class="btn btn-outline-success">Save map</button> </form>    
+                <button id="export-map-button" class="btn btn-outline-success">Export map data</button>                    
+                <button id="clear-grid-button" class="btn btn-outline-success">Clear grid</button>
+                <button id="back-to-map-menu-button" class="btn btn-outline-success navigation-button">Back to New map screen</button>
+            </div>
+
         </div> 
-        <!-- Active map idea -->
+
+        <!-- Active map editor -->
         <div class="col-sm-2 mapmaker-column">   
             <div id="tilesheet-div" class="list-container right-list-container">
                 <canvas id="tilesheet-canvas" class="border border-info invisible-canvas"></canvas>

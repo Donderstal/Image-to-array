@@ -171,9 +171,10 @@ document.addEventListener('keydown', ( e ) => {
 
 document.getElementById("return-to-hood-selection").addEventListener( 'click', unsetNeighbourhoodForManager)
 
-document.getElementById("tiles-mode").addEventListener( 'click', toggleMode, true )
-
-document.getElementById("map-objects-mode").addEventListener( 'click', toggleMode, true )
+let modeRadioNodes = document.getElementsByClassName("mode-toggle-radio");
+[ ...modeRadioNodes ].forEach( ( e ) => {
+    e.addEventListener( 'click', toggleMode, true )
+})
 
 let spriteSelectionIdList = [
     [ "show-character-sprites", "character-sprite-pngs-div" ],
@@ -185,12 +186,17 @@ let spriteSelectionIdList = [
     [ "show-rest-items", "rest-sprites-div" ]
 ]
 
-spriteSelectionIdList.forEach( ( e ) => {
-    document.getElementById(e[0]).addEventListener( 'click', ( ) => {
-        switchSpriteSettingMode( e[0] )
-        clearSpriteCanvas( )
-        hideListContainersAndShowGiven( e[1] )
-    }, true )
+document.getElementById("map-objects-options-div").addEventListener( 'change', ( e ) => {
+    let optionSelected = e.target.value
+    let divId = "";
+    spriteSelectionIdList.forEach( ( e ) => {
+        if ( e[0] == optionSelected )
+        divId = e[1]
+    })
+
+    switchSpriteSettingMode( optionSelected )
+    clearSpriteCanvas( )
+    hideListContainersAndShowGiven( divId )
 })
 
 let mapNameInput = document.getElementById( "mapname-span" );
@@ -202,17 +208,6 @@ let neighbourhoodNameInput = document.getElementById( "neighbourhood-span" );
 neighbourhoodNameInput.addEventListener( "input", ( ) => { 
     MAP.setNeighbourhood( neighbourhoodNameInput.value.trim( ) )
 })
-
-document.getElementById("show-map-info-div").addEventListener( 'click', ( ) => {
-    if ( MAP_INFO_DIV_IS_HIDDEN ) {
-        showElementWithId("map-information-input" );
-        MAP_INFO_DIV_IS_HIDDEN = false;
-    }
-    else {
-        hideElementWithId( "map-information-input" );
-        MAP_INFO_DIV_IS_HIDDEN = true;
-    }
-}, true)
 
 document.getElementById("show-sprite-grid").addEventListener( 'click', ( ) => {
     if ( SPRITE_GRID_IS_HIDDEN ) {

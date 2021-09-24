@@ -13,6 +13,12 @@
                     echo "<button id='go-back-button' type='button' class='btn btn-dark navigation-button go-back-button'> <- Back </button>";
                 }
                 ?>
+                <div id="map-information-input" style="margin: 0 auto; visibility: hidden; display: none;">
+                    <p style='display:inline-block;' >Mapname: <input id="mapname-span" type="text" /> </p>             
+                    <p style='display:inline-block;' >Neighbourhood: <input id="neighbourhood-span" type="text" /> </p>                 
+                    <p style='display:inline-block;'>Rows: <span id="rows-span" style='font-weight: bold;'>  </span></p>             
+                    <p style='display:inline-block;'>Columns: <span id="columns-span" style='font-weight: bold;'>  </span> </p>                          
+                </div>
                 <form id="logout-form" class='logout-form'>
                 <?php if(isset($_SESSION["username"])) {
                     echo "<input id='log-out-button' type='button' name='logout' value='logout' onclick='LogOut()' class='btn btn-dark'> " .$_SESSION["username"]. " </input>";
