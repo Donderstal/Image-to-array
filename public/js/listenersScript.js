@@ -171,67 +171,9 @@ document.addEventListener('keydown', ( e ) => {
 
 document.getElementById("return-to-hood-selection").addEventListener( 'click', unsetNeighbourhoodForManager)
 
-document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
-    MAPMAKER_IN_TILE_MODE = true;
-    MAPMAKER_IN_OBJECT_MODE = false;
-    HAS_SELECTED_TILE = false;
-    HAS_SELECTED_SPRITE = false;
+document.getElementById("tiles-mode").addEventListener( 'click', toggleMode, true )
 
-    document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
-    SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height )
-    
-    MAP_FOREGROUND_CANVAS.style.visibility = "hidden";
-    MAP_FOREGROUND_CANVAS.style.display = "none";
-    
-    document.getElementById("map-canvas").style.pointerEvents = "auto"
-    document.getElementById("map-foreground-canvas").style.pointerEvents = "none"
-    
-    document.getElementById("map-objects-options-div").style.visibility = "hidden";
-    document.getElementById("map-objects-options-div").style.display = "none";
-    
-    hideListContainersAndShowGiven( "", false )
-
-    document.getElementById("selected-sprite-div").style.visibility = "hidden";
-    document.getElementById("selected-sprite-div").style.display = "none";
-
-    document.getElementById("selected-tile-div").style.visibility = "visible";
-    document.getElementById("selected-tile-div").style.display = "block";
-    
-    document.getElementById("tilesheet-div").style.visibility = "visible";
-    document.getElementById("tilesheet-div").style.display = "block";
-}, true )
-
-document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
-    MAPMAKER_IN_TILE_MODE = false;
-    MAPMAKER_IN_OBJECT_MODE = true;
-    HAS_SELECTED_TILE = false;
-    HAS_SELECTED_SPRITE = false;
-
-    document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
-    SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height )
-
-    IN_SHOW_CHARACTER_SPRITES_MODE = true;
-    IN_SHOW_MAP_OBJECTS_MODE = false;
-
-    MAP_FOREGROUND_CANVAS.style.visibility = "visible";
-    MAP_FOREGROUND_CANVAS.style.display = "block";
-
-    document.getElementById("map-canvas").style.pointerEvents = "none"
-    document.getElementById("map-foreground-canvas").style.pointerEvents = "auto"
-
-    document.getElementById("map-objects-options-div").style.visibility = "visible";
-    document.getElementById("map-objects-options-div").style.display = "block";
-
-    document.getElementById("tilesheet-div").style.visibility = "hidden";
-    document.getElementById("tilesheet-div").style.display = "none";
-    document.getElementById("selected-tile-div").style.visibility = "hidden";
-    document.getElementById("selected-tile-div").style.display = "none";
-
-    document.getElementById("selected-sprite-div").style.visibility = "visible";
-    document.getElementById("selected-sprite-div").style.display = "block";
-
-    hideListContainersAndShowGiven( "character-sprite-pngs-div" )
-}, true )
+document.getElementById("map-objects-mode").addEventListener( 'click', toggleMode, true )
 
 let spriteSelectionIdList = [
     [ "show-character-sprites", "character-sprite-pngs-div" ],
