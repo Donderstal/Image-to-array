@@ -240,6 +240,7 @@ const characterListener = ( e, isDragStart ) => {
     document.getElementById('selected-sprite-canvas').width = STRD_SPRITE_WIDTH;
     document.getElementById('selected-sprite-canvas').height = STRD_SPRITE_HEIGHT;
     SELECTED_SPRITE = e.target.id;
+    HAS_SELECTED_SPRITE = true;
     SELECTED_SPRITE_POSITION = 'FACING_DOWN';
 
     drawSpriteFromCanvasToSelectedSpriteCanvas( );
@@ -249,6 +250,7 @@ const characterListener = ( e, isDragStart ) => {
 
 const mapObjectListener = ( e, isDragStart ) => {
     SELECTED_SPRITE = e.target.id;
+    HAS_SELECTED_SPRITE = true;
     if ( e.target.dataObject.isCar ) {
         IS_CAR = true;
         SELECTED_SPRITE_POSITION = 'FACING_DOWN'

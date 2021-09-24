@@ -75,6 +75,10 @@ const switchView = ( event ) => {
         document.getElementById('go-back-button').style.visibility = "invisible";
     }
 
+    if ( nextScreen == 'mapmaker-div' ) {
+        setTimeout( ( ) => { document.getElementById("tiles-mode").click( ) }, 100)
+    }
+
    document.getElementsByClassName('window-active')[0].className = "row window window-inactive";
 
    document.getElementById(nextScreen).className = className;
@@ -143,13 +147,14 @@ const confirmTilesheetChoice = ( ) => {
 
 const captureSheetClick = ( event ) => {
     SHEET.captureTileAtXY(event.offsetX, event.offsetY);
+    HAS_SELECTED_TILE = true;
 }
 
 const captureMapClick = ( event ) => {
     if ( event.shiftKey ) {
         MAP.clearTileAtXY(event.offsetX, event.offsetY);    
     }
-    else {
+    else if ( HAS_SELECTED_TILE ) {
         MAP.drawTileAtXY(event.offsetX, event.offsetY);        
     }
 }
@@ -158,10 +163,10 @@ const captureForegroundClick = ( event ) => {
     if ( event.shiftKey ) {
         MAP_FOREGROUND.clearSpriteFromTile(event.offsetX, event.offsetY);      
     }
-    else if ( IN_SHOW_CHARACTER_SPRITES_MODE ) {
+    else if ( IN_SHOW_CHARACTER_SPRITES_MODE && HAS_SELECTED_SPRITE ) {
         MAP_FOREGROUND.placeCharacterSpriteAtXY(event.offsetX, event.offsetY);        
     }
-    else if ( IN_SHOW_MAP_OBJECTS_MODE ) {
+    else if ( IN_SHOW_MAP_OBJECTS_MODE && HAS_SELECTED_SPRITE ) {
         MAP_FOREGROUND.placeObjectSpriteAtXY(event.offsetX, event.offsetY);     
     }
 }

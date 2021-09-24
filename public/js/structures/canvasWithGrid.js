@@ -135,14 +135,14 @@ class Map extends CanvasWithGrid {
 
     drawTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
-        tile.clearTileID( SHEET.activeTile.index)
+        tile.setTileID( SHEET.activeTile.index)
         tile.setSettings( SHEET.activeTileSettings );
         MAP_CTX.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
     }
 
     clearTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
-        tile.setTileID( )
+        tile.clearTileID( )
         tile.unSetSettings( );
         MAP_CTX.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
         tile.drawTileBorders( )

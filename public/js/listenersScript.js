@@ -95,6 +95,9 @@ OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
 });
 
 MAP_CANVAS.addEventListener('mouseup', (event) => { 
+    if ( !HAS_SELECTED_TILE ) {
+        return;
+    }
     let endingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);
     MOUSE_DRAG_RANGE.END = { 'x': endingTile.x, 'y': endingTile.y }
     const square = {
@@ -171,6 +174,11 @@ document.getElementById("return-to-hood-selection").addEventListener( 'click', u
 document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
     MAPMAKER_IN_TILE_MODE = true;
     MAPMAKER_IN_OBJECT_MODE = false;
+    HAS_SELECTED_TILE = false;
+    HAS_SELECTED_SPRITE = false;
+
+    document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
+    SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height )
     
     MAP_FOREGROUND_CANVAS.style.visibility = "hidden";
     MAP_FOREGROUND_CANVAS.style.display = "none";
@@ -194,9 +202,13 @@ document.getElementById("tiles-mode").addEventListener( 'click', ( ) => {
 }, true )
 
 document.getElementById("map-objects-mode").addEventListener( 'click', ( ) => {
-    console.log('clikc')
     MAPMAKER_IN_TILE_MODE = false;
     MAPMAKER_IN_OBJECT_MODE = true;
+    HAS_SELECTED_TILE = false;
+    HAS_SELECTED_SPRITE = false;
+
+    document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
+    SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height )
 
     IN_SHOW_CHARACTER_SPRITES_MODE = true;
     IN_SHOW_MAP_OBJECTS_MODE = false;
