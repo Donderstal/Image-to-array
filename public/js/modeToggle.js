@@ -9,6 +9,9 @@ const toggleMode = ( event ) => {
             break;
         case "neighbours-mode" : 
             initNeighboursMode( )
+            break;
+        case "roads-mode" : 
+            initRoadsMode( )
             break;  
     }
 }
@@ -16,6 +19,9 @@ const toggleMode = ( event ) => {
 const clearCurrentEditMode = ( ) => {
     MAPMAKER_IN_TILE_MODE = false;
     MAPMAKER_IN_OBJECT_MODE = false;
+    MAPMAKER_IN_NEIGHBOURS_MODE = false;
+    MAPMAKER_IN_ROADS_MODE = false;
+
     HAS_SELECTED_TILE = false;
     HAS_SELECTED_SPRITE = false;
 
@@ -56,6 +62,15 @@ const initNeighboursMode = ( ) => {
     MAPMAKER_IN_NEIGHBOURS_MODE = true;
     hideListContainersAndShowGiven( "", false ); 
     [ "map-foreground-canvas", "neighbour-options-div" ].forEach( 
+        ( e ) => { showElementWithId( e) }
+    );
+    toggleForeGroundGrid( );
+} 
+
+const initRoadsMode = ( ) => {
+    MAPMAKER_IN_ROADS_MODE = true;
+    hideListContainersAndShowGiven( "", false ); 
+    [ "map-foreground-canvas", "road-options-div" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );
     toggleForeGroundGrid( );
