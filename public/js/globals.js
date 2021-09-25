@@ -105,6 +105,10 @@ const TILESHEETS = {
         "src": "City4_Tiles.png",
         "tiles": 800
     },
+    "starting_neighbourhood_clean" : {
+        "src": "Starting_neighbourhood_2.png",
+        "tiles": 800
+    },
     "my_house" : {
         "src": "Bed_Room.png",
         "tiles": 31
@@ -128,6 +132,10 @@ const TILESHEETS = {
     "Generic_Room_C_Tile_Set" : {
         "src": "Generic_Room_C_Tile_Set.png",
         "tiles": 63
+    },
+    "Generic_Room_DX" : {
+        "src": "Generic_Room_DX_Tile_Sheet.png",
+        "tiles": 83
     },
     "Interior_Yum_Mart_Tiles" : {
         "src": "Interior_Yum_Mart_Tiles.png",
