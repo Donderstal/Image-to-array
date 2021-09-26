@@ -156,13 +156,61 @@ class Map extends CanvasWithGrid {
 
         let pendingRoad = new MapRoad( direction );
         pendingRoad.setRoadFromTileList( tileList );
-        this.roads.push( pendingRoad )
+
+        let roadToMergeWith = this.findCollidingRoadIfPossible(direction, pendingRoad)
+
+        if ( roadToMergeWith ) {
+            roadToMergeWith.mergeRoad( pendingRoad )
+        }
+        else {
+            this.roads.push( pendingRoad )
+        }
     }
 
     clearRoadTiles( direction, tileList ) {
         tileList.forEach( ( e ) => {
             this.removeSelectedRoadBlockAtTile( e.x, e.y )
         })
+
+        let pendingRoad = new MapRoad( direction );
+        pendingRoad.setRoadFromTileList( tileList );
+
+        let collidingRoad = this.findCollidingRoadIfPossible(direction, pendingRoad)
+        collidingRoad.clearTiles( pendingRoad.tileList );
+    }
+
+    findCollidingRoadIfPossible(direction, pendingRoad) {
+        let roadToMergeWith = false;
+        this.roads.forEach( ( e ) => { 
+            if ( e.direction == direction ) {
+                let roadsCanCollide = e.isHorizontal 
+                    ? e.topRow == pendingRoad.topRow && e.bottomRow == pendingRoad.bottomRow 
+                    : e.leftCol == pendingRoad.leftCol && e.rightCol == pendingRoad.rightCol
+
+                if ( !roadsCanCollide ) {
+                    return;
+                }
+                switch( e.direction ) {
+                    case FACING_LEFT:
+                        roadToMergeWith = ( pendingRoad.startCol == ( e.endCol - 1) || pendingRoad.startCol >= e.endCol ) 
+                        || ( pendingRoad.endCol == ( e.startCol + 1) || pendingRoad.endCol <= e.startCol ) ? e : false;
+                        break;
+                    case FACING_UP:
+                        roadToMergeWith = ( pendingRoad.startRow == ( e.endRow - 1) || pendingRoad.startRow >= e.endRow ) 
+                        || ( pendingRoad.endRow == ( e.startRow + 1) || pendingRoad.endRow <= e.startRow ) ? e : false;
+                        break;
+                    case FACING_RIGHT:
+                        roadToMergeWith = ( pendingRoad.startCol == ( e.endCol + 1) || pendingRoad.startCol <= e.endCol ) 
+                        || ( pendingRoad.endCol == ( e.startCol - 1) || pendingRoad.endCol >= e.startCol ) ? e : false;
+                        break;
+                    case FACING_DOWN:
+                        roadToMergeWith = ( pendingRoad.startRow == ( e.endRow + 1) || pendingRoad.startRow <= e.endRow ) 
+                        || ( pendingRoad.endRow == ( e.startRow - 1) || pendingRoad.endRow >= e.startRow ) ? e : false;
+                        break;
+                } 
+            }
+        })
+        return roadToMergeWith;
     }
 
     drawSelectedRoadBlockAtTile( x, y ) {

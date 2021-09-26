@@ -198,6 +198,8 @@ class MapRoad {
     }
 
     setRoadFromTileList( tileList ) {
+        this.tileList = tileList;
+
         if ( this.isHorizontal ) {
             this.setRows( Math.min(...tileList.map(item => item.row)), Math.max(...tileList.map(item => item.row)) )
         }
@@ -222,6 +224,36 @@ class MapRoad {
                 this.endRow = Math.max(...tileList.map(item => item.row));
                 break;
         }
+    }
+
+    mergeRoad( road ) {
+        road.tileList.forEach( ( e ) => {
+            let tile = e;
+            let isInArray = false;
+            for ( var i = 0; i < this.tileList.length; i++) {
+                if (this.tileList[i] === tile) {
+                    isInArray = true;
+                }
+            }
+            
+            if ( !isInArray ){
+                this.tileList.push( tile );                
+            }
+            
+        } )
+
+        this.setRoadFromTileList( this.tileList )
+    }
+
+    clearTiles( tileList ) {
+        tileList.forEach( ( e ) => {
+            if ( this.tileList.includes( e ) ) {
+                let tile = e;
+                this.tileList = this.tileList.filter( ( e ) => { return e != tile; })
+            }
+        })
+
+        this.setRoadFromTileList( this.tileList )
     }
 
     setRows( topRow, bottomRow ) {
