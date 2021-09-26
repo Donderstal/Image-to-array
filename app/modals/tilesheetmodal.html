@@ -9,37 +9,50 @@
           </button>
         </div>
         <div class="modal-body">
-            <select id='tilesheet-select' class='center-in-div' onchange="showTilesheetPreview()">
-                <option value="my_house"> 
-                    Bedroom </option>
-                <option value="my_neighbourhood">
-                    Starting neighbourhood </option>
-                <option value="my_neighbourhood_2">
-                    Starting neighbourhood 2</option>
-                <option value="downtown"> 
-                    Downtown </option>
-                <option value="battle_downtown"> 
-                    Downtown (battle)</option>
-                <option value="downtown_2"> 
-                    Downtown 2 </option>
-                <option value="Generic_Room_A_Tile_Set"> 
-                    Generic set A </option>
-                <option value="Generic_Room_AX"> 
-                    Generic set A clean </option>
-                <option value="Generic_Room_B_Tile_Set"> 
-                    Generic set B </option>
-                <option value="Generic_Room_BX"> 
-                    Generic set B clean </option>
-                <option value="Generic_Room_C_Tile_Set"> 
-                    Generic set C </option>
-                <option value="Interior_Yum_Mart_Tiles"> 
-                    Yum mart </option>
+            <select id='tilesheet-select' class='center-in-div' onchange="showTilesheetPreview()">\
+                <option value="" selected disabled hidden>Choose a tilesheet...</option>
+                <optgroup label="Clean tilesheets ( outdoor )">
+                    <option value="starting_neighbourhood_clean">
+                        First neighbourhood clean </option>
+                    <option value="downtown_2"> 
+                        Downtown clean </option>
+                </optgroup>
+                <optgroup label="Clean tilesheets ( indoor )">
+                    <option value="Generic_Room_AX"> 
+                        Indoor set A clean </option>
+                    <option value="Generic_Room_BX"> 
+                        Indoor set B clean </option>
+                    <option value="Generic_Room_DX"> 
+                        Indoor set D clean </option>
+                </optgroup>
+                <optgroup label="Battle tilesheets">
+                    <option value="battle_downtown"> 
+                        Downtown (battle)</option>
+                </optgroup>
+                <optgroup label="Old tilesheets">
+                    <option value="my_house"> 
+                        Bedroom </option>
+                    <option value="my_neighbourhood">
+                        Starting neighbourhood </option>  
+                    <option value="my_neighbourhood_2">
+                        Starting neighbourhood 2</option>     
+                    <option value="downtown"> 
+                        Downtown </option>            
+                    <option value="Generic_Room_A_Tile_Set"> 
+                        Generic set A </option>
+                    <option value="Generic_Room_B_Tile_Set"> 
+                        Generic set B </option>
+                    <option value="Generic_Room_C_Tile_Set"> 
+                        Generic set C </option>
+                    <option value="Interior_Yum_Mart_Tiles"> 
+                        Yum mart </option>     
+                </optgroup>
             </select>
 
             <button onclick="confirmTilesheetChoice()" class="btn btn-info center-in-div"> Confirm choice </button>
 
             <div>
-                <img id="sheet-preview" class='center-in-div' src="/png-files/tilesheets/Bed_Room.png">
+                <img id="sheet-preview" class='center-in-div'>
             </div>
         </div>
       </div>
