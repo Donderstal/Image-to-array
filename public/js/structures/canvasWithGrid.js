@@ -116,6 +116,7 @@ class Sheet extends CanvasWithGrid {
 class Map extends CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
+        this.roads = []
         console.log("initializing map!")
     };
 
@@ -146,6 +147,22 @@ class Map extends CanvasWithGrid {
         tile.unSetSettings( );
         MAP_CTX.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
         tile.drawTileBorders( )
+    }
+
+    addRoad( direction, tileList ) {
+        tileList.forEach( ( e ) => {
+            this.drawSelectedRoadBlockAtTile( e.x, e.y );
+        })
+
+        let pendingRoad = new MapRoad( direction );
+        pendingRoad.setRoadFromTileList( tileList );
+        this.roads.push( pendingRoad )
+    }
+
+    clearRoadTiles( direction, tileList ) {
+        tileList.forEach( ( e ) => {
+            this.removeSelectedRoadBlockAtTile( e.x, e.y )
+        })
     }
 
     drawSelectedRoadBlockAtTile( x, y ) {

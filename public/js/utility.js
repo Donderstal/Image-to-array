@@ -158,3 +158,98 @@ class DataObject{
         }
     }
 }
+
+class MapRoad {
+    constructor( direction ) {
+        this.direction = direction
+
+        this.topRow;
+        this.bottomRow;
+
+        this.leftCol;
+        this.rightCol;
+    }
+
+    get isHorizontal( ) { return this.direction == FACING_LEFT || this.direction == FACING_RIGHT; };
+    get isVertical( ) { return !this.isHorizontal; };
+    get endsAtIntersection( ) { 
+        switch( this.direction ) {
+            case FACING_LEFT:
+                return this.endCol != 1;
+            case FACING_UP:
+                return this.endRow != 1;
+            case FACING_RIGHT:
+                return this.endCol != MAP.grid.cols;
+            case FACING_DOWN:
+                return this.endRow != MAP.grid.rows;
+        }
+    }
+    get hasStart( ) {
+        switch( this.direction ) {
+            case FACING_LEFT:
+                return this.startCol == MAP.grid.cols;
+            case FACING_UP:
+                return this.startRow == MAP.grid.rows;
+            case FACING_RIGHT:
+                return this.startCol == 1;
+            case FACING_DOWN:
+                return this.startRow == 1;
+        }
+    }
+
+    setRoadFromTileList( tileList ) {
+        if ( this.isHorizontal ) {
+            this.setRows( Math.min(...tileList.map(item => item.row)), Math.max(...tileList.map(item => item.row)) )
+        }
+        else {
+            this.setCols( Math.min(...tileList.map(item => item.col)), Math.max(...tileList.map(item => item.col)) )
+        }
+        switch( this.direction ) {
+            case FACING_LEFT:
+                this.startCol = Math.max(...tileList.map(item => item.col));
+                this.endCol = Math.min(...tileList.map(item => item.col));
+                break;
+            case FACING_UP:
+                this.startRow = Math.max(...tileList.map(item => item.row));
+                this.endRow = Math.min(...tileList.map(item => item.row));
+                break;
+            case FACING_RIGHT:
+                this.startCol = Math.min(...tileList.map(item => item.col));
+                this.endCol = Math.max(...tileList.map(item => item.col));
+                break;
+            case FACING_DOWN:
+                this.startRow = Math.min(...tileList.map(item => item.row));
+                this.endRow = Math.max(...tileList.map(item => item.row));
+                break;
+        }
+    }
+
+    setRows( topRow, bottomRow ) {
+        this.topRow = topRow;
+        this.bottomRow = bottomRow;
+    }
+
+    setCols( leftCol, rightCol ) {
+        this.leftCol = leftCol;
+        this.rightCol = rightCol;
+    }
+
+    getExportObject( ) {
+        let exportObject = {
+            "direction": this.direction,
+            "alignment": this.isHorizontal ? "HORI" : "VERT",
+            "hasStart": this.hasStart
+        }
+
+        if ( this.isHorizontal ) {
+            exportObject["topRow"] = this.topRow;
+            exportObject["bottomRow"] = this.bottomRow;
+        }
+        else {
+            exportObject["leftCol"] = this.leftCol;
+            exportObject["rightCol"] = this.rightCol;
+        }
+
+        return exportObject;
+    }
+}
