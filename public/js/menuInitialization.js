@@ -1,8 +1,9 @@
 const generatePNGCanvasElements = ( ) => {
-    const charactersWrapper = document.getElementById('character-sprite-pngs-div');
-
     initCharactersDiv( );
     initMapObjectDivs( );
+    setTimeout( ( ) => {
+        initRoadSelectionDiv( );
+    }, 100)
 }
 
 const initCharactersDiv = ( ) => {
@@ -68,6 +69,54 @@ const initMapObjectDivs = ( ) => {
                 element.append(canvas)            
             };
         } )
+    });
+}
+
+const initRoadSelectionDiv = ( ) => {
+    [
+        [ "car-left-sprite-canvas", FACING_LEFT ],
+        [ "car-up-sprite-canvas", FACING_UP ],
+        [ "car-right-sprite-canvas", FACING_RIGHT ],
+        [ "car-down-sprite-canvas", FACING_DOWN ]
+    ].forEach( ( e ) => {
+        let carData = document.getElementById("car_a").dataObject;
+        let carImage = document.getElementById("car_a").image;
+        let destinationCanvas = document.getElementById( e[0] );
+        let dimensions = carData.getDimensions( e[1] );
+        destinationCanvas.width = dimensions.width;
+        destinationCanvas.height = dimensions.height;
+
+        destinationCanvas.getContext("2d").drawImage( 
+            carImage, carData[e[1]].x, carData[e[1]].y, 
+            dimensions.width * 2, dimensions.height * 2, 
+            0, 0, destinationCanvas.width, destinationCanvas.height
+        )
+    });
+    
+    [
+        [ "car-left-block-canvas", "#FFC000", "/png-files/arrow-left.png" ],
+        [ "car-up-block-canvas", "#FFFC00", "/png-files/arrow-up.png" ],
+        [ "car-right-block-canvas", "#FF0000", "/png-files/arrow-right.png" ],
+        [ "car-down-block-canvas", "#00FFFF", "/png-files/arrow-down.png" ]
+    ].forEach( ( e ) => {
+        let destinationCanvas = document.getElementById( e[0] );
+        destinationCanvas.width = TILE_SIZE;
+        destinationCanvas.height = TILE_SIZE;
+        let ctx = destinationCanvas.getContext("2d")
+        ctx.fillStyle = e[1]
+        ctx.fillRect( 0, 0, TILE_SIZE, TILE_SIZE )
+
+        let arrowImage = new Image( )
+        arrowImage.src = e[2];
+        arrowImage.onload = ( ) => {
+            ctx.drawImage(
+                arrowImage,
+                0, 0,
+                arrowImage.width, arrowImage.height,
+                TILE_SIZE * .165, TILE_SIZE * .165,
+                TILE_SIZE * .66, TILE_SIZE * .66
+            )
+        }
     });
 }
 
