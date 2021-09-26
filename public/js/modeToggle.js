@@ -69,6 +69,7 @@ const initNeighboursMode = ( ) => {
 
 const initRoadsMode = ( ) => {
     MAPMAKER_IN_ROADS_MODE = true;
+    SELECTED_ROAD_DIRECTION = false;
     hideListContainersAndShowGiven( "", false ); 
     [ "map-foreground-canvas", "road-options-div" ].forEach( 
         ( e ) => { showElementWithId( e) }

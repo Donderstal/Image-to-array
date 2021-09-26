@@ -91,6 +91,8 @@ const initRoadSelectionDiv = ( ) => {
             dimensions.width * 2, dimensions.height * 2, 
             0, 0, destinationCanvas.width, destinationCanvas.height
         )
+
+        destinationCanvas.addEventListener( 'click', roadsListener )
     });
     
     [
@@ -117,6 +119,8 @@ const initRoadSelectionDiv = ( ) => {
                 TILE_SIZE * .66, TILE_SIZE * .66
             )
         }
+
+        destinationCanvas.addEventListener( 'click', roadsListener )
     });
 }
 
@@ -129,6 +133,35 @@ const createSpriteCanvas = ( id, width, height, image ) => {
     canvas.image = image;
     canvas.setAttribute("draggable", true)
     return canvas;
+}
+
+const roadsListener = ( event ) => {
+    [ ...document.getElementsByClassName("road-canvas-wrapper")].forEach( ( e ) =>{
+        e.classList.remove( 'selected-road-button' )
+    })
+
+    let id;
+    if ( event.target.id.includes('left') ) {
+        id = "car-left-block-canvas"
+        wrapperId = "road-canvas-wrapper-left";
+        SELECTED_ROAD_DIRECTION = FACING_LEFT
+    } else if ( event.target.id.includes('up') ) {
+        id = "car-up-block-canvas"
+        wrapperId = "road-canvas-wrapper-up"
+        SELECTED_ROAD_DIRECTION = FACING_UP
+    } else if ( event.target.id.includes('right') ) {
+        id = "car-right-block-canvas"
+        wrapperId = "road-canvas-wrapper-right"
+        SELECTED_ROAD_DIRECTION = FACING_RIGHT
+    } else if ( event.target.id.includes('down') ) {
+        id = "car-down-block-canvas"
+        wrapperId = "road-canvas-wrapper-down"
+        SELECTED_ROAD_DIRECTION = FACING_DOWN
+    }
+
+    let arrowCanvas = document.getElementById( id );
+    document.getElementById(wrapperId).classList.add( 'selected-road-button' )
+
 }
 
 const characterListener = ( e, isDragStart ) => {

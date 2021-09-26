@@ -261,3 +261,8 @@ body {
 .stored-tile-div {
     display: inline-block;
 }
+
+.selected-road-button {
+    box-shadow: 0 0 10px #fff;
+    box-shadow: 0 0 5px rgb(231, 188, 188);
+}
