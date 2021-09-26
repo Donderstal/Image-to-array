@@ -48,8 +48,6 @@ const clearSpriteCanvas = ( ) => {
 const hideListContainersAndShowGiven = ( divId, activateNewDiv = true ) => {
     const elementList = document.getElementsByClassName("right-list-container");
     for (let item of elementList) {
-        console.log( item )
-        console.log( item.style.visibility )
         item.style.visibility = "hidden";
         item.style.display = "none";
     }
