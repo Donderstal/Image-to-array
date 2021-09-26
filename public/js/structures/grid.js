@@ -92,11 +92,16 @@ class Tile {
         this.hasSettings = false;
         this.angle = 0;
         this.mirrored = false;
+
         this.row = row;
         this.col = col;
+
         this.hasSprite = false;
         this.spriteType;
         this.spriteData = {};
+
+        this.roads = [];
+        this.isRoadTile = [];
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -196,4 +201,14 @@ class Tile {
     clearTileID( ) {
         this.ID = "E"
     };
+
+    setRoad( direction ) {
+        this.roads = [ ...this.roads, direction ];
+        this.isRoadTile = true;
+    }
+
+    unsetRoad( direction ) {
+        this.roads = this.roads.filter( ( e ) => { return e != direction });
+        this.isRoadTile = false;
+    }
 };

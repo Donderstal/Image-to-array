@@ -162,10 +162,10 @@ const captureSheetClick = ( event ) => {
 }
 
 const captureMapClick = ( event ) => {
-    if ( event.shiftKey ) {
+    if ( event.shiftKey && MAPMAKER_IN_TILE_MODE ) {
         MAP.clearTileAtXY(event.offsetX, event.offsetY);    
     }
-    else if ( HAS_SELECTED_TILE ) {
+    else if ( HAS_SELECTED_TILE && MAPMAKER_IN_TILE_MODE  ) {
         MAP.drawTileAtXY(event.offsetX, event.offsetY);        
     }
 }

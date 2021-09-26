@@ -54,32 +54,37 @@ const initMapObjectsMode = ( ) => {
         ( e ) => { showElementWithId( e) }
     );
     
-    toggleForeGroundGrid( );
+    turnOnForeground( );
     hideListContainersAndShowGiven( "character-sprite-pngs-div" )
 }
 
 const initNeighboursMode = ( ) => {
     MAPMAKER_IN_NEIGHBOURS_MODE = true;
     hideListContainersAndShowGiven( "", false ); 
-    [ "map-foreground-canvas", "neighbour-options-div" ].forEach( 
+    [ "neighbour-options-div" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );
-    toggleForeGroundGrid( );
+    turnOnBackground( );
 } 
 
 const initRoadsMode = ( ) => {
     MAPMAKER_IN_ROADS_MODE = true;
     SELECTED_ROAD_DIRECTION = false;
     hideListContainersAndShowGiven( "", false ); 
-    [ "map-foreground-canvas", "road-options-div" ].forEach( 
+    [ "road-options-div" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );
-    toggleForeGroundGrid( );
+    turnOnBackground( );
 } 
 
-const toggleForeGroundGrid = ( ) => {
+const turnOnForeground = ( ) => {
     document.getElementById("map-canvas").style.pointerEvents = "none"
     document.getElementById("map-foreground-canvas").style.pointerEvents = "auto"
+}
+
+const turnOnBackground = ( ) => {
+    document.getElementById("map-canvas").style.pointerEvents = "auto"
+    document.getElementById("map-foreground-canvas").style.pointerEvents = "none"
 }
 
 const hideElementWithId = ( id ) => {

@@ -95,7 +95,7 @@ OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
 });
 
 MAP_CANVAS.addEventListener('mouseup', (event) => { 
-    if ( !HAS_SELECTED_TILE ) {
+    if ( !HAS_SELECTED_TILE && MAPMAKER_IN_TILE_MODE ) {
         return;
     }
     let endingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);
@@ -107,11 +107,21 @@ MAP_CANVAS.addEventListener('mouseup', (event) => {
         LEFT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.END.x : MOUSE_DRAG_RANGE.START.x
     }
     
-    MAP.grid.array.forEach( ( tile ) => {
-        if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
-            event.shiftKey ? MAP.clearTileAtXY( tile.x, tile.y ) : MAP.drawTileAtXY( tile.x, tile.y )
-        }
-    } )
+    if ( MAPMAKER_IN_TILE_MODE ) {
+        MAP.grid.array.forEach( ( tile ) => {
+            if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
+                event.shiftKey ? MAP.clearTileAtXY( tile.x, tile.y ) : MAP.drawTileAtXY( tile.x, tile.y )
+            }
+        } )        
+    }
+    else if ( MAPMAKER_IN_ROADS_MODE ) {
+        MAP.grid.array.forEach( ( tile ) => {
+            
+            if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
+                event.shiftKey ? MAP.removeSelectedRoadBlockAtTile( tile.x, tile.y ) : MAP.drawSelectedRoadBlockAtTile( tile.x, tile.y  )
+            }
+        } )   
+    }
 });
 MAP_CANVAS.addEventListener('mousedown', (event) => {
     MOUSE_DRAG_IN_MAPMAKER = false;

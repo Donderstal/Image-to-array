@@ -148,6 +148,39 @@ class Map extends CanvasWithGrid {
         tile.drawTileBorders( )
     }
 
+    drawSelectedRoadBlockAtTile( x, y ) {
+        let sourceCanvas;
+        switch ( SELECTED_ROAD_DIRECTION ) {
+            case FACING_LEFT:
+                sourceCanvas = document.getElementById("car-left-block-canvas")
+                break;
+            case FACING_UP:
+                sourceCanvas = document.getElementById("car-up-block-canvas")
+                break;
+            case FACING_RIGHT:
+                sourceCanvas = document.getElementById("car-right-block-canvas")
+                break;
+            case FACING_DOWN:
+                sourceCanvas = document.getElementById("car-down-block-canvas")
+                break;
+        }
+        let sourceImage = new Image( );
+        sourceImage.src = sourceCanvas.toDataURL( )
+        sourceImage.onload = ( ) => {
+            const tile = super.getTileAtXY( x, y );
+            MAP_CTX.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+            tile.setRoad( SELECTED_ROAD_DIRECTION )
+        }
+
+    }
+
+    removeSelectedRoadBlockAtTile( x, y ) {
+        const tile = super.getTileAtXY( x, y );
+        MAP_CTX.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+        tile.unsetRoad( SELECTED_ROAD_DIRECTION );
+        tile.drawTileInMap( this.sheetImage )
+    }
+
     exportMapData( ) {
         let exportArray = [];
         this.grid.array.forEach( ( e ) => {
