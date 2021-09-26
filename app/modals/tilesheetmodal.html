@@ -10,6 +10,7 @@
         </div>
         <div class="modal-body">
             <select id='tilesheet-select' class='center-in-div' onchange="showTilesheetPreview()">\
+                <option value="" selected disabled hidden>Choose a tilesheet...</option>
                 <optgroup label="Clean tilesheets ( outdoor )">
                     <option value="starting_neighbourhood_clean">
                         First neighbourhood clean </option>
@@ -51,7 +52,7 @@
             <button onclick="confirmTilesheetChoice()" class="btn btn-info center-in-div"> Confirm choice </button>
 
             <div>
-                <img id="sheet-preview" class='center-in-div' src="/png-files/tilesheets/Bed_Room.png">
+                <img id="sheet-preview" class='center-in-div'>
             </div>
         </div>
       </div>
