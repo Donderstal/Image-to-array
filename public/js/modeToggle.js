@@ -28,7 +28,7 @@ const clearCurrentEditMode = ( ) => {
     document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
     SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height );
     [ 
-        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tilesheet-div", "selected-tile-div" 
+        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tilesheet-div", "selected-tile-div", "map-roads-canvas"
     ].forEach( 
         ( e ) => { hideElementWithId( e) }
     );
@@ -71,7 +71,7 @@ const initRoadsMode = ( ) => {
     MAPMAKER_IN_ROADS_MODE = true;
     SELECTED_ROAD_DIRECTION = false;
     hideListContainersAndShowGiven( "", false ); 
-    [ "road-options-div" ].forEach( 
+    [ "road-options-div", "map-roads-canvas" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );
     turnOnBackground( );

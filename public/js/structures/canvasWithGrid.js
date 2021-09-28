@@ -274,12 +274,12 @@ class Map extends CanvasWithGrid {
                 let sourceImage2 = new Image( );
                 sourceImage2.src = sourceCanvas.toDataURL( )
                 sourceImage2.onload = ( ) => {
-                    MAP_CTX.drawImage( 
+                    MAP_ROADS_CTX.drawImage( 
                         sourceImage, 
                         0, 0, TILE_SIZE / 2, TILE_SIZE / 2, 
                         tile.x, tile.y, TILE_SIZE / 2, TILE_SIZE / 2
                     )
-                    MAP_CTX.drawImage( 
+                    MAP_ROADS_CTX.drawImage( 
                         sourceImage2, 
                         TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2, 
                         tile.x + TILE_SIZE / 2, tile.y + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2
@@ -288,7 +288,7 @@ class Map extends CanvasWithGrid {
                 tile.setRoad( SELECTED_ROAD_DIRECTION )
             }
             else {
-                MAP_CTX.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+                MAP_ROADS_CTX.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
                 tile.setRoad( SELECTED_ROAD_DIRECTION )
             }
         }
@@ -296,10 +296,13 @@ class Map extends CanvasWithGrid {
     }
 
     removeSelectedRoadBlockAtTile( x, y ) {
-        const tile = super.getTileAtXY( x, y );
-        MAP_CTX.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+        const tile = this.getTileAtXY( x, y );
+        MAP_ROADS_CTX.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
         tile.unsetRoad( SELECTED_ROAD_DIRECTION );
         tile.drawTileInMap( this.sheetImage )
+        MAP_ROADS.grid.array.forEach( ( e ) => {
+            e.drawTileBorders( );
+        })
     }
 
     exportMapData( ) {

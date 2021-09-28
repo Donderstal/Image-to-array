@@ -6,7 +6,7 @@ class Grid {
         this.cols = cols;
         this.array = [];
         this.ctx = ctx;
-        this.isOverviewCanvas = this.ctx != MAP_CTX && this.ctx != SHEET_CTX && this.ctx != PREVIEW_MAP_CTX && this.ctx != MAP_FOREGROUND_CTX;
+        this.isOverviewCanvas = this.ctx != MAP_ROADS_CTX &&this.ctx != MAP_CTX && this.ctx != SHEET_CTX && this.ctx != PREVIEW_MAP_CTX && this.ctx != MAP_FOREGROUND_CTX;
 
         this.initializeGrid( );
     };
@@ -101,7 +101,7 @@ class Tile {
         this.spriteData = {};
 
         this.roads = [];
-        this.isRoadTile = [];
+        this.isRoadTile = false;
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );

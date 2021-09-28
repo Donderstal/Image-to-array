@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
     PREVIEW_MAP = new Map( previewMapX, previewMapY, PREVIEW_MAP_CTX );
     SHEET = new Sheet( sheetX, sheetY, SHEET_CTX );
     MAP = new Map( mapX, mapY, MAP_CTX );
+    MAP_ROADS = new Map( mapX, mapY, MAP_ROADS_CTX );
     MAP_FOREGROUND =  new ObjectsGrid( mapForegroundX, mapForegroundY, MAP_FOREGROUND_CTX );
 });
 
