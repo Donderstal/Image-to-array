@@ -203,12 +203,12 @@ class Tile {
     };
 
     setRoad( direction ) {
-        this.roads = [ ...this.roads, direction ];
+        this.roads = this.roads.includes(direction) ? this.roads : [ ...this.roads, direction ];
         this.isRoadTile = true;
     }
 
-    unsetRoad( direction ) {
-        this.roads = this.roads.filter( ( e ) => { return e != direction });
+    unsetRoad( ) {
+        this.roads = [];
         this.isRoadTile = false;
     }
 };

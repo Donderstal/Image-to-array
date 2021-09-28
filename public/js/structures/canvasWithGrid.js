@@ -156,6 +156,7 @@ class Map extends CanvasWithGrid {
 
         let pendingRoad = new MapRoad( direction );
         pendingRoad.setRoadFromTileList( tileList );
+        this.deleteCrossingOppositeDirectionRoads( direction, pendingRoad );
 
         let collidingRoads = this.findCollidingRoadIfPossible(direction, pendingRoad);
         collidingRoads.forEach( ( e ) => {
@@ -166,6 +167,27 @@ class Map extends CanvasWithGrid {
         this.roads.push( pendingRoad );
     }
 
+    deleteCrossingOppositeDirectionRoads( direction, pendingRoad ) {
+        let collidingRoads;
+        switch( direction ) {
+            case FACING_LEFT:
+                collidingRoads = this.findCollidingRoadIfPossible( FACING_RIGHT, pendingRoad )
+                break;
+            case FACING_UP:
+                collidingRoads = this.findCollidingRoadIfPossible( FACING_DOWN, pendingRoad )
+                break;
+            case FACING_RIGHT:
+                collidingRoads = this.findCollidingRoadIfPossible( FACING_LEFT, pendingRoad )
+                break;
+            case FACING_DOWN:
+                collidingRoads = this.findCollidingRoadIfPossible( FACING_UP, pendingRoad )
+                break;
+        }
+        collidingRoads.forEach( ( e ) => {
+            this.roads.splice( this.roads.indexOf( e ), 1 )
+        })
+    }
+
     clearRoadTiles( direction, tileList ) {
         tileList.forEach( ( e ) => {
             this.removeSelectedRoadBlockAtTile( e.x, e.y )
@@ -174,9 +196,11 @@ class Map extends CanvasWithGrid {
         let pendingRoad = new MapRoad( direction );
         pendingRoad.setRoadFromTileList( tileList );
 
-        let collidingRoads = this.findCollidingRoadIfPossible(direction, pendingRoad)
-        collidingRoads.forEach( ( e ) => {
+        this.roads.forEach( ( e ) => {
             e.clearTiles( pendingRoad.tileList );
+            if ( e.tileList.length == 0 ) {
+                this.roads.splice( this.roads.indexOf( e ), 1 )
+            }
         })
     }
 
@@ -242,8 +266,31 @@ class Map extends CanvasWithGrid {
         sourceImage.src = sourceCanvas.toDataURL( )
         sourceImage.onload = ( ) => {
             const tile = super.getTileAtXY( x, y );
-            MAP_CTX.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
-            tile.setRoad( SELECTED_ROAD_DIRECTION )
+            let newRoadIsHorizontal = SELECTED_ROAD_DIRECTION == FACING_LEFT || SELECTED_ROAD_DIRECTION == FACING_RIGHT
+            if ( tile.roads.length != 0 && 
+                ( (!newRoadIsHorizontal && (tile.roads[0] == FACING_LEFT || tile.roads[0] == FACING_RIGHT))
+                || (newRoadIsHorizontal && (tile.roads[0] == FACING_UP || tile.roads[0] == FACING_DOWN)) ) 
+                ) {
+                let sourceImage2 = new Image( );
+                sourceImage2.src = sourceCanvas.toDataURL( )
+                sourceImage2.onload = ( ) => {
+                    MAP_CTX.drawImage( 
+                        sourceImage, 
+                        0, 0, TILE_SIZE / 2, TILE_SIZE / 2, 
+                        tile.x, tile.y, TILE_SIZE / 2, TILE_SIZE / 2
+                    )
+                    MAP_CTX.drawImage( 
+                        sourceImage2, 
+                        TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2, 
+                        tile.x + TILE_SIZE / 2, tile.y + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2
+                    )
+                }
+                tile.setRoad( SELECTED_ROAD_DIRECTION )
+            }
+            else {
+                MAP_CTX.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+                tile.setRoad( SELECTED_ROAD_DIRECTION )
+            }
         }
 
     }
