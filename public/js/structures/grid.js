@@ -6,7 +6,7 @@ class Grid {
         this.cols = cols;
         this.array = [];
         this.ctx = ctx;
-        this.isOverviewCanvas = this.ctx != MAP_ROADS_CTX &&this.ctx != MAP_CTX && this.ctx != SHEET_CTX && this.ctx != PREVIEW_MAP_CTX && this.ctx != MAP_FOREGROUND_CTX;
+        this.isOverviewCanvas = this.ctx != MAP_ROADS_CTX &&this.ctx != MAP_CTX && this.ctx != SHEET_CTX && this.ctx != PREVIEW_MAP_CTX && this.ctx != MAP_FOREGROUND_CTX && this.ctx != MAP_SPAWN_POINTS_CTX;
 
         this.initializeGrid( );
     };
@@ -102,6 +102,8 @@ class Tile {
 
         this.roads = [];
         this.isRoadTile = false;
+
+        this.hasSpawnPoint = false;
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -211,4 +213,41 @@ class Tile {
         this.roads = [];
         this.isRoadTile = false;
     }
-};
+
+    setSpawnPoint( ) {
+        this.hasSpawnPoint = true;
+        this.spawnDirection = SELECTED_SPAWN_DIRECTION;
+        this.drawSpawnPoint( )
+    }
+
+    drawSpawnPoint( ) {
+        let sourceCanvas;
+        switch( this.spawnDirection ) {
+            case FACING_LEFT:
+                sourceCanvas = document.getElementById("spawn-left-block-canvas")
+                break;
+            case FACING_UP:
+                sourceCanvas = document.getElementById("spawn-up-block-canvas")
+                break;
+            case FACING_RIGHT:
+                sourceCanvas = document.getElementById("spawn-right-block-canvas")
+                break;
+            case FACING_DOWN:
+                sourceCanvas = document.getElementById("spawn-down-block-canvas")
+                break;
+        }        
+
+        let sourceImage = new Image( )
+        sourceImage.src = sourceCanvas.toDataURL( )
+        sourceImage.onload = ( ) => {
+            this.ctx.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, this.x, this.y, TILE_SIZE, TILE_SIZE )
+        }
+    }
+
+    unsetSpawnPoint( ) {
+        this.hasSpawnPoint = false;
+        this.spawnDirection = false;
+        this.ctx.clearRect( this.x, this.y, TILE_SIZE, TILE_SIZE )
+        this.drawTileBorders( );
+    }
+}; 

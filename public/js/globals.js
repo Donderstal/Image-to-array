@@ -6,6 +6,7 @@ const SHEET_CANVAS = document.getElementById('tilesheet-canvas');
 const SELECTED_TILE_CANVAS = document.getElementById('selected-tile-canvas');
 const MAP_CANVAS = document.getElementById('map-canvas');
 const MAP_ROADS_CANVAS = document.getElementById('map-roads-canvas');
+const MAP_SPAWN_POINTS_CANVAS = document.getElementById('map-spawn-points-canvas');
 const MAP_FOREGROUND_CANVAS = document.getElementById('map-foreground-canvas');
 const PREVIEW_MAP_CANVAS = document.getElementById('preview-map-canvas');
 
@@ -13,6 +14,7 @@ const SHEET_CTX = SHEET_CANVAS.getContext("2d");
 const SELECTED_TILE_CTX = SELECTED_TILE_CANVAS.getContext("2d");
 const MAP_CTX = MAP_CANVAS.getContext("2d");
 const MAP_ROADS_CTX = MAP_ROADS_CANVAS.getContext("2d");
+const MAP_SPAWN_POINTS_CTX = MAP_SPAWN_POINTS_CANVAS.getContext("2d");
 const MAP_FOREGROUND_CTX = MAP_FOREGROUND_CANVAS.getContext("2d")
 const PREVIEW_MAP_CTX = PREVIEW_MAP_CANVAS.getContext("2d");
 
@@ -29,6 +31,7 @@ let IS_CAR;
 let SHEET;
 let MAP;
 let MAP_ROADS;
+let MAP_SPAWN_POINTS;
 let PREVIEW_MAP;
 let MAP_FOREGROUND;
 

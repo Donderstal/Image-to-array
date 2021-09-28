@@ -34,11 +34,15 @@ const initMapCanvas = ( rows, cols ) => {
 
     MAP.initGrid( rows, cols )
 
-
     MAP_ROADS_CANVAS.width = cols * TILE_SIZE
     MAP_ROADS_CANVAS.height = rows * TILE_SIZE
 
     MAP_ROADS.initGrid( rows, cols )
+
+    MAP_SPAWN_POINTS_CANVAS.width = cols * TILE_SIZE
+    MAP_SPAWN_POINTS_CANVAS.height = rows * TILE_SIZE
+
+    MAP_SPAWN_POINTS.initGrid( rows, cols )
 
     MAP_FOREGROUND_CANVAS.width = cols * TILE_SIZE
     MAP_FOREGROUND_CANVAS.height = rows * TILE_SIZE

@@ -87,7 +87,7 @@ const initSpawnPointsMode = ( ) => {
     [ "spawn-points-options-div", "map-spawn-points-canvas" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );
-    turnOnForeground( );
+    turnOnBackground( );
 }
 
 const turnOnForeground = ( ) => {

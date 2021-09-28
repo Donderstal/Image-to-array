@@ -149,6 +149,16 @@ class Map extends CanvasWithGrid {
         tile.drawTileBorders( )
     }
 
+    clearSpawnPointFromTileAtXY( x, y ) {
+        const tile = super.getTileAtXY( x, y );
+        tile.unsetSpawnPoint( )
+    }
+
+    setSpawnPointToTileAtXY( x, y ) {
+        const tile = super.getTileAtXY( x, y );
+        tile.setSpawnPoint( )
+    }
+
     addRoad( direction, tileList ) {
         tileList.forEach( ( e ) => {
             this.drawSelectedRoadBlockAtTile( e.x, e.y );

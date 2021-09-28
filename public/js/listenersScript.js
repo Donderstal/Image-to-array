@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
     SHEET = new Sheet( sheetX, sheetY, SHEET_CTX );
     MAP = new Map( mapX, mapY, MAP_CTX );
     MAP_ROADS = new Map( mapX, mapY, MAP_ROADS_CTX );
+    MAP_SPAWN_POINTS =  new Map( mapForegroundX, mapForegroundY, MAP_SPAWN_POINTS_CTX );
     MAP_FOREGROUND =  new ObjectsGrid( mapForegroundX, mapForegroundY, MAP_FOREGROUND_CTX );
 });
 
@@ -144,8 +145,14 @@ MAP_CANVAS.addEventListener('mousedown', (event) => {
     let startingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);   
     MOUSE_DRAG_RANGE.START = { 'x': startingTile.x, 'y': startingTile.y }
 });
-MAP_CANVAS.addEventListener('mousemove', (event) => {
+MAP_CANVAS.addEventListener('mousemove', ( ) => {
     MOUSE_DRAG_IN_MAPMAKER = true;
+});
+
+MAP_SPAWN_POINTS_CANVAS.addEventListener('click', (event) => {
+    ( event.shiftKey ) 
+        ? MAP_SPAWN_POINTS.clearSpawnPointFromTileAtXY(event.offsetX, event.offsetY)
+        : MAP_SPAWN_POINTS.setSpawnPointToTileAtXY(event.offsetX, event.offsetY)
 });
 
 document.getElementById('arrow-flip-left').addEventListener( 'click', ( ) => { flipTile("Counter-clockwise") }, true )
