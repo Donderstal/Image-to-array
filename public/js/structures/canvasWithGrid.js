@@ -157,14 +157,13 @@ class Map extends CanvasWithGrid {
         let pendingRoad = new MapRoad( direction );
         pendingRoad.setRoadFromTileList( tileList );
 
-        let roadToMergeWith = this.findCollidingRoadIfPossible(direction, pendingRoad)
+        let collidingRoads = this.findCollidingRoadIfPossible(direction, pendingRoad);
+        collidingRoads.forEach( ( e ) => {
+            pendingRoad.mergeRoad( e );
+            this.roads.splice( this.roads.indexOf( e ), 1 )
+        })
 
-        if ( roadToMergeWith ) {
-            roadToMergeWith.mergeRoad( pendingRoad )
-        }
-        else {
-            this.roads.push( pendingRoad )
-        }
+        this.roads.push( pendingRoad );
     }
 
     clearRoadTiles( direction, tileList ) {
@@ -175,12 +174,14 @@ class Map extends CanvasWithGrid {
         let pendingRoad = new MapRoad( direction );
         pendingRoad.setRoadFromTileList( tileList );
 
-        let collidingRoad = this.findCollidingRoadIfPossible(direction, pendingRoad)
-        collidingRoad.clearTiles( pendingRoad.tileList );
+        let collidingRoads = this.findCollidingRoadIfPossible(direction, pendingRoad)
+        collidingRoads.forEach( ( e ) => {
+            e.clearTiles( pendingRoad.tileList );
+        })
     }
 
     findCollidingRoadIfPossible(direction, pendingRoad) {
-        let roadToMergeWith = false;
+        let collidingRoads = [];
         this.roads.forEach( ( e ) => { 
             if ( e.direction == direction ) {
                 let roadsCanCollide = e.isHorizontal 
@@ -192,25 +193,33 @@ class Map extends CanvasWithGrid {
                 }
                 switch( e.direction ) {
                     case FACING_LEFT:
-                        roadToMergeWith = ( pendingRoad.startCol == ( e.endCol - 1) || pendingRoad.startCol >= e.endCol ) 
-                        || ( pendingRoad.endCol == ( e.startCol + 1) || pendingRoad.endCol <= e.startCol ) ? e : false;
+                        if ( ( pendingRoad.startCol == ( e.endCol - 1) || pendingRoad.startCol >= e.endCol ) 
+                        || ( pendingRoad.endCol == ( e.startCol + 1) || pendingRoad.endCol <= e.startCol ) ) {
+                            collidingRoads =  [ ...collidingRoads, e ]
+                        }
                         break;
                     case FACING_UP:
-                        roadToMergeWith = ( pendingRoad.startRow == ( e.endRow - 1) || pendingRoad.startRow >= e.endRow ) 
-                        || ( pendingRoad.endRow == ( e.startRow + 1) || pendingRoad.endRow <= e.startRow ) ? e : false;
+                        if (( pendingRoad.startRow == ( e.endRow - 1) || pendingRoad.startRow >= e.endRow ) 
+                        || ( pendingRoad.endRow == ( e.startRow + 1) || pendingRoad.endRow <= e.startRow ) ) {
+                            collidingRoads =  [ ...collidingRoads, e ]
+                        }
                         break;
                     case FACING_RIGHT:
-                        roadToMergeWith = ( pendingRoad.startCol == ( e.endCol + 1) || pendingRoad.startCol <= e.endCol ) 
-                        || ( pendingRoad.endCol == ( e.startCol - 1) || pendingRoad.endCol >= e.startCol ) ? e : false;
+                        if ( ( pendingRoad.startCol == ( e.endCol + 1) || pendingRoad.startCol <= e.endCol ) 
+                        || ( pendingRoad.endCol == ( e.startCol - 1) || pendingRoad.endCol >= e.startCol ) ) {
+                            collidingRoads =  [ ...collidingRoads, e ]
+                        }
                         break;
                     case FACING_DOWN:
-                        roadToMergeWith = ( pendingRoad.startRow == ( e.endRow + 1) || pendingRoad.startRow <= e.endRow ) 
-                        || ( pendingRoad.endRow == ( e.startRow - 1) || pendingRoad.endRow >= e.startRow ) ? e : false;
+                        if ( ( pendingRoad.startRow == ( e.endRow + 1) || pendingRoad.startRow <= e.endRow ) 
+                        || ( pendingRoad.endRow == ( e.startRow - 1) || pendingRoad.endRow >= e.startRow )) {
+                            collidingRoads =  [ ...collidingRoads, e ]
+                        }
                         break;
                 } 
             }
         })
-        return roadToMergeWith;
+        return collidingRoads;
     }
 
     drawSelectedRoadBlockAtTile( x, y ) {

@@ -253,7 +253,48 @@ class MapRoad {
             }
         })
 
+        this.tileList = this.checkIfRoadIsBroken( );
+
         this.setRoadFromTileList( this.tileList )
+    }
+
+    checkIfRoadIsBroken( ) {
+        let propKey = this.isHorizontal ? "col" : "row" ;
+        let high = Math.max(...this.tileList.map(item => item[propKey]));;
+        let low = Math.min(...this.tileList.map(item => item[propKey]));
+
+        let ascList = this.getContinuousTileList( true, high, low, propKey );
+        let descList = this.getContinuousTileList( false, high, low, propKey );
+
+        let accumulatedIndexesAsc = ascList.reduce( (acc, curr) => { return acc += curr.index; }, 0 )
+        let accumulatedIndexesDesc = descList.reduce( (acc, curr) => { return acc += curr.index; }, 0 )
+
+        if ( accumulatedIndexesAsc != accumulatedIndexesDesc ) {
+            let splitRoad =  new MapRoad( this.direction )
+            splitRoad.setRoadFromTileList( ascList );
+            MAP.roads.push( splitRoad )
+        }
+        return descList;
+    }
+
+    getContinuousTileList( ascending, high, low, propKey ) {
+        let arrayCopy = this.tileList.slice( );
+        let list = [];
+
+        for( var i = ascending ? low : high; ascending ? i <= high : i >= low; ascending ? i++ : i-- ) {
+            let tilesWithValue = this.tileList.filter( ( e ) => { return e[propKey] == i })
+            tilesWithValue.forEach( ( e ) => {
+                arrayCopy.pop( e )
+            })
+            if ( tilesWithValue.length > 0 ) {
+                list = [ ...list, ...tilesWithValue ];
+            }
+            else {
+                i = ascending ? high : low;
+            }
+        }
+
+        return list
     }
 
     setRows( topRow, bottomRow ) {
