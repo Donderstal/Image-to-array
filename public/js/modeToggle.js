@@ -13,6 +13,9 @@ const toggleMode = ( event ) => {
         case "roads-mode" : 
             initRoadsMode( )
             break;  
+        case "spawn-mode" : 
+        initSpawnPointsMode( )
+            break;  
     }
 }
 
@@ -28,7 +31,7 @@ const clearCurrentEditMode = ( ) => {
     document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
     SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height );
     [ 
-        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tilesheet-div", "selected-tile-div", "map-roads-canvas"
+        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tilesheet-div", "selected-tile-div", "map-roads-canvas", "map-spawn-points-canvas"
     ].forEach( 
         ( e ) => { hideElementWithId( e) }
     );
@@ -76,6 +79,16 @@ const initRoadsMode = ( ) => {
     );
     turnOnBackground( );
 } 
+
+const initSpawnPointsMode = ( ) => {
+    MAPMAKER_IN_SPAWN_MODE = true;
+    SELECTED_SPAWN_DIRECTION = false;
+    hideListContainersAndShowGiven( "", false ); 
+    [ "spawn-points-options-div", "map-spawn-points-canvas" ].forEach( 
+        ( e ) => { showElementWithId( e) }
+    );
+    turnOnForeground( );
+}
 
 const turnOnForeground = ( ) => {
     document.getElementById("map-canvas").style.pointerEvents = "none"

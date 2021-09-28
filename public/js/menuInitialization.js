@@ -4,6 +4,9 @@ const generatePNGCanvasElements = ( ) => {
     setTimeout( ( ) => {
         initRoadSelectionDiv( );
     }, 150)
+    setTimeout( ( ) => {
+        initSpawnPointsSelectionDiv( );
+    }, 250)
 }
 
 const initCharactersDiv = ( ) => {
@@ -101,27 +104,42 @@ const initRoadSelectionDiv = ( ) => {
         [ "car-right-block-canvas", "#FF0000", "/png-files/arrow-right.png" ],
         [ "car-down-block-canvas", "#00FFFF", "/png-files/arrow-down.png" ]
     ].forEach( ( e ) => {
-        let destinationCanvas = document.getElementById( e[0] );
-        destinationCanvas.width = TILE_SIZE;
-        destinationCanvas.height = TILE_SIZE;
-        let ctx = destinationCanvas.getContext("2d")
-        ctx.fillStyle = e[1]
-        ctx.fillRect( 0, 0, TILE_SIZE, TILE_SIZE )
-
-        let arrowImage = new Image( )
-        arrowImage.src = e[2];
-        arrowImage.onload = ( ) => {
-            ctx.drawImage(
-                arrowImage,
-                0, 0,
-                arrowImage.width, arrowImage.height,
-                TILE_SIZE * .165, TILE_SIZE * .165,
-                TILE_SIZE * .66, TILE_SIZE * .66
-            )
-        }
-
-        destinationCanvas.addEventListener( 'click', roadsListener )
+        initBlockCanvas( e, true )
     });
+}
+
+const initSpawnPointsSelectionDiv = ( ) => {
+    [
+        [ "spawn-left-block-canvas", "#FFC000", "/png-files/arrow-left.png" ],
+        [ "spawn-up-block-canvas", "#FFFC00", "/png-files/arrow-up.png" ],
+        [ "spawn-right-block-canvas", "#FF0000", "/png-files/arrow-right.png" ],
+        [ "spawn-down-block-canvas", "#00FFFF", "/png-files/arrow-down.png" ]
+    ].forEach( ( e ) => {
+        initBlockCanvas( e, false )
+    });
+}
+
+const initBlockCanvas = ( e, isRoadCanvas ) => {
+    let destinationCanvas = document.getElementById( e[0] );
+    destinationCanvas.width = TILE_SIZE;
+    destinationCanvas.height = TILE_SIZE;
+    let ctx = destinationCanvas.getContext("2d")
+    ctx.fillStyle = e[1]
+    ctx.fillRect( 0, 0, TILE_SIZE, TILE_SIZE )
+
+    let arrowImage = new Image( )
+    arrowImage.src = e[2];
+    arrowImage.onload = ( ) => {
+        ctx.drawImage(
+            arrowImage,
+            0, 0,
+            arrowImage.width, arrowImage.height,
+            TILE_SIZE * .165, TILE_SIZE * .165,
+            TILE_SIZE * .66, TILE_SIZE * .66
+        )
+    }
+
+    destinationCanvas.addEventListener( 'click', isRoadCanvas ? roadsListener : spawnPointsListener )
 }
 
 const createSpriteCanvas = ( id, width, height, image ) => {
@@ -140,28 +158,43 @@ const roadsListener = ( event ) => {
         e.classList.remove( 'selected-road-button' )
     })
 
-    let id;
     if ( event.target.id.includes('left') ) {
-        id = "car-left-block-canvas"
         wrapperId = "road-canvas-wrapper-left";
         SELECTED_ROAD_DIRECTION = FACING_LEFT
     } else if ( event.target.id.includes('up') ) {
-        id = "car-up-block-canvas"
         wrapperId = "road-canvas-wrapper-up"
         SELECTED_ROAD_DIRECTION = FACING_UP
     } else if ( event.target.id.includes('right') ) {
-        id = "car-right-block-canvas"
         wrapperId = "road-canvas-wrapper-right"
         SELECTED_ROAD_DIRECTION = FACING_RIGHT
     } else if ( event.target.id.includes('down') ) {
-        id = "car-down-block-canvas"
         wrapperId = "road-canvas-wrapper-down"
         SELECTED_ROAD_DIRECTION = FACING_DOWN
     }
 
-    let arrowCanvas = document.getElementById( id );
     document.getElementById(wrapperId).classList.add( 'selected-road-button' )
+}
 
+const spawnPointsListener = ( event ) => {
+    [ ...document.getElementsByClassName("road-canvas-wrapper")].forEach( ( e ) =>{
+        e.classList.remove( 'selected-road-button' )
+    })
+
+    if ( event.target.id.includes('left') ) {
+        wrapperId = "spawn-points-wrapper-left";
+        SELECTED_SPAWN_DIRECTION = FACING_LEFT
+    } else if ( event.target.id.includes('up') ) {
+        wrapperId = "spawn-points-wrapper-up"
+        SELECTED_SPAWN_DIRECTION = FACING_UP
+    } else if ( event.target.id.includes('right') ) {
+        wrapperId = "spawn-points-wrapper-right"
+        SELECTED_SPAWN_DIRECTION = FACING_RIGHT
+    } else if ( event.target.id.includes('down') ) {
+        wrapperId = "spawn-points-wrapper-down"
+        SELECTED_SPAWN_DIRECTION = FACING_DOWN
+    }
+
+    document.getElementById(wrapperId).classList.add( 'selected-road-button' )
 }
 
 const characterListener = ( e, isDragStart ) => {

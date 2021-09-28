@@ -88,6 +88,9 @@ let MAPMAKER_IN_NEIGHBOURS_MODE = false;
 let MAPMAKER_IN_ROADS_MODE = false;
 let SELECTED_ROAD_DIRECTION = false;
 
+let MAPMAKER_IN_SPAWN_MODE = false;
+let SELECTED_SPAWN_DIRECTION = false;
+
 const TILE_SIZE = 32;
 
 const MAX_ROWS = 16;

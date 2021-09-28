@@ -26,7 +26,7 @@
                         <label>Roads mode</label>
                     </div>       
                     <div >
-                        <input type="radio" id="roads-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <input type="radio" id="spawn-mode" name="edit-mode-toggle" class="mode-toggle-radio">
                         <label>Spawn mode</label>
                     </div>
                     <div >
@@ -82,6 +82,7 @@
             <div id="map-canvas-div" class="list-container">
                 <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
                 <canvas id="map-roads-canvas" class="border border-info invisible-canvas foreground-canvas" style="pointer-events: none;"></canvas>
+                <canvas id="map-spawn-points-canvas" class="border border-info invisible-canvas foreground-canvas" style="pointer-events: none;"></canvas>
                 <canvas id="map-foreground-canvas" ondrop="handleDragEnd(event);" ondragover="handleDragOver(event);" class="border border-info foreground-canvas invisible-canvas"></canvas>
             </div>        
             <div class="map-canvas-buttons-div" >
@@ -161,6 +162,25 @@
                 <div id="road-canvas-wrapper-down" onclick="roadsListener(event)" class="road-canvas-wrapper mb-2">
                     <canvas id="car-down-sprite-canvas" class="visible-canvas"></canvas>
                     <canvas id="car-down-block-canvas" class="visible-canvas" ></canvas>
+                    <hr>
+                </div>
+            </div>
+            <div id="spawn-points-options-div" class="list-container right-list-container">
+                <h3>Create spawn points:</h3>
+                 <div id="spawn-points-wrapper-left" onclick="spawnPointsListener(event)" class="road-canvas-wrapper mb-2">
+                    <canvas id="spawn-left-block-canvas" class="visible-canvas" ></canvas>
+                    <hr>
+                </div>
+                <div id="spawn-points-wrapper-up" onclick="spawnPointsListener(event)" class="road-canvas-wrapper mb-2">
+                    <canvas id="spawn-up-block-canvas" class="visible-canvas" ></canvas>
+                    <hr>
+                </div>
+                <div id="spawn-points-wrapper-right" onclick="spawnPointsListener(event)" class="road-canvas-wrapper mb-2">                  
+                    <canvas id="spawn-right-block-canvas" class="visible-canvas" ></canvas>
+                    <hr>
+                </div>
+                <div id="spawn-points-wrapper-down" onclick="spawnPointsListener(event)" class="road-canvas-wrapper mb-2">
+                    <canvas id="spawn-down-block-canvas" class="visible-canvas" ></canvas>
                     <hr>
                 </div>
             </div>
