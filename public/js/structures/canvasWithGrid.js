@@ -386,6 +386,7 @@ class ObjectsGrid extends CanvasWithGrid {
         super( x, y, ctx );
         this.characters = false;
         this.objects = false;
+        this.doors = [];
         console.log("initializing objectsGrid!")
     };
     setCharacters( characters ) {
@@ -431,6 +432,10 @@ class ObjectsGrid extends CanvasWithGrid {
         if ( IS_CAR )
             objectData["direction"] = SELECTED_SPRITE_POSITION;
         tile.setSpriteData( 'object', objectData )
+
+        if ( objectData.type.includes( 'door' ) ) {
+            this.doors.push( new Door( tile, objectData.type ) )
+        }
 
         this.drawSpritesInGrid( )
     }
@@ -486,10 +491,37 @@ class ObjectsGrid extends CanvasWithGrid {
             }
         })
     }
+    drawDoorsInGrid( ) {
+        this.ctx.clearRect(0, 0, MAP_FOREGROUND_CANVAS.width, MAP_FOREGROUND_CANVAS.height);
+        this.grid.array.forEach( ( tile ) => {
+            tile.drawTileBorders( )
+        })
+        this.doors.forEach( ( e ) => {
+            console.log(e)
+            e.draw( );
+        } );
+    }
+    setDoorListToGrid( list ) {
+        list.forEach( ( doorItem ) => { 
+            let tileList = this.grid.array.filter( ( tile ) => { return doorItem.col == tile.col && doorItem.row == tile.row; })
+            let doorTile = tileList[0]
+            this.doors.push( new Door( doorTile, list.type ) )
+        })
+    }
     clearSpriteFromTile(x, y) {
         const tile = super.getTileAtXY(x,y);
+        if ( tile.spriteType.includes( 'door' ) ) {
+            
+        }
         tile.clearSpriteData( );
         this.drawSpritesInGrid( );
+    }
+    deleteDoorAtTile( tile ) {
+        this.doors.forEach( ( door, index ) => {
+            if ( door.row == tile.row && door.col == tile.col && door.spriteType == tile.spriteType ) {
+                this.door.splice(index, 1);
+            }
+        })
     }
     exportAllSprites( ) {
         let allSprites = {

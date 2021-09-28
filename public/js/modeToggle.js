@@ -14,8 +14,11 @@ const toggleMode = ( event ) => {
             initRoadsMode( )
             break;  
         case "spawn-mode" : 
-        initSpawnPointsMode( )
+            initSpawnPointsMode( )
             break;  
+        case "doors-mode" :
+            initDoorsMode( );
+            break;
     }
 }
 
@@ -88,6 +91,18 @@ const initSpawnPointsMode = ( ) => {
         ( e ) => { showElementWithId( e) }
     );
     turnOnBackground( );
+}
+
+const initDoorsMode = ( ) => {
+    MAPMAKER_IN_DOORS_MODE = true;
+
+    [ "map-foreground-canvas", "doors-options-div" ].forEach( 
+        ( e ) => { showElementWithId(e) }
+    );
+    
+    turnOnForeground( );
+    MAP_FOREGROUND.drawDoorsInGrid( )
+    hideListContainersAndShowGiven( "doors-options-div" )
 }
 
 const turnOnForeground = ( ) => {
