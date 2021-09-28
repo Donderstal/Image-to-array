@@ -97,6 +97,7 @@ const setMapJSON = ( JSON ) => {
     
     NEIGHBOURS_TO_LOAD = JSON["neighbours"];
     ROADS_TO_LOAD = JSON["roads"];
+    SPAWN_POINTS_TO_LOAD = JSON["spawnPoints"]
 
     document.getElementById("preview-map-neighbourhood").innerText = "Neighbourhood: " + NEIGHBOURHOOD_TO_LOAD
     document.getElementById("preview-map-tileset").innerText = "Tileset: " + TILESHEET_TO_LOAD

@@ -323,6 +323,19 @@ class Map extends CanvasWithGrid {
         })
     }
 
+    setSpawnPoints( spawnPointsList ) {
+        spawnPointsList.forEach( ( spawn ) => {
+            let spawnData = spawn;
+            spawnData.col = spawnData.col < 1 ? 1 : spawnData.col > this.grid.cols ? this.grid.cols : spawnData.col;
+            spawnData.row = spawnData.row < 1 ? 1 : spawnData.row > this.grid.rows ? this.grid.rows : spawnData.row;
+            this.grid.array.forEach( ( e ) => {
+                if ( spawnData.col == e.col && spawnData.row == e.row) {
+                    e.setSpawnPoint( spawnData.direction )
+                }
+            })
+        })
+    }
+
     exportMapData( ) {
         let exportArray = [];
         this.grid.array.forEach( ( e ) => {
@@ -344,6 +357,7 @@ class Map extends CanvasWithGrid {
             'mapName' : this.mapName,
             'neighbourhood': this.neighbourhood,
             'neighbours' : {},
+            'spawnPoints' : MAP_SPAWN_POINTS.grid.array.filter( ( e ) => { return e.hasSpawnPoint } ).map( ( e ) => { return e.exportSpawnData( ) } ),
             'roads': [ ...this.roads.map( ( e ) => { return e.getExportObject( ) })],
             'tileSet' : SHEET.sheetName,
             'outdoors' : null,

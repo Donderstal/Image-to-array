@@ -214,9 +214,9 @@ class Tile {
         this.isRoadTile = false;
     }
 
-    setSpawnPoint( ) {
+    setSpawnPoint( direction = SELECTED_SPAWN_DIRECTION ) {
         this.hasSpawnPoint = true;
-        this.spawnDirection = SELECTED_SPAWN_DIRECTION;
+        this.spawnDirection = direction;
         this.drawSpawnPoint( )
     }
 
@@ -249,5 +249,26 @@ class Tile {
         this.spawnDirection = false;
         this.ctx.clearRect( this.x, this.y, TILE_SIZE, TILE_SIZE )
         this.drawTileBorders( );
+    }
+
+    exportSpawnData( ) {
+        let col = this.col;
+        let row = this.row;
+
+        if ( col == 1 && this.spawnDirection == FACING_RIGHT ) {
+            col -= 1
+        } else if ( col == MAP.grid.cols && this.spawnDirection == FACING_LEFT ) {
+            col += 1
+        } else  if ( row == 1 && this.spawnDirection == FACING_DOWN ) {
+            row -= 1
+        } else  if ( row == MAP.grid.rows && this.spawnDirection == FACING_UP ) {
+            row += 1
+        }
+
+        return {
+            "col": col,
+            "row": row,
+            "direction": this.spawnDirection
+        };
     }
 }; 
