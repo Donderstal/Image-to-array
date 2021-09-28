@@ -434,7 +434,7 @@ class ObjectsGrid extends CanvasWithGrid {
         tile.setSpriteData( 'object', objectData )
 
         if ( objectData.type.includes( 'door' ) ) {
-            this.doors.push( new Door( tile, objectData.type ) )
+            this.doors.push( new Door( tile, objectData.type, this.doors.length ) )
         }
 
         this.drawSpritesInGrid( )
@@ -505,13 +505,17 @@ class ObjectsGrid extends CanvasWithGrid {
         list.forEach( ( doorItem ) => { 
             let tileList = this.grid.array.filter( ( tile ) => { return doorItem.col == tile.col && doorItem.row == tile.row; })
             let doorTile = tileList[0]
-            this.doors.push( new Door( doorTile, list.type ) )
+            this.doors.push( new Door( doorTile, list.type, this.doors.length ) )
         })
     }
     clearSpriteFromTile(x, y) {
         const tile = super.getTileAtXY(x,y);
-        if ( tile.spriteType.includes( 'door' ) ) {
-            
+        if ( tile.spriteData.type.includes( 'door' ) ) {
+            let doors = this.doors.filter( ( e ) => { return e.col == tile.col && e.row == tile.row })
+            let door = doors[0];
+            let doorIndex = this.doors.indexOf( door );
+            door.removeDoorDiv( )
+            this.doors.splice(doorIndex, 1)
         }
         tile.clearSpriteData( );
         this.drawSpritesInGrid( );
@@ -519,7 +523,20 @@ class ObjectsGrid extends CanvasWithGrid {
     deleteDoorAtTile( tile ) {
         this.doors.forEach( ( door, index ) => {
             if ( door.row == tile.row && door.col == tile.col && door.spriteType == tile.spriteType ) {
+                door.removeDoorDiv( )
                 this.door.splice(index, 1);
+            }
+        })
+    }
+    highlightDoorAtXy( x, y ) {
+        this.doors.forEach( ( door ) => {
+            let spriteTop = door.y -  ( (door.dataObject.height_blocks - 1) * TILE_SIZE );
+            if ( x > door.x && x < door.x + door.width 
+                && y > spriteTop && y < spriteTop + door.height )
+            {
+                this.ctx.strokeStyle = 'white'
+                this.ctx.lineWidth = 1.5
+                this.ctx.strokeRect( door.x, spriteTop, door.width, door.height )
             }
         })
     }

@@ -1,5 +1,6 @@
 class Door {
-    constructor( tile, spriteType ) {
+    constructor( tile, spriteType, index ) {
+        
         this.x = tile.x;
         this.y = tile.y;
         this.col = tile.col;
@@ -8,6 +9,7 @@ class Door {
         this.to;
         this.from;
         this.directionIn;
+        this.index = index;
 
         this.spriteType = spriteType;
 
@@ -18,6 +20,7 @@ class Door {
         this.width = element.width;
         this.height = element.height
         this.draw( )
+        this.addDoorDiv( );
     }
 
     draw( ) {
@@ -28,5 +31,26 @@ class Door {
             this.x, this.y -  ((this.dataObject.height_blocks - 1) * TILE_SIZE),
             this.width, this.height
         )
+        MAP_FOREGROUND_CTX.fillStyle = "white";
+        MAP_FOREGROUND_CTX.font = '32px serif';
+        MAP_FOREGROUND_CTX.fillText( this.index, this.x, this.y )
+    }
+
+    addDoorDiv( ) {
+        let doorDiv = document.getElementById("doors-control-prototype").cloneNode(true);
+        this.doorId = "door-control-" + this.col + " " + this.row;
+        doorDiv.id = this.doorId
+        doorDiv.style.visibility = "visible";
+        doorDiv.style.display = "block";
+
+        let h5 = document.createElement("h5")
+        h5.innerText = "Door #" + this.index;
+        doorDiv.prepend(h5);
+        document.getElementById("doors-options-div-inner").append(doorDiv)
+    }
+
+    removeDoorDiv( ) {
+        let doorDiv = document.getElementById(this.doorId);
+        document.getElementById("doors-options-div-inner").removeChild( doorDiv );
     }
 }

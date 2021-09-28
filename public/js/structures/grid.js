@@ -112,6 +112,7 @@ class Tile {
     drawTileBorders( ) {
         this.ctx.beginPath();
         this.ctx.lineWidth = .5
+        this.ctx.strokeStyle = 'black'
         this.ctx.moveTo( this.x, this.y );
         this.ctx.lineTo( this.x, this.y + TILE_SIZE );
         this.ctx.moveTo( this.x, this.y );
