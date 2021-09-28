@@ -161,6 +161,7 @@ class DataObject{
 
 class MapRoad {
     constructor( direction ) {
+        this.tileList = [];
         this.direction = direction
 
         this.topRow;
@@ -224,6 +225,45 @@ class MapRoad {
                 this.endRow = Math.max(...tileList.map(item => item.row));
                 break;
         }
+    }
+
+    setRoadFromDataObject( object ) {
+        if ( this.isHorizontal ) {
+            this.setRows( object.topRow, object.bottomRow )
+            this.startCol = object.startCol;
+            this.endCol = object.endCol;
+        }
+        else {
+            this.setCols( object.leftCol, object.rightCol )
+            this.startRow = object.startRow;
+            this.endRow = object.endRow;
+        }
+
+        let allGridTiles = MAP.grid.array.slice( );
+        allGridTiles.forEach( ( e ) => { 
+            switch( this.direction ) {
+                case FACING_LEFT:
+                    if ( e.col >= this.endCol && e.col <= this.startCol && ( e.row == this.topRow || e.row == this.bottomRow ))
+                        this.tileList.push( e );
+                    break;
+                case FACING_UP:
+                    if ( e.row >= this.endRow && e.row <= this.startRow && ( e.col == this.leftCol || e.col == this.rightCol ))
+                        this.tileList.push( e );
+                    break;
+                case FACING_RIGHT:
+                    if ( e.col >= this.startCol && e.col <= this.endCol && ( e.row == this.topRow || e.row == this.bottomRow ))
+                        this.tileList.push( e );
+                    break;
+                case FACING_DOWN:
+                    if ( e.row >= this.startRow && e.row <= this.endRow && ( e.col == this.leftCol || e.col == this.rightCol ))
+                        this.tileList.push( e );
+                    break;
+            }
+        });
+
+        this.tileList.forEach( ( e ) => {
+            MAP_ROADS.drawSelectedRoadBlockAtTile( e.x, e.y, this.direction );
+        })
     }
 
     mergeRoad( road ) {
@@ -317,10 +357,14 @@ class MapRoad {
         if ( this.isHorizontal ) {
             exportObject["topRow"] = this.topRow;
             exportObject["bottomRow"] = this.bottomRow;
+            exportObject["startCol"] = this.startCol;
+            exportObject["endCol"] = this.endCol;
         }
         else {
             exportObject["leftCol"] = this.leftCol;
             exportObject["rightCol"] = this.rightCol;
+            exportObject["startRow"] = this.startRow;
+            exportObject["endRow"] = this.endRow;
         }
 
         return exportObject;

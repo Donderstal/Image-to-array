@@ -120,6 +120,10 @@ const loadMapToMapmaker = ( ) => {
         MAP_FOREGROUND.setObjects( OBJECTS_TO_LOAD );   
     }
 
+    if ( ROADS_TO_LOAD != undefined && ROADS_TO_LOAD != null ) {
+        MAP.setRoads( ROADS_TO_LOAD )
+    }
+
     MAP_FOREGROUND.drawSpritesInGrid( );
     MAP.setTileGrid( GRID_TO_LOAD );
     MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, MAP.drawMapFromGridData )

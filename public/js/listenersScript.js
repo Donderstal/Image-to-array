@@ -118,12 +118,12 @@ MAP_CANVAS.addEventListener('mouseup', (event) => {
     else if ( MAPMAKER_IN_ROADS_MODE ) {
         if ( ( SELECTED_ROAD_DIRECTION == FACING_RIGHT || SELECTED_ROAD_DIRECTION == FACING_LEFT ) 
         && ( square.BOTTOM - square.TOP < TILE_SIZE || square.BOTTOM - square.TOP > TILE_SIZE ) ) {
-            alert( 'A road must be two tiles wide!' );
+            alert( 'A horizontal road must be two tiles high!' );
             return;
         }
         else if ( ( SELECTED_ROAD_DIRECTION == FACING_DOWN || SELECTED_ROAD_DIRECTION == FACING_UP ) 
         && ( square.RIGHT - square.LEFT < TILE_SIZE || square.RIGHT - square.LEFT > TILE_SIZE ) ) {
-            alert( 'A road must be two tiles wide!' );
+            alert( 'A vertical road must be two tiles wide!' );
             return;
         }
 

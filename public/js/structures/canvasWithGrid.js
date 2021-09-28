@@ -246,9 +246,9 @@ class Map extends CanvasWithGrid {
         return collidingRoads;
     }
 
-    drawSelectedRoadBlockAtTile( x, y ) {
+    drawSelectedRoadBlockAtTile( x, y, direction = SELECTED_ROAD_DIRECTION ) {
         let sourceCanvas;
-        switch ( SELECTED_ROAD_DIRECTION ) {
+        switch ( direction ) {
             case FACING_LEFT:
                 sourceCanvas = document.getElementById("car-left-block-canvas")
                 break;
@@ -266,7 +266,7 @@ class Map extends CanvasWithGrid {
         sourceImage.src = sourceCanvas.toDataURL( )
         sourceImage.onload = ( ) => {
             const tile = super.getTileAtXY( x, y );
-            let newRoadIsHorizontal = SELECTED_ROAD_DIRECTION == FACING_LEFT || SELECTED_ROAD_DIRECTION == FACING_RIGHT
+            let newRoadIsHorizontal = direction == FACING_LEFT || direction == FACING_RIGHT
             if ( tile.roads.length != 0 && 
                 ( (!newRoadIsHorizontal && (tile.roads[0] == FACING_LEFT || tile.roads[0] == FACING_RIGHT))
                 || (newRoadIsHorizontal && (tile.roads[0] == FACING_UP || tile.roads[0] == FACING_DOWN)) ) 
@@ -285,11 +285,11 @@ class Map extends CanvasWithGrid {
                         tile.x + TILE_SIZE / 2, tile.y + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2
                     )
                 }
-                tile.setRoad( SELECTED_ROAD_DIRECTION )
+                tile.setRoad( direction )
             }
             else {
                 MAP_ROADS_CTX.drawImage( sourceImage, 0, 0, TILE_SIZE, TILE_SIZE, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
-                tile.setRoad( SELECTED_ROAD_DIRECTION )
+                tile.setRoad( direction )
             }
         }
 
@@ -302,6 +302,14 @@ class Map extends CanvasWithGrid {
         tile.drawTileInMap( this.sheetImage )
         MAP_ROADS.grid.array.forEach( ( e ) => {
             e.drawTileBorders( );
+        })
+    }
+
+    setRoads( roadObjects ) {
+        roadObjects.forEach( ( e ) => {
+            let road = new MapRoad( e.direction );
+            road.setRoadFromDataObject( e );
+            this.roads.push( road );
         })
     }
 
@@ -326,6 +334,7 @@ class Map extends CanvasWithGrid {
             'mapName' : this.mapName,
             'neighbourhood': this.neighbourhood,
             'neighbours' : {},
+            'roads': [ ...this.roads.map( ( e ) => { return e.getExportObject( ) })],
             'tileSet' : SHEET.sheetName,
             'outdoors' : null,
             'music' : null,
