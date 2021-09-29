@@ -111,6 +111,35 @@
 
         <!-- Active map editor -->
         <div class="col-sm-2 mapmaker-column">   
+            <div id="doors-options-div" class="list-container right-list-container">
+                <h3>Door controls:</h3>
+                <div>
+                    Click a door on the map to select it and open the door data editor. For a door to be functional, you need to select a destination and a direction for the door.
+                    The direction corresponds to the direction a sprite should be facing to enter the door ( left, up, right, down ).
+                </div>
+                 <div class="road-canvas-wrapper mb-2">
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <input id="door-sprites" type="radio" name='doors-toggle' value="door-sprites">  <label class="mt-1 ml-1" for="Door sprites">Sprites</label>
+                          </div>
+                          <div class="input-group-text">
+                            <input id="edit-doors" type="radio" name='doors-toggle' value="edit-doors">  <label class="mt-1 ml-1" for="Edit doors">Data</label>
+                          </div>
+                      </div>
+                    </div>
+                <div id="doors-control-prototype" class="m-1 p-1 bg-success" style="visibility: hidden; display: none;">
+                    <h1></h1>
+                    <p>Destination: <br> <select id="doors-destination-select" class="neighbour-select" type="text">
+                        <option value="" selected disabled hidden>Choose a destination...</option>
+                    </select></p>
+                    <p>Direction in: <br> <select id="doors-Direction-in" class="direction-select" type="text">
+                        <option value="" selected disabled hidden>Choose a direction...</option>
+                    </select></p>
+                </div>
+                <div id="doors-options-div-inner">
+
+                </div>
+            </div>
             <div id="tilesheet-div" class="list-container right-list-container">
                 <canvas id="tilesheet-canvas" class="border border-info invisible-canvas"></canvas>
             </div>  
@@ -137,10 +166,18 @@
             </div>
             <div id="neighbour-options-div" class="list-container right-list-container">
                 <h3>Neighbouring maps:</h3>
-                 <p>Left: <br> <select id="neighbours-input-left" class="neighbour-select" type="text"></select></p>
-                 <p>Up: <br> <select id="neighbours-input-up" class="neighbour-select" type="text"></select></p>
-                 <p>Right: <br> <select id="neighbours-input-right" class="neighbour-select" type="text"></select></p>
-                 <p>Down: <br> <select id="neighbours-input-down" class="neighbour-select" type="text"/></select></p>
+                 <p>Left: <br> <select id="neighbours-input-left" class="neighbour-select" type="text">
+                    <option value="" selected disabled hidden>Choose a neighbour...</option>
+                 </select></p>
+                 <p>Up: <br> <select id="neighbours-input-up" class="neighbour-select" type="text">
+                    <option value="" selected disabled hidden>Choose a neighbour...</option>
+                 </select></p>
+                 <p>Right: <br> <select id="neighbours-input-right" class="neighbour-select" type="text">
+                    <option value="" selected disabled hidden>Choose a neighbour...</option>
+                 </select></p>
+                 <p>Down: <br> <select id="neighbours-input-down" class="neighbour-select" type="text">                
+                    <option value="" selected disabled hidden>Choose a neighbour...</option>
+                </select></p>
             </div>
             <div id="road-options-div" class="list-container right-list-container">
                 <h3>Create road:</h3>
@@ -182,27 +219,6 @@
                 <div id="spawn-points-wrapper-down" onclick="spawnPointsListener(event)" class="road-canvas-wrapper mb-2">
                     <canvas id="spawn-down-block-canvas" class="visible-canvas" ></canvas>
                     <hr>
-                </div>
-            </div>
-            <div id="doors-options-div" class="list-container right-list-container">
-                <h3>Door controls:</h3>
-                <div>
-                    Click a door on the map to select it and open the door data editor. For a door to be functional, you need to select a destination and a direction for the door.
-                    The direction corresponds to the direction a sprite should be facing to enter the door ( left, up, right, down ).
-                </div>
-                 <div class="road-canvas-wrapper mb-2">
-                    <button id="create-door-button" class="btn btn-outline-success">Create door</button>
-                </div>
-                <div class="road-canvas-wrapper mb-2">
-                    <button id="edit-door-button" class="btn btn-outline-success navigation-button">Edit door</button>
-                </div>
-                <div id="doors-control-prototype" class="m-1 p-1 bg-success" style="visibility: hidden; display: none;">
-                    <h1></h1>
-                    <p>Destination: <br> <select id="doors-destination-select" class="neighbour-select" type="text"></select></p>
-                    <p>Direction in: <br> <select id="doors-destination-in" type="text"></select></p>
-                </div>
-                <div id="doors-options-div-inner">
-
                 </div>
             </div>
         </div> 

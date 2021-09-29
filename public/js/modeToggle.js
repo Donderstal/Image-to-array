@@ -1,4 +1,7 @@
 const toggleMode = ( event ) => {
+    if( MAPMAKER_IN_DOORS_MODE && document.getElementById("door-sprites").checked ) {
+        document.getElementById("edit-doors").click( );
+    }
     clearCurrentEditMode( )
     switch( event.target.id ) {
         case "tiles-mode" : 

@@ -55,6 +55,15 @@ document.addEventListener("DOMContentLoaded", function() {
     MAP_ROADS = new Map( mapX, mapY, MAP_ROADS_CTX );
     MAP_SPAWN_POINTS =  new Map( mapForegroundX, mapForegroundY, MAP_SPAWN_POINTS_CTX );
     MAP_FOREGROUND =  new ObjectsGrid( mapForegroundX, mapForegroundY, MAP_FOREGROUND_CTX );
+
+    let selectList = document.getElementsByClassName( "direction-select" );
+    [ ...selectList ].forEach( ( e ) => {
+        let parent = e;
+        [ FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN ].forEach( ( value ) => {
+            appendOptionToSelect( value, parent )
+        })
+    })
+
 });
 
 Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {
@@ -257,3 +266,26 @@ document.getElementById("show-sprite-grid").addEventListener( 'click', ( ) => {
         SPRITE_GRID_IS_HIDDEN = true;
     }
 }, true)
+
+document.body.addEventListener('change', function (e) {
+    switch (e.target.value) {
+        case 'door-sprites':
+            showElementWithId("windows-doors-pngs-div");
+            for ( node of document.getElementById("windows-doors-pngs-div").children ) {
+                if ( !node.id.includes( 'door') ) {
+                    hideElementWithId(node.id);
+                }
+            }
+            hideElementWithId("doors-options-div-inner");
+            break;
+        case 'edit-doors':
+            showElementWithId("doors-options-div-inner");
+            for ( node of document.getElementById("windows-doors-pngs-div").children ) {
+                if ( !node.id.includes( 'door') ) {
+                    showElementWithId(node.id);
+                }
+            }
+            hideElementWithId("windows-doors-pngs-div");
+            break;
+    }
+});

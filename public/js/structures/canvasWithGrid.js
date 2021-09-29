@@ -510,7 +510,7 @@ class ObjectsGrid extends CanvasWithGrid {
     }
     clearSpriteFromTile(x, y) {
         const tile = super.getTileAtXY(x,y);
-        if ( tile.spriteData.type.includes( 'door' ) ) {
+        if ( tile.hasSprite && tile.spriteData.type.includes( 'door' ) ) {
             let doors = this.doors.filter( ( e ) => { return e.col == tile.col && e.row == tile.row })
             let door = doors[0];
             let doorIndex = this.doors.indexOf( door );
