@@ -405,6 +405,9 @@ class ObjectsGrid extends CanvasWithGrid {
             this.grid.array.forEach( ( tile ) => {
                 if ( tile.row == object.row && tile.col == object.col ) {
                     tile.setSpriteData( "object", object )
+                    if ( object.hasDoor ) {
+                        this.doors.push( new Door( tile, object.type, this.doors.length, object.destination, object.directionIn ) )
+                    }
                 }
             })
         })
@@ -552,8 +555,22 @@ class ObjectsGrid extends CanvasWithGrid {
         this.grid.array.forEach( ( tile ) => {
             tile.drawTileBorders( )
             if ( tile.hasSprite ) {
-                if ( tile.spriteType == 'object' ) {
+                if ( tile.spriteType == 'object' && !tile.spriteData.type.includes( 'door' ) ) {
                     allSprites.mapObjects.push( tile.spriteData )
+                }
+                else if ( tile.spriteType == 'object' && tile.spriteData.type.includes( 'door' ) ) {
+                    let data = {}
+                    this.doors.forEach( ( door ) => {
+                        if ( door.row == tile.row && door.col == tile.col ) {
+                            data = { 
+                                ...tile.spriteData, 
+                                'hasDoor': true, 
+                                'directionIn': door.direction, 
+                                'destination': door.destination
+                            }
+                        }
+                    })
+                    allSprites.mapObjects.push( data )
                 }
                 else if ( tile.spriteType == 'character' ) {
                     allSprites.characters.push( tile.spriteData )
