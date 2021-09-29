@@ -26,6 +26,9 @@ const toggleMode = ( event ) => {
 }
 
 const clearCurrentEditMode = ( ) => {
+    if ( MAPMAKER_IN_DOORS_MODE ) {
+        MAP_FOREGROUND.drawSpritesInGrid( );
+    }
     MAPMAKER_IN_TILE_MODE = false;
     MAPMAKER_IN_OBJECT_MODE = false;
     MAPMAKER_IN_NEIGHBOURS_MODE = false;
@@ -45,6 +48,7 @@ const clearCurrentEditMode = ( ) => {
     ].forEach( 
         ( e ) => { hideElementWithId( e) }
     );
+    document.getElementById("show-sprite-grid").disabled = false;
 }
 
 const initTilesMode = ( ) => {
@@ -59,6 +63,10 @@ const initTilesMode = ( ) => {
 } 
 
 const initMapObjectsMode = ( ) => {
+    document.getElementById("show-sprite-grid").disabled = true;
+    document.getElementById("show-sprite-grid").checked = false;
+    SPRITE_GRID_IS_HIDDEN = true;
+    
     MAPMAKER_IN_OBJECT_MODE = true;
     IN_SHOW_CHARACTER_SPRITES_MODE = true;
     IN_SHOW_MAP_OBJECTS_MODE = false;

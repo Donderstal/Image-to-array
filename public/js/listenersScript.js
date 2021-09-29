@@ -260,9 +260,15 @@ document.getElementById("show-sprite-grid").addEventListener( 'click', ( ) => {
     if ( SPRITE_GRID_IS_HIDDEN ) {
         showElementWithId("map-foreground-canvas" );
         SPRITE_GRID_IS_HIDDEN = false;
+        MAP_FOREGROUND.drawSpritesInGrid( )
     }
     else {
-        hideElementWithId( "map-foreground-canvas" );
+        if ( MAPMAKER_IN_DOORS_MODE ) {
+            MAP_FOREGROUND.drawDoorsInGrid( )
+        }
+        else {
+            hideElementWithId( "map-foreground-canvas" );
+        }
         SPRITE_GRID_IS_HIDDEN = true;
     }
 }, true)
