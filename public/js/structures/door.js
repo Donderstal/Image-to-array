@@ -42,10 +42,21 @@ class Door {
         doorDiv.id = this.doorId
         doorDiv.style.visibility = "visible";
         doorDiv.style.display = "block";
-
-        let h5 = document.createElement("h5")
-        h5.innerText = "Door #" + this.index;
-        doorDiv.prepend(h5);
+        doorDiv.onmouseenter = ( ) => {
+            MAP_FOREGROUND.drawDoorsInGrid( )
+            MAP_FOREGROUND.highlightDoor( this );
+         };
+        doorDiv.onmouseleave = ( ) => { 
+            MAP_FOREGROUND.drawDoorsInGrid( )
+        };
+        let h5 = doorDiv.getElementsByTagName("h5")
+        h5[0].innerText = "Door #" + this.index;
+        let button = doorDiv.getElementsByTagName("button");
+        button[0].onclick = ( ) => {
+            this.removeDoorDiv( );
+            MAP_FOREGROUND.doors.splice(this.index, 1);
+            MAP_FOREGROUND.drawDoorsInGrid( );
+        }
         document.getElementById("doors-options-div-inner").append(doorDiv)
     }
 

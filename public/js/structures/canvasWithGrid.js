@@ -534,11 +534,15 @@ class ObjectsGrid extends CanvasWithGrid {
             if ( x > door.x && x < door.x + door.width 
                 && y > spriteTop && y < spriteTop + door.height )
             {
-                this.ctx.strokeStyle = 'white'
-                this.ctx.lineWidth = 1.5
-                this.ctx.strokeRect( door.x, spriteTop, door.width, door.height )
+                this.highlightDoor( door )
             }
         })
+    }
+    highlightDoor( door ) {
+        let spriteTop = door.y -  ( (door.dataObject.height_blocks - 1) * TILE_SIZE );
+        this.ctx.strokeStyle = 'white'
+        this.ctx.lineWidth = 1.5
+        this.ctx.strokeRect( door.x, spriteTop, door.width, door.height )
     }
     exportAllSprites( ) {
         let allSprites = {

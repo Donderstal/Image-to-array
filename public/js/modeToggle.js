@@ -32,6 +32,9 @@ const clearCurrentEditMode = ( ) => {
     MAPMAKER_IN_ROADS_MODE = false;
     MAPMAKER_IN_DOORS_MODE = false;
 
+    IN_SHOW_CHARACTER_SPRITES_MODE = false;
+    IN_SHOW_MAP_OBJECTS_MODE = false;
+
     HAS_SELECTED_TILE = false;
     HAS_SELECTED_SPRITE = false;
 

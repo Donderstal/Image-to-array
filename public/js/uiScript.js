@@ -185,7 +185,7 @@ const captureForegroundClick = ( event ) => {
     else if ( IN_SHOW_CHARACTER_SPRITES_MODE && HAS_SELECTED_SPRITE ) {
         MAP_FOREGROUND.placeCharacterSpriteAtXY(event.offsetX, event.offsetY);        
     }
-    else if ( IN_SHOW_MAP_OBJECTS_MODE && HAS_SELECTED_SPRITE ) {
+    else if ( ( IN_SHOW_MAP_OBJECTS_MODE || MAPMAKER_IN_DOORS_MODE ) && HAS_SELECTED_SPRITE ) {
         MAP_FOREGROUND.placeObjectSpriteAtXY(event.offsetX, event.offsetY);     
     }
 }
