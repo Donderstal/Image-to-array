@@ -44,7 +44,8 @@ const clearCurrentEditMode = ( ) => {
     document.getElementById("selected-sprite-canvas").getContext('2d').clearRect( 0, 0, document.getElementById("selected-sprite-canvas").width, document.getElementById("selected-sprite-canvas").width )
     SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height );
     [ 
-        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tilesheet-div", "selected-tile-div", "map-roads-canvas", "map-spawn-points-canvas"
+        "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tile-storage-div",
+        "tilesheet-div", "selected-tile-div", "map-roads-canvas", "map-spawn-points-canvas"
     ].forEach( 
         ( e ) => { hideElementWithId( e) }
     );
@@ -54,7 +55,7 @@ const clearCurrentEditMode = ( ) => {
 const initTilesMode = ( ) => {
     MAPMAKER_IN_TILE_MODE = true;       
     hideListContainersAndShowGiven( "", false );    
-    [ "tilesheet-div", "selected-tile-div" ].forEach( 
+    [ "tilesheet-div", "selected-tile-div", "tile-storage-div" ].forEach( 
         ( e ) => { showElementWithId( e) }
     );  
 

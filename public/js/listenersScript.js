@@ -62,8 +62,15 @@ document.addEventListener("DOMContentLoaded", function() {
         [ FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN ].forEach( ( value ) => {
             appendOptionToSelect( value, parent )
         })
-    })
+    });
 
+    [ ...document.getElementsByClassName("stored-tile-canvas") ].forEach( ( canvas ) => {
+        canvas.onclick = ( event ) => {
+            if ( event.target.activeTile != undefined ) {
+                SHEET.captureTileAtXY( event.target.activeTile.x, event.target.activeTile.y );
+            }
+        }
+    })
 });
 
 Array.from(document.getElementsByClassName('select-map-for-overview-button')).forEach( ( e ) => {

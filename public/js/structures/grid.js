@@ -121,6 +121,7 @@ class Tile {
     }
 
     drawTileInMap( sheetImage ) {
+        this.ctx.clearRect( this.x, this.y, TILE_SIZE, TILE_SIZE )
         if ( this.ID === "E" || this.ID === null) {
             return;
         }
