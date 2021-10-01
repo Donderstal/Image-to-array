@@ -3,10 +3,8 @@ const generatePNGCanvasElements = ( ) => {
     initMapObjectDivs( );
     setTimeout( ( ) => {
         initRoadSelectionDiv( );
-    }, 150)
-    setTimeout( ( ) => {
         initSpawnPointsSelectionDiv( );
-    }, 250)
+    }, 1000)
 }
 
 const initCharactersDiv = ( ) => {

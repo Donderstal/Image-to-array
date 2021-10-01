@@ -22,6 +22,9 @@ const toggleMode = ( event ) => {
         case "doors-mode" :
             initDoorsMode( );
             break;
+        case "blocked-tiles-mode" :
+            initBlockedTilesMode( );
+            break;
     }
 }
 
@@ -49,6 +52,7 @@ const clearCurrentEditMode = ( ) => {
     ].forEach( 
         ( e ) => { hideElementWithId( e) }
     );
+    showElementWithId("middle-mapmaker-div")
     document.getElementById("show-sprite-grid").disabled = false;
 }
 
@@ -119,6 +123,12 @@ const initDoorsMode = ( ) => {
     turnOnForeground( );
     MAP_FOREGROUND.drawDoorsInGrid( )
     hideListContainersAndShowGiven( "doors-options-div" )
+}
+
+const initBlockedTilesMode = ( ) => {
+    MAPMAKER_IN_BLOCKED_TILES_MODE = true;
+    showElementWithId("tilesheet-div")
+    hideElementWithId("middle-mapmaker-div")
 }
 
 const turnOnForeground = ( ) => {

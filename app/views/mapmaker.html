@@ -13,10 +13,14 @@
                         <input type="radio" id="tiles-mode" name="edit-mode-toggle" class="mode-toggle-radio" checked>
                         <label >Tile mode</label>
                     </div>
-                        <div >
-                            <input type="radio" id="neighbours-mode" name="edit-mode-toggle" class="mode-toggle-radio">
-                            <label>Neighbours mode</label>
-                        </div>  
+                    <div >
+                        <input type="radio" id="blocked-tiles-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <label>Blocked tiles mode</label>
+                    </div>  
+                    <div >
+                        <input type="radio" id="neighbours-mode" name="edit-mode-toggle" class="mode-toggle-radio">
+                        <label>Neighbours mode</label>
+                    </div>  
                     <div >
                         <input type="radio" id="doors-mode" name="edit-mode-toggle" class="mode-toggle-radio">
                         <label>Doors mode</label>
@@ -78,7 +82,7 @@
             </div>
         </div>
         <!-- Current map grid -->
-        <div class="col-sm-8 fixed-div">
+        <div id="middle-mapmaker-div" class="col-sm-8 fixed-div">
             <div id="map-canvas-div" class="list-container">
                 <canvas id="map-canvas" class="border border-info invisible-canvas"></canvas>
                 <canvas id="map-roads-canvas" class="border border-info invisible-canvas foreground-canvas" style="pointer-events: none;"></canvas>
