@@ -104,6 +104,7 @@ class Tile {
         this.isRoadTile = false;
 
         this.hasSpawnPoint = false;
+        this.isUnblocked = false;
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
         this.drawTileBorders( );
@@ -118,6 +119,11 @@ class Tile {
         this.ctx.moveTo( this.x, this.y );
         this.ctx.lineTo( this.x + TILE_SIZE, this.y );
         this.ctx.stroke( );
+        
+        if ( this.isUnblocked ) {
+            this.ctx.fillStyle = 'red'
+            this.ctx.fillRect( this.x, this.y, TILE_SIZE, TILE_SIZE )
+        }
     }
 
     drawTileInMap( sheetImage ) {
@@ -272,5 +278,13 @@ class Tile {
             "row": row,
             "direction": this.spawnDirection
         };
+    }
+
+    setAsUnblocked( ) {
+        this.isUnblocked = true;
+    }
+
+    unsetAsUnblocked( ) {
+        this.isUnblocked = false;
     }
 }; 

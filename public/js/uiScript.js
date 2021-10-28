@@ -165,8 +165,17 @@ const confirmTilesheetChoice = ( ) => {
 }
 
 const captureSheetClick = ( event ) => {
-    SHEET.captureTileAtXY(event.offsetX, event.offsetY);
-    HAS_SELECTED_TILE = true;
+    if ( MAPMAKER_IN_TILE_MODE ) {
+        SHEET.captureTileAtXY(event.offsetX, event.offsetY);
+        HAS_SELECTED_TILE = true;
+    }
+    else if ( !event.shiftKey && MAPMAKER_IN_BLOCKED_TILES_MODE ) {
+        SHEET.setTileAsUnblocked(event.offsetX, event.offsetY);
+    }
+    else if ( event.shiftKey && MAPMAKER_IN_BLOCKED_TILES_MODE ) {
+        SHEET.unsetTileAsUnblocked(event.offsetX, event.offsetY);
+    }
+
 }
 
 const captureMapClick = ( event ) => {

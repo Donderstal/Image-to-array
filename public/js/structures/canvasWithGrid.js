@@ -111,6 +111,34 @@ class Sheet extends CanvasWithGrid {
                 alert('Error in flipping tile. Call the police!')
         }
     }
+
+    setTileAsUnblocked( x, y ) {
+        const tile = super.getTileAtXY( x, y );
+        tile.setAsUnblocked( );
+        this.redraw( );
+    }
+
+    unsetTileAsUnblocked( x, y ) {
+        const tile = super.getTileAtXY( x, y );
+        tile.unsetAsUnblocked( );
+        this.redraw( );
+    }
+
+    redraw( ) {
+        this.ctx.clearRect( 0, 0, SHEET_CANVAS.image.width / 2, SHEET_CANVAS.image.height / 2 );
+        this.ctx.drawImage( SHEET_CANVAS.image, 0, 0, SHEET_CANVAS.image.width, SHEET_CANVAS.image.height, 0, 0, SHEET_CANVAS.image.width / 2, SHEET_CANVAS.image.height / 2 );
+        this.grid.array.forEach( ( tile ) => { tile.drawTileBorders( ) } )
+    }
+
+    logBlockedTiles( ) {
+        let logger = [];
+        this.grid.array.forEach( ( tile ) => { 
+            if ( !tile.isUnblocked ) {
+                logger.push( tile.ID );
+            }
+        })
+        console.log(logger)
+    }
 }
 
 class Map extends CanvasWithGrid {
