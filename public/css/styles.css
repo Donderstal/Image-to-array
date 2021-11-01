@@ -168,11 +168,15 @@ hr {
     max-height: 90vh;
 }
 
-.map-overview-canvas-wrapper, .map-overview-info-wrapper, .map-overview-buttons-wrapper {
+.map-overview-canvas-wrapper {
     overflow: hidden;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     white-space: nowrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0x;
+    grid-auto-rows: minmax(100px, auto);
 }
 
 .map-overview-canvas-wrapper:hover {
@@ -181,16 +185,6 @@ hr {
 
 .map-overview-canvas-wrapper:active {
     cursor: grabbing;
-}
-
-.map-overview-buttons-wrapper {
-    text-align: center;
-}
-
-.overview-canvas {
-    display: inline-block;
-    margin-left: .125vw;
-    margin-right: .125vw;
 }
 
 .overview-header-row {

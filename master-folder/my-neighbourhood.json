@@ -1,5 +1,7 @@
 {
-    "neighbourhood-A0" : {
+    "horizontal_slots": ["A", "B", "C"], 
+    "vertical_slots": ["1", "2", "3"],
+    "A1" : {
         "mapName": "my-neighbourhood/A0/neighbourhood-A0",
         "tileSet": "my_neighbourhood",
         "outdoors": true,
@@ -144,7 +146,7 @@
             }
         ]
     },
-    "neighbourhood-A1" : {
+    "B1" : {
         "mapName": "my-neighbourhood/A1/neighbourhood-A1",
         "tileSet": "my_neighbourhood",
         "outdoors": true,
@@ -528,7 +530,7 @@
             }
         ]
     },
-    "neighbourhood-A2" : {
+    "C1" : {
         "mapName": "my-neighbourhood/A2/neighbourhood-A2",
         "tileSet": "my_neighbourhood",
         "outdoors": true,
@@ -841,7 +843,7 @@
             }
         ]
     },
-    "neighbourhood-A3": {    
+    "A2": {    
         "mapName": "my-neighbourhood/A3/neighbourhood-A3",
         "tileSet": "my_neighbourhood",
         "outdoors": true,
@@ -1060,7 +1062,7 @@
             }
         ]
     },
-    "neighbourhood-A4" : {
+    "B2" : {
         "mapName": "my-neighbourhood/A4/neighbourhood-A4",
         "tileSet": "my_neighbourhood",
         "outdoors": true,
