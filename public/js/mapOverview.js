@@ -12,40 +12,14 @@ const mapOverviewHorizontalScroll = ( event ) => {
     const x = event.pageX - OVERVIEW_CANVAS_WRAPPER.offsetLeft;
     const step = x - OVERVIEW_SCROLL_X_COUNTER;
     OVERVIEW_CANVAS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
-    OVERVIEW_INFO_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
-    OVERVIEW_BUTTONS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
-}
-
-const initButtonsInDiv = ( div, mapData, index ) => {
-    const buttonClassList = 'btn btn-large btn-success m-2 '
-
-    const showSubMapsButton = createNodeWithClassOrID( 
-        'button',
-        buttonClassList + 'select-map-for-overview-button show-submaps', 
-        mapData.mapName
-    );
-    showSubMapsButton.innerText = IN_SUBMAP_OVERVIEW ? "Show main maps" : "Show submaps"
-    div.append(showSubMapsButton)
-
-    const loadMapButton = createNodeWithClassOrID( 
-        'button',
-        buttonClassList + 'load-from-overview', 
-        'load-map-' + index
-    );
-    loadMapButton.innerText = "Load map to mapmaker"
-    div.append(loadMapButton)
 }
 
 const setMapOverviewElementsTotalWidth = ( width ) => {
-    OVERVIEW_INFO_WRAPPER.width = width;
     OVERVIEW_CANVAS_WRAPPER.width = width;
-    OVERVIEW_BUTTONS_WRAPPER.width = width;
 }
 
 const clearOverviewWrapperElements = ( ) => {
     removeAllChildrenFromParent( "map-overview-canvas-wrapper" );
-    removeAllChildrenFromParent( "map-overview-info-wrapper" );
-    removeAllChildrenFromParent( "map-overview-buttons-wrapper" );
 }
 
 const setLoadMapListeners = ( ) => {
@@ -97,56 +71,10 @@ const getCanvasElementsListFromMapJSON = ( ) => {
     return canvasElementsList
 }
 
-const setInfoToInfoCanvas = ( canvas, data ) => {
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#f8f9fa";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#343a40";    
-    ctx.font = TILE_SIZE / 2 + "px Arial";
-    ctx.fillText( "Name: " + data.mapName.split('/')[2], TILE_SIZE, TILE_SIZE );
-    ctx.fillText( "Characters: " + ( ( data.characters == undefined ) ? "No" : data.characters.length ), TILE_SIZE, TILE_SIZE * 1.75 );
-    ctx.fillText( "Doors: " + ( ( data.doors == undefined ) ? "No" : data.doors.length ), TILE_SIZE, TILE_SIZE * 2.50 );
-    ctx.fillText( "Mapobjects: " + ( ( data.mapObjects == undefined ) ? "No" : data.mapObjects.length ), TILE_SIZE, TILE_SIZE * 3.25 );
-
-    if ( !IN_SUBMAP_OVERVIEW ) {
-        ctx.fillText( "SUBMAPS", TILE_SIZE * 8, TILE_SIZE );
-        if ( data.subMaps != undefined ) {
-            Object.keys(data.subMaps).forEach( ( subMap, index ) => {
-                ctx.fillText( "* " + subMap, TILE_SIZE * 8, ( TILE_SIZE * 1.75 ) + ( TILE_SIZE * ( index * .75 ) ) );
-            } )
-        }
-        else {
-            ctx.fillText( "No", TILE_SIZE * 8, TILE_SIZE * 1.75 );
-        }
-    }
-    else {
-        ctx.fillText( "MAIN MAP", TILE_SIZE * 8, TILE_SIZE );
-        ctx.fillText( data.mapName.split('/')[0], TILE_SIZE * 8, TILE_SIZE * 1.75 );
-    }
-
-}
-
 const setOverviewCanvas = ( mapCanvas ) => {
     mapCanvas.width = MAX_CANVAS_WIDTH;
     mapCanvas.height = MAX_CANVAS_HEIGHT;    
     OVERVIEW_CANVAS_WRAPPER.append( mapCanvas )
-}
-
-const setInfoCanvas = ( infoCanvas, mapData ) => {
-    infoCanvas.width     = MAX_CANVAS_WIDTH;
-    infoCanvas.height    = 6 * TILE_SIZE;    
-    OVERVIEW_INFO_WRAPPER.append( infoCanvas );
-    setInfoToInfoCanvas( infoCanvas, mapData );
-}
-
-const setButtonsDiv = ( buttonsDiv, mapData, index ) => {
-    initButtonsInDiv( buttonsDiv, mapData, index );
-
-    buttonsDiv.style.width = MAX_CANVAS_WIDTH + "px";
-    buttonsDiv.style.height = 2 * TILE_SIZE + "px";
-
-    OVERVIEW_BUTTONS_WRAPPER.append(buttonsDiv)
 }
 
 const setMapClass = ( mapClass, mapCanvas, mapData, canvasX, canvasY ) => {
@@ -159,8 +87,6 @@ const setMapClass = ( mapClass, mapCanvas, mapData, canvasX, canvasY ) => {
 const setCanvasElementData = ( element, canvasX, canvasY ) => {
     const mapData = element.mapData;
     setOverviewCanvas( element.mapCanvas );
-    setInfoCanvas( element.infoCanvas, mapData );
-    setButtonsDiv( element.buttonsDiv, mapData, element.index );
     setMapClass( element.mapClass, element.mapCanvas, mapData, canvasX, canvasY );
 }
 
@@ -196,3 +122,32 @@ const initializeMapOverviewCanvases = ( ) => {
 
     setLoadMapListeners( );
 }
+
+class CanvasSlot {
+    constructor( key ) {
+        this.isSet = false;
+        this.key = key;
+        this.canvas = createNodeWithClassOrID( 'canvas', "overview-canvas", this.key );
+    }
+
+    loadMapToCanvas( data ) {
+        
+    }
+}
+
+class CanvasGrid {
+    constructor( data ){
+        data.horizontal_slots.forEach((slotChar, index) => { 
+            let horiChar = slotChar;
+            let horiIndex = index;
+            data.vertical_slots.forEach((e, vertIndex ) => {
+                this[horiChar+e] = new CanvasSlot(horiChar+e);
+            });
+        })
+        Object.keys(data.grid).forEach((key) => { 
+
+        })
+    }
+}
+
+new CanvasGrid( ["A", "B", "C", "D", "E"], ["1", "2", "3", "4"] )

@@ -19,8 +19,6 @@ const MAP_FOREGROUND_CTX = MAP_FOREGROUND_CANVAS.getContext("2d")
 const PREVIEW_MAP_CTX = PREVIEW_MAP_CANVAS.getContext("2d");
 
 const OVERVIEW_CANVAS_WRAPPER =  document.querySelector('.map-overview-canvas-wrapper');
-const OVERVIEW_INFO_WRAPPER = document.querySelector('.map-overview-info-wrapper');
-const OVERVIEW_BUTTONS_WRAPPER = document.querySelector('.map-overview-buttons-wrapper');
 
 const STRD_SPRITE_WIDTH = 64;
 const STRD_SPRITE_HEIGHT = 112;
