@@ -197,12 +197,6 @@ hr {
     visibility: hidden;
 }
 
-body {
-    overflow: hidden;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
 .flip-tile-png, .mirror-tile {
     max-width: 32px;
 }

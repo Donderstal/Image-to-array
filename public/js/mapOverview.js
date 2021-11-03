@@ -5,14 +5,20 @@ const stopMapOverviewScroll = ( ) => {
 
 const initMapOverviewScrollOnClick = ( event ) => {
     IS_OVERVIEW_SCROLL_ACTIVE = true;
+    OVERVIEW_SCROLL_Y_COUNTER = event.pageY - OVERVIEW_CANVAS_WRAPPER.offsetTop;
     OVERVIEW_SCROLL_X_COUNTER = event.pageX - OVERVIEW_CANVAS_WRAPPER.offsetLeft;
+    OVERVIEW_SCROLL_TOP = OVERVIEW_CANVAS_WRAPPER.scrollTop;    
     OVERVIEW_SCROLL_LEFT = OVERVIEW_CANVAS_WRAPPER.scrollLeft;    
 }
 
 const mapOverviewHorizontalScroll = ( event ) => {
     const x = event.pageX - OVERVIEW_CANVAS_WRAPPER.offsetLeft;
-    const step = x - OVERVIEW_SCROLL_X_COUNTER;
-    OVERVIEW_CANVAS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - step;
+    const stepHori = x - OVERVIEW_SCROLL_X_COUNTER;
+    OVERVIEW_CANVAS_WRAPPER.scrollLeft = OVERVIEW_SCROLL_LEFT - stepHori;
+
+    const y = event.pageY - OVERVIEW_CANVAS_WRAPPER.offsetTop;
+    const stepVert = y - OVERVIEW_SCROLL_Y_COUNTER;
+    OVERVIEW_CANVAS_WRAPPER.scrollTop = OVERVIEW_SCROLL_TOP - stepVert;
 }
 
 const setMapOverviewElementsTotalWidth = ( width ) => {
@@ -67,6 +73,13 @@ class CanvasSlot {
         this.setCanvas( );
     }
 
+    drawMap( ) {
+        this.map = new Map( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
+        this.map.initGrid( this.rows, this.columns );
+        this.map.setTileGrid( this.grid );
+        this.map.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[this.tileSet].src, this.map.drawMapFromGridData );
+    }
+
     setCanvas( ) {
         this.canvas = createNodeWithClassOrID( 'canvas', "overview-canvas", this.key );
         this.canvas.width = MAX_CANVAS_WIDTH;
@@ -77,19 +90,28 @@ class CanvasSlot {
     }
 
     loadMapToCanvas( data ) {
-        console.log(data)
+        if ( data != undefined ) {
+            let map = MAP_STORAGE.maps[data];
+            this.rows = map.rows;
+            this.columns = map.columns;
+            this.grid = map.grid.flat(1);
+            this.tileSet = map.tileSet;
+            this.drawMap( );
+        }
     }
 }
 
 class CanvasGrid {
     constructor( data ){
-        [...data.horizontal_slots].forEach((slotChar, index) => { 
+        data.horizontal_slots.forEach((slotChar, index) => { 
             let horiChar = slotChar;
             let horiIndex = index;
-            [...data.vertical_slots].forEach((e, vertIndex) => {
+            data.vertical_slots.forEach((e, vertIndex) => {
                 this[horiChar+e] = new CanvasSlot(horiChar+e, horiIndex + 1, vertIndex + 1);
                 this[horiChar+e].loadMapToCanvas(data[horiChar+e]);
             });
         })
+/*         OVERVIEW_CANVAS_WRAPPER.style.width = data.horizontal_slots.length * MAX_CANVAS_WIDTH;
+        OVERVIEW_CANVAS_WRAPPER.style.height = data.vertical_slots.length * MAX_CANVAS_HEIGHT; */
     }
 }

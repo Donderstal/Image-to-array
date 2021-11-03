@@ -1,0 +1,16 @@
+{
+    "horizontal_slots": ["A", "B", "C", "D", "E"], 
+    "vertical_slots": ["1", "2", "3", "4"],
+    "A1" : "A1",
+    "A2" : "A2",
+    "A3" : "A3",
+    "B2" : "B2",
+    "B3" : "B3",
+    "B4" : "B4_TAPIJT",
+    "C3" : "C3_TAPIJT",
+    "C4": "C4_TAPIJT",
+    "D2" : "D2_TAPIJT",
+    "D3" : "D3_TAPIJT",    
+    "D4" : "D4_TAPIJT",
+    "E3" : "E3_TAPIJT"
+}
