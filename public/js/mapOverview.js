@@ -111,7 +111,5 @@ class CanvasGrid {
                 this[horiChar+e].loadMapToCanvas(data[horiChar+e]);
             });
         })
-/*         OVERVIEW_CANVAS_WRAPPER.style.width = data.horizontal_slots.length * MAX_CANVAS_WIDTH;
-        OVERVIEW_CANVAS_WRAPPER.style.height = data.vertical_slots.length * MAX_CANVAS_HEIGHT; */
     }
 }

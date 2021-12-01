@@ -62,27 +62,26 @@ const STANDARD_CAR = {
 
 const BUS = {
     "dimensional_alignment": "HORI_VERT", "isCar" : true,
-    "hori_height_blocks": 3, "hori_width_blocks": 5,
-    "vert_height_blocks": 4, "vert_width_blocks": 3,
+    "hori_height_blocks": 3, "hori_width_blocks": 4,
+    "vert_height_blocks": 4, "vert_width_blocks": 2,
     "movement_frames" : {
         [FACING_LEFT] : [
-            { "x": TILE_SIZE, "y": 384 },
-            { "x": TILE_SIZE, "y": 576 }
+            { "x": 0, "y": 384 },
+            { "x": 0, "y": 576 }
         ],
         [FACING_UP] : [
             { "x": 0, "y": 1024 },
-            { "x": 192, "y": 1024 }
+            { "x": 128, "y": 1024 }
         ],
         [FACING_RIGHT] : [
-            { "x": TILE_SIZE, "y": 0 },
-            { "x": TILE_SIZE, "y": 192 }
+            { "x": 0, "y": 0 },
+            { "x": 0, "y": 192 }
         ],
         [FACING_DOWN] : [
             { "x": 0, "y": 768 },
-            { "x": 192, "y": 768 }
+            { "x": 128, "y": 768 }
         ]
     }
-    
 }
 
 const STANDARD_SHELVE = {
@@ -509,7 +508,15 @@ const spriteData = {
     "trash_4" : {
         "src": "Trash_Z4.png",
         ...getBackgroundItem( 0.5625, 0.53125 )
+    },  
+    "tree" : {
+        "src": "tree.png",
+        ...getGroundedAtBottom( 2, 3 )
     },    
+    "tree_plus_base" : {
+        "src": "tree_plus_base.png",
+        ...getGroundedAtBottom(2, 3 )
+    },  
     "vent_1" : {
         "src": "Vent_Z1.png",
         ...getBackgroundItem( 0.65625, 0.40625 )

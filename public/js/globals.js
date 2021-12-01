@@ -124,11 +124,11 @@ const TILESHEETS = {
     },
     "my_neighbourhood_2" : {
         "src": "City4_Tiles.png",
-        "tiles": 800
+        "tiles": 1200
     },
     "starting_neighbourhood_clean" : {
         "src": "Starting_neighbourhood_2.png",
-        "tiles": 1100
+        "tiles": 1200
     },
     "my_house" : {
         "src": "Bed_Room.png",
@@ -192,5 +192,5 @@ const setSheetXyValues = ( tilesInSheet ) => {
     return tilesheetXyValues;
 }
 
-const SHEET_XY_VALUES = setSheetXyValues( 1200 );
+const SHEET_XY_VALUES = setSheetXyValues( 1300 );
 
