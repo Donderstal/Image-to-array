@@ -236,6 +236,7 @@ let spriteSelectionIdList = [
     [ "show-background-items", "background-items-pngs-div" ],
     [ "show-grounded-at-bottom-items", "grounded-at-bottom-items-pngs-div" ],
     [ "show-not-grounded-items", "not-grounded-items-div" ],
+    [ "show-gate-items", "gate-items-div" ],
     [ "show-cars", "cars-div" ],
     [ "show-rest-items", "rest-sprites-div" ]
 ]

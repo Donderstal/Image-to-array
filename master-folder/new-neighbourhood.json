@@ -4,13 +4,19 @@
     "A1" : "A1",
     "A2" : "A2",
     "A3" : "A3",
+    "A4" : "tapijt_a4",
+    "B1" : "tapijt_b1",
     "B2" : "B2",
     "B3" : "B3",
     "B4" : "B4_TAPIJT",
+    "C1" : "tapijt_c1",
+    "C2" : "tapijt_c2",
     "C3" : "C3_TAPIJT",
-    "C4": "C4_TAPIJT",
+    "C4" : "C4_TAPIJT",
+    "D1" : "tapijt_d1",   
     "D2" : "D2_TAPIJT",
     "D3" : "D3_TAPIJT",    
     "D4" : "D4_TAPIJT",
-    "E3" : "E3_TAPIJT"
+    "E3" : "E3_TAPIJT",
+    "E4" : "tapijt_e4"
 }

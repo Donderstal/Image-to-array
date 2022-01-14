@@ -30,6 +30,7 @@ const initMapObjectDivs = ( ) => {
         [getBackgroundItems( ), document.getElementById("background-items-pngs-div")],
         [getGroundedAtBottomItems( ), document.getElementById("grounded-at-bottom-items-pngs-div")],
         [getNotGroundedItems( ), document.getElementById("not-grounded-items-div")],
+        [getGateItems( ), document.getElementById("gate-items-div")],
         [getCars(), document.getElementById("cars-div")],
         [getRestItems(), restWrapper = document.getElementById("rest-sprites-div")]
     ]
