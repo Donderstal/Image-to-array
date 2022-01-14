@@ -1,5 +1,5 @@
 class Grid {
-    constructor( x, y, rows, cols, ctx ) {
+    constructor( x, y, rows, cols, ctx, drawBorders ) {
         this.x = x;
         this.y = y;
         this.rows = rows;
@@ -8,10 +8,10 @@ class Grid {
         this.ctx = ctx;
         this.isOverviewCanvas = this.ctx != MAP_ROADS_CTX &&this.ctx != MAP_CTX && this.ctx != SHEET_CTX && this.ctx != PREVIEW_MAP_CTX && this.ctx != MAP_FOREGROUND_CTX && this.ctx != MAP_SPAWN_POINTS_CTX;
 
-        this.initializeGrid( );
+        this.initializeGrid( drawBorders );
     };
     
-    initializeGrid( ) {
+    initializeGrid( drawBorders ) {
         const limit = this.rows * this.cols
         let tileX = ( this.isOverviewCanvas ) ? this.getXOffset( ) : 0;
         let tileY = ( this.isOverviewCanvas ) ? this.getYOffset( ) : 0;
@@ -19,7 +19,7 @@ class Grid {
         let col = 1;
 
         for( var i = 0; i < limit; i++ ) {
-            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col ) )
+            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col, drawBorders ) )
 
             if ( ( i + 1 ) % this.cols == 0 ) {
                 tileX = ( this.isOverviewCanvas ) ? this.getXOffset( ) : 0;
@@ -84,7 +84,7 @@ class Grid {
 }
 
 class Tile {
-    constructor( index, x, y, ctx, row, col ) {
+    constructor( index, x, y, ctx, row, col, drawBorders ) {
         this.x = x;
         this.y = y;
         this.ctx = ctx;
@@ -107,7 +107,9 @@ class Tile {
         this.isUnblocked = false;
 
         ( ctx == SHEET_CTX ) ? this.setTileID( this.index ) : this.clearTileID( );
-        this.drawTileBorders( );
+        if ( drawBorders ){
+            this.drawTileBorders( );            
+        }
     };
 
     drawTileBorders( ) {

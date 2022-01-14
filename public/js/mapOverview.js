@@ -77,7 +77,15 @@ class CanvasSlot {
         this.map = new Map( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
         this.map.initGrid( this.rows, this.columns );
         this.map.setTileGrid( this.grid );
-        this.map.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[this.tileSet].src, this.map.drawMapFromGridData );
+        this.map.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[this.tileSet].src, (() => {
+            this.map.drawMapFromGridData( )
+            this.spriteGrid = new ObjectsGrid( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
+            this.spriteGrid.initGrid( this.rows, this.columns, false );
+            this.spriteGrid.setCharacters( this.characters );
+            this.spriteGrid.setObjects( this.objects );
+            this.spriteGrid.drawSpritesInGrid( false );        
+        }).bind(this) );
+
     }
 
     setCanvas( ) {
@@ -96,6 +104,8 @@ class CanvasSlot {
             this.columns = map.columns;
             this.grid = map.grid.flat(1);
             this.tileSet = map.tileSet;
+            this.characters = map.characters;
+            this.objects = map.mapObjects;
             this.drawMap( );
         }
     }

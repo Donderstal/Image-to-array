@@ -10,8 +10,8 @@ class CanvasWithGrid {
         this.height = height;
     };
 
-    initGrid( rows, cols ) {
-        this.grid       = new Grid( this.x, this.y, rows, cols, this.ctx );
+    initGrid( rows, cols, drawBorders = true ) {
+        this.grid       = new Grid( this.x, this.y, rows, cols, this.ctx, drawBorders );
     };
 
     setTileGrid( gridToSet ) {
@@ -470,56 +470,67 @@ class ObjectsGrid extends CanvasWithGrid {
 
         this.drawSpritesInGrid( )
     }
-    drawSpritesInGrid( ) {
-        this.ctx.clearRect(0, 0, MAP_FOREGROUND_CANVAS.width, MAP_FOREGROUND_CANVAS.height);
+    drawSpritesInGrid( inMapMaker = true ) {
+        if ( inMapMaker ) {
+            this.ctx.clearRect(0, 0, MAP_FOREGROUND_CANVAS.width, MAP_FOREGROUND_CANVAS.height);            
+        }
         this.grid.array.forEach( ( tile ) => {
-            tile.drawTileBorders( )
-            if ( tile.hasSprite ) {
-                const element = document.getElementById( tile.spriteType == 'object' ? tile.spriteData.type : tile.spriteData.sprite)
-                if ( tile.spriteType == 'object' && typeof tile.spriteData.direction != 'string' ) {
-                    this.ctx.drawImage(
-                        element.image,
-                        0, 0,
-                        element.width * 2, element.height * 2,
-                        tile.x, element.dataObject.height_blocks > 1 ? tile.y -  ( (element.dataObject.height_blocks - 1) * TILE_SIZE ) : tile.y,
-                        element.width, element.height
-                    )
+            try {
+                if ( inMapMaker ) {
+                    tile.drawTileBorders( )                    
                 }
-                else if ( tile.spriteType == 'object' && typeof tile.spriteData.direction == 'string' ) {
-                    let dimensions = element.dataObject.getDimensions( tile.direction );
-                    this.ctx.drawImage(
-                        element.image,
-                        element.dataObject[tile.direction].x, element.dataObject[tile.direction].y, 
-                        dimensions.width * 2, dimensions.height * 2,
-                        tile.x, (dimensions.height) > TILE_SIZE ? tile.y -  (dimensions.height - TILE_SIZE) : tile.y,
-                        dimensions.width, dimensions.height
-                    )
-                }
-                else if ( tile.spriteType == 'character' ) {
-                    let sourceY;
-                    switch( tile.spriteData.direction ) {
-                        case 'FACING_DOWN':
-                            sourceY = 0;
-                            break;
-                        case 'FACING_LEFT':
-                            sourceY = STRD_SPRITE_HEIGHT
-                            break;
-                        case 'FACING_RIGHT':
-                            sourceY = STRD_SPRITE_HEIGHT *  2
-                            break;
-                        case 'FACING_UP':
-                            sourceY = STRD_SPRITE_HEIGHT * 3
-                            break;
+
+                if ( tile.hasSprite ) {
+                    const element = document.getElementById( tile.spriteType == 'object' ? tile.spriteData.type : tile.spriteData.sprite)
+                    if ( tile.spriteType == 'object' && typeof tile.spriteData.direction != 'string' ) {
+                        this.ctx.drawImage(
+                            element.image,
+                            0, 0,
+                            element.width * 2, element.height * 2,
+                            tile.x, element.dataObject.height_blocks > 1 ? tile.y -  ( (element.dataObject.height_blocks - 1) * TILE_SIZE ) : tile.y,
+                            element.width, element.height
+                        )
                     }
-                    this.ctx.drawImage(
-                        element.image,
-                        0, sourceY,
-                        element.width, element.height,
-                        tile.x, tile.y - ( TILE_SIZE * 0.75 ),
-                        STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
-                    )
+                    else if ( tile.spriteType == 'object' && typeof tile.spriteData.direction == 'string' ) {
+                        let dimensions = element.dataObject.getDimensions( tile.direction );
+                        this.ctx.drawImage(
+                            element.image,
+                            element.dataObject[tile.direction].x, element.dataObject[tile.direction].y, 
+                            dimensions.width * 2, dimensions.height * 2,
+                            tile.x, (dimensions.height) > TILE_SIZE ? tile.y -  (dimensions.height - TILE_SIZE) : tile.y,
+                            dimensions.width, dimensions.height
+                        )
+                    }
+                    else if ( tile.spriteType == 'character' ) {
+                        let sourceY;
+                        switch( tile.spriteData.direction ) {
+                            case 'FACING_DOWN':
+                                sourceY = 0;
+                                break;
+                            case 'FACING_LEFT':
+                                sourceY = STRD_SPRITE_HEIGHT
+                                break;
+                            case 'FACING_RIGHT':
+                                sourceY = STRD_SPRITE_HEIGHT *  2
+                                break;
+                            case 'FACING_UP':
+                                sourceY = STRD_SPRITE_HEIGHT * 3
+                                break;
+                        }
+                        this.ctx.drawImage(
+                            element.image,
+                            0, sourceY,
+                            element.width, element.height,
+                            tile.x, tile.y - ( TILE_SIZE * 0.75 ),
+                            STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
+                        )
+                    }
                 }
             }
+            catch( ex ){
+                console.log(ex.message);
+            }
+
         })
     }
     drawDoorsInGrid( ) {
