@@ -57,6 +57,7 @@ const clearCurrentEditMode = ( ) => {
 }
 
 const initTilesMode = ( ) => {
+    document.getElementById("show-front-tile-grid").disabled = false;
     MAPMAKER_IN_TILE_MODE = true;       
     hideListContainersAndShowGiven( "", false );    
     [ "tilesheet-div", "selected-tile-div", "tile-storage-div" ].forEach( 
@@ -70,6 +71,8 @@ const initTilesMode = ( ) => {
 const initMapObjectsMode = ( ) => {
     document.getElementById("show-sprite-grid").disabled = true;
     document.getElementById("show-sprite-grid").checked = false;
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
     SPRITE_GRID_IS_HIDDEN = true;
     
     MAPMAKER_IN_OBJECT_MODE = true;
@@ -85,6 +88,8 @@ const initMapObjectsMode = ( ) => {
 }
 
 const initNeighboursMode = ( ) => {
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
     MAPMAKER_IN_NEIGHBOURS_MODE = true;
     hideListContainersAndShowGiven( "", false ); 
     [ "neighbour-options-div" ].forEach( 
@@ -94,6 +99,8 @@ const initNeighboursMode = ( ) => {
 } 
 
 const initRoadsMode = ( ) => {
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
     MAPMAKER_IN_ROADS_MODE = true;
     SELECTED_ROAD_DIRECTION = false;
     hideListContainersAndShowGiven( "", false ); 
@@ -104,6 +111,8 @@ const initRoadsMode = ( ) => {
 } 
 
 const initSpawnPointsMode = ( ) => {
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
     MAPMAKER_IN_SPAWN_MODE = true;
     SELECTED_SPAWN_DIRECTION = false;
     hideListContainersAndShowGiven( "", false ); 
@@ -114,6 +123,8 @@ const initSpawnPointsMode = ( ) => {
 }
 
 const initDoorsMode = ( ) => {
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
     MAPMAKER_IN_DOORS_MODE = true;
 
     [ "map-foreground-canvas", "doors-options-div" ].forEach( 
@@ -126,6 +137,8 @@ const initDoorsMode = ( ) => {
 }
 
 const initBlockedTilesMode = ( ) => {
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
     MAPMAKER_IN_BLOCKED_TILES_MODE = true;
     showElementWithId("tilesheet-div")
     hideElementWithId("middle-mapmaker-div")

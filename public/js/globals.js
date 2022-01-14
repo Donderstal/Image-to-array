@@ -5,6 +5,7 @@ const TILESHEET_PREVIEW = document.getElementById( 'sheet-preview' );
 const SHEET_CANVAS = document.getElementById('tilesheet-canvas');
 const SELECTED_TILE_CANVAS = document.getElementById('selected-tile-canvas');
 const MAP_CANVAS = document.getElementById('map-canvas');
+const MAP_FRONT_GRID_CANVAS = document.getElementById('map-grid-front-canvas');
 const MAP_ROADS_CANVAS = document.getElementById('map-roads-canvas');
 const MAP_SPAWN_POINTS_CANVAS = document.getElementById('map-spawn-points-canvas');
 const MAP_FOREGROUND_CANVAS = document.getElementById('map-foreground-canvas');
@@ -13,6 +14,7 @@ const PREVIEW_MAP_CANVAS = document.getElementById('preview-map-canvas');
 const SHEET_CTX = SHEET_CANVAS.getContext("2d");
 const SELECTED_TILE_CTX = SELECTED_TILE_CANVAS.getContext("2d");
 const MAP_CTX = MAP_CANVAS.getContext("2d");
+const MAP_FRONT_GRID_CTX = MAP_FRONT_GRID_CANVAS.getContext("2d");
 const MAP_ROADS_CTX = MAP_ROADS_CANVAS.getContext("2d");
 const MAP_SPAWN_POINTS_CTX = MAP_SPAWN_POINTS_CANVAS.getContext("2d");
 const MAP_FOREGROUND_CTX = MAP_FOREGROUND_CANVAS.getContext("2d")
@@ -55,6 +57,7 @@ let IN_SUBMAP_OVERVIEW;
 
 let ON_MAPMAKER_PAGE = false;
 let SPRITE_GRID_IS_HIDDEN = true;
+let FRONT_TILES_GRID_IS_HIDDEN = true;
 let MOUSE_DRAG_IN_MAPMAKER;
 let MOUSE_DRAG_RANGE = {
     START: null,

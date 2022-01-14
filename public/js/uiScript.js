@@ -178,15 +178,6 @@ const captureSheetClick = ( event ) => {
 
 }
 
-const captureMapClick = ( event ) => {
-    if ( event.shiftKey && MAPMAKER_IN_TILE_MODE ) {
-        MAP.clearTileAtXY(event.offsetX, event.offsetY);    
-    }
-    else if ( HAS_SELECTED_TILE && MAPMAKER_IN_TILE_MODE  ) {
-        MAP.drawTileAtXY(event.offsetX, event.offsetY);        
-    }
-}
-
 const captureForegroundClick = ( event ) => {
     if ( event.shiftKey ) {
         MAP_FOREGROUND.clearSpriteFromTile(event.offsetX, event.offsetY);      
@@ -228,7 +219,6 @@ const unsetMapInformation = ( ) => {
 const unsetMapGrid = ( ) => {
     setTextContentOfElements( { "rows-span": "", "columns-span": "" } )
     hideVisibleCanvas( MAP_CANVAS );
-
     MAP.clearGrid( );
 }
 

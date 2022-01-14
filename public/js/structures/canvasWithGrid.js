@@ -154,7 +154,7 @@ class Map extends CanvasWithGrid {
 
     clearGrid( ) {
         super.clearGrid( );
-        MAP_CTX.clearRect( 0, 0, MAP_CANVAS.width, MAP_CANVAS.height )
+        this.ctx.clearRect( 0, 0, MAP_CANVAS.width, MAP_CANVAS.height )
         this.grid.initializeGrid( );
     }
 
@@ -166,14 +166,14 @@ class Map extends CanvasWithGrid {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( SHEET.activeTile.index)
         tile.setSettings( SHEET.activeTileSettings );
-        MAP_CTX.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+        this.ctx.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
     }
 
     clearTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.clearTileID( )
         tile.unSetSettings( );
-        MAP_CTX.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+        this.ctx.clearRect( tile.x, tile.y, TILE_SIZE, TILE_SIZE )
         tile.drawTileBorders( )
     }
 
@@ -375,6 +375,16 @@ class Map extends CanvasWithGrid {
             }
         })
 
+        let frontArray = []
+        MAP_FRONT_GRID.grid.array.forEach( ( e ) => {
+            if ( e.hasSettings ) {
+                frontArray.push( { 'id': e.ID, 'angle': e.angle, 'mirrored': e.mirrored } )
+            }
+            else {
+                frontArray.push(e.ID)
+            }
+        })
+
         const sprites = MAP_FOREGROUND.exportAllSprites( );
 
         const leftInput = document.getElementById("neighbours-input-left")
@@ -394,6 +404,7 @@ class Map extends CanvasWithGrid {
             'rows' : parseInt(this.grid.rows),
             'columns' : parseInt(this.grid.cols),
             'grid' : exportArray,
+            'frontGrid' : frontArray,
             'mapObjects' : sprites.mapObjects,            
             'characters' : sprites.characters,
             'actions' : [],

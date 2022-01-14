@@ -1,5 +1,4 @@
 SHEET_CANVAS.addEventListener( 'click', captureSheetClick, true )
-MAP_CANVAS.addEventListener( 'click', captureMapClick, true )
 MAP_FOREGROUND_CANVAS.addEventListener( 'click', captureForegroundClick, true)
 
 document.getElementById('export-map-button').addEventListener( 'click', exportMapData, true )
@@ -44,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const sheetY = SHEET_CANVAS.getBoundingClientRect( ).y;
     const mapX = MAP_CANVAS.getBoundingClientRect( ).x;
     const mapY = MAP_CANVAS.getBoundingClientRect( ).y;
+    const mapFrontGridX = MAP_FRONT_GRID_CANVAS.getBoundingClientRect( ).x;
+    const mapFrontGridY = MAP_FRONT_GRID_CANVAS.getBoundingClientRect( ).y;
     const previewMapX = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
     const previewMapY = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
     const mapForegroundY = MAP_FOREGROUND_CANVAS.getBoundingClientRect( ).y;;
@@ -51,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     PREVIEW_MAP = new Map( previewMapX, previewMapY, PREVIEW_MAP_CTX );
     SHEET = new Sheet( sheetX, sheetY, SHEET_CTX );
-    MAP = new Map( mapX, mapY, MAP_CTX );
+    MAP = new Map( mapFrontGridX, mapFrontGridY, MAP_CTX );
+    MAP_FRONT_GRID = new Map( mapX, mapY, MAP_FRONT_GRID_CTX );
     MAP_ROADS = new Map( mapX, mapY, MAP_ROADS_CTX );
     MAP_SPAWN_POINTS =  new Map( mapForegroundX, mapForegroundY, MAP_SPAWN_POINTS_CTX );
     MAP_FOREGROUND =  new ObjectsGrid( mapForegroundX, mapForegroundY, MAP_FOREGROUND_CTX );
@@ -112,58 +114,67 @@ OVERVIEW_CANVAS_WRAPPER.addEventListener('mousemove', (e) => {
     }
 });
 
-MAP_CANVAS.addEventListener('mouseup', (event) => { 
-    if ( !HAS_SELECTED_TILE && MAPMAKER_IN_TILE_MODE ) {
-        return;
-    }
-    let endingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);
-    MOUSE_DRAG_RANGE.END = { 'x': endingTile.x, 'y': endingTile.y }
-    const square = {
-        TOP: MOUSE_DRAG_RANGE.START.y > MOUSE_DRAG_RANGE.END.y ? MOUSE_DRAG_RANGE.END.y : MOUSE_DRAG_RANGE.START.y,
-        RIGHT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.START.x : MOUSE_DRAG_RANGE.END.x,
-        BOTTOM: MOUSE_DRAG_RANGE.START.y > MOUSE_DRAG_RANGE.END.y ? MOUSE_DRAG_RANGE.START.y : MOUSE_DRAG_RANGE.END.y,
-        LEFT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.END.x : MOUSE_DRAG_RANGE.START.x
-    }
-    
-    if ( MAPMAKER_IN_TILE_MODE ) {
-        MAP.grid.array.forEach( ( tile ) => {
-            if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
-                event.shiftKey ? MAP.clearTileAtXY( tile.x, tile.y ) : MAP.drawTileAtXY( tile.x, tile.y )
-            }
-        } )        
-    }
-    else if ( MAPMAKER_IN_ROADS_MODE ) {
-        if ( ( SELECTED_ROAD_DIRECTION == FACING_RIGHT || SELECTED_ROAD_DIRECTION == FACING_LEFT ) 
-        && ( square.BOTTOM - square.TOP < TILE_SIZE || square.BOTTOM - square.TOP > TILE_SIZE ) ) {
-            alert( 'A horizontal road must be two tiles high!' );
+[MAP_CANVAS, MAP_FRONT_GRID_CANVAS].forEach( ( e ) =>{
+    e.addEventListener('mouseup', (event) => { 
+        if ( !HAS_SELECTED_TILE && MAPMAKER_IN_TILE_MODE ) {
             return;
         }
-        else if ( ( SELECTED_ROAD_DIRECTION == FACING_DOWN || SELECTED_ROAD_DIRECTION == FACING_UP ) 
-        && ( square.RIGHT - square.LEFT < TILE_SIZE || square.RIGHT - square.LEFT > TILE_SIZE ) ) {
-            alert( 'A vertical road must be two tiles wide!' );
-            return;
+        let endingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);
+        MOUSE_DRAG_RANGE.END = { 'x': endingTile.x, 'y': endingTile.y }
+        const square = {
+            TOP: MOUSE_DRAG_RANGE.START.y > MOUSE_DRAG_RANGE.END.y ? MOUSE_DRAG_RANGE.END.y : MOUSE_DRAG_RANGE.START.y,
+            RIGHT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.START.x : MOUSE_DRAG_RANGE.END.x,
+            BOTTOM: MOUSE_DRAG_RANGE.START.y > MOUSE_DRAG_RANGE.END.y ? MOUSE_DRAG_RANGE.START.y : MOUSE_DRAG_RANGE.END.y,
+            LEFT: MOUSE_DRAG_RANGE.START.x > MOUSE_DRAG_RANGE.END.x ? MOUSE_DRAG_RANGE.END.x : MOUSE_DRAG_RANGE.START.x
         }
-
-        let tileList = [];
-
-        MAP.grid.array.forEach( ( tile ) => {
-            if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
-                event.shiftKey ? MAP.removeSelectedRoadBlockAtTile( tile.x, tile.y ) : MAP.drawSelectedRoadBlockAtTile( tile.x, tile.y  )
-                tileList.push( tile );
-            }
-        } )  
         
-        event.shiftKey ? MAP.clearRoadTiles( SELECTED_ROAD_DIRECTION, tileList ) : MAP.addRoad( SELECTED_ROAD_DIRECTION, tileList );
-    }
-});
-MAP_CANVAS.addEventListener('mousedown', (event) => {
-    MOUSE_DRAG_IN_MAPMAKER = false;
-    let startingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);   
-    MOUSE_DRAG_RANGE.START = { 'x': startingTile.x, 'y': startingTile.y }
-});
-MAP_CANVAS.addEventListener('mousemove', ( ) => {
-    MOUSE_DRAG_IN_MAPMAKER = true;
-});
+        if ( MAPMAKER_IN_TILE_MODE && FRONT_TILES_GRID_IS_HIDDEN ) {
+            MAP.grid.array.forEach( ( tile ) => {
+                if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
+                    event.shiftKey ? MAP.clearTileAtXY( tile.x, tile.y ) : MAP.drawTileAtXY( tile.x, tile.y )
+                }
+            } )        
+        }
+        else if ( MAPMAKER_IN_TILE_MODE && !FRONT_TILES_GRID_IS_HIDDEN ) {
+            MAP_FRONT_GRID.grid.array.forEach( ( tile ) => {
+                if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
+                    event.shiftKey ? MAP_FRONT_GRID.clearTileAtXY( tile.x, tile.y ) : MAP_FRONT_GRID.drawTileAtXY( tile.x, tile.y )
+                }
+            } )
+        }
+        else if ( MAPMAKER_IN_ROADS_MODE ) {
+            if ( ( SELECTED_ROAD_DIRECTION == FACING_RIGHT || SELECTED_ROAD_DIRECTION == FACING_LEFT ) 
+            && ( square.BOTTOM - square.TOP < TILE_SIZE || square.BOTTOM - square.TOP > TILE_SIZE ) ) {
+                alert( 'A horizontal road must be two tiles high!' );
+                return;
+            }
+            else if ( ( SELECTED_ROAD_DIRECTION == FACING_DOWN || SELECTED_ROAD_DIRECTION == FACING_UP ) 
+            && ( square.RIGHT - square.LEFT < TILE_SIZE || square.RIGHT - square.LEFT > TILE_SIZE ) ) {
+                alert( 'A vertical road must be two tiles wide!' );
+                return;
+            }
+    
+            let tileList = [];
+    
+            MAP.grid.array.forEach( ( tile ) => {
+                if ( tile.x >= square.LEFT && tile.x <= square.RIGHT && tile.y >= square.TOP && tile.y <= square.BOTTOM ){
+                    event.shiftKey ? MAP.removeSelectedRoadBlockAtTile( tile.x, tile.y ) : MAP.drawSelectedRoadBlockAtTile( tile.x, tile.y  )
+                    tileList.push( tile );
+                }
+            } )  
+            
+            event.shiftKey ? MAP.clearRoadTiles( SELECTED_ROAD_DIRECTION, tileList ) : MAP.addRoad( SELECTED_ROAD_DIRECTION, tileList );
+        }
+    });
+    e.addEventListener('mousedown', (event) => {
+        MOUSE_DRAG_IN_MAPMAKER = false;
+        let startingTile = MAP.getTileAtXY(event.offsetX, event.offsetY);   
+        MOUSE_DRAG_RANGE.START = { 'x': startingTile.x, 'y': startingTile.y }
+    });
+    e.addEventListener('mousemove', ( ) => {
+        MOUSE_DRAG_IN_MAPMAKER = true;
+    });
+})
 
 MAP_SPAWN_POINTS_CANVAS.addEventListener('click', (event) => {
     ( event.shiftKey ) 
@@ -278,6 +289,19 @@ document.getElementById("show-sprite-grid").addEventListener( 'click', ( ) => {
             hideElementWithId( "map-foreground-canvas" );
         }
         SPRITE_GRID_IS_HIDDEN = true;
+    }
+}, true)
+
+document.getElementById("show-front-tile-grid").addEventListener( 'click', ( ) => {
+    if ( FRONT_TILES_GRID_IS_HIDDEN ) {
+        showElementWithId("map-grid-front-canvas" );
+        MAP_CANVAS.style.pointerEvents = "none"
+        FRONT_TILES_GRID_IS_HIDDEN = false;
+    }
+    else {
+        hideElementWithId( "map-grid-front-canvas" );
+        MAP_CANVAS.style.pointerEvents = "auto"
+        FRONT_TILES_GRID_IS_HIDDEN = true;
     }
 }, true)
 
