@@ -28,8 +28,8 @@ class CanvasWithGrid {
         };
     }
 
-    drawMapFromGridData( ) {
-        this.grid.drawMap( this.sheetImage )
+    drawMapFromGridData( clearTiles = true ) {
+        this.grid.drawMap( this.sheetImage, clearTiles )
     }
 
     clearGrid( ) {

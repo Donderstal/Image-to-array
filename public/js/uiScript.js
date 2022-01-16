@@ -130,7 +130,11 @@ const loadMapToMapmaker = ( ) => {
 
     MAP_FOREGROUND.drawSpritesInGrid( );
     MAP.setTileGrid( GRID_TO_LOAD );
-    MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, MAP.drawMapFromGridData )
+    MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, MAP.drawMapFromGridData );
+
+    MAP_FRONT_GRID.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
+    MAP_FRONT_GRID.setTileGrid( FRONT_GRID_TO_LOAD );
+    MAP_FRONT_GRID.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, MAP_FRONT_GRID.drawMapFromGridData );
 }
 
 const mapMakerDataIsSet = ( ) => {

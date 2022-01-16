@@ -9,7 +9,7 @@ class Grid {
         this.isOverviewCanvas = 
             this.ctx != MAP_ROADS_CTX && this.ctx != MAP_CTX && this.ctx != SHEET_CTX && 
             this.ctx != PREVIEW_MAP_CTX && this.ctx != MAP_FOREGROUND_CTX && this.ctx != MAP_SPAWN_POINTS_CTX 
-            && this.ctx != MAP_FRONT_GRID_CTX; 
+            && this.ctx != MAP_FRONT_GRID_CTX && this.ctx != FRONT_PREVIEW_MAP_CTX; 
 
         this.initializeGrid( drawBorders );
     };
@@ -50,17 +50,17 @@ class Grid {
         this.grid = [];
     }
 
-    drawMap( tileSheet ) {
+    drawMap( tileSheet, clearTiles ) {
         for ( var i = 0; i < this.array.length; i += this.cols ) {
             let row = this.array.slice( i, i + this.cols )
-            this.drawRowInMap( row, tileSheet )
+            this.drawRowInMap( row, tileSheet, clearTiles )
         }
     }
 
-    drawRowInMap( currentRow, tileSheet ) {
+    drawRowInMap( currentRow, tileSheet, clearTiles ) {
         for ( var j = 0; j < this.cols; j++ ) {
             const currentTile = currentRow[j]
-            currentTile.drawTileInMap( tileSheet )
+            currentTile.drawTileInMap( tileSheet, clearTiles )
         }
     }
 
@@ -131,8 +131,10 @@ class Tile {
         }
     }
 
-    drawTileInMap( sheetImage ) {
-        this.ctx.clearRect( this.x, this.y, TILE_SIZE, TILE_SIZE )
+    drawTileInMap( sheetImage, clearTiles ) {
+        if ( clearTiles) {
+            this.ctx.clearRect( this.x, this.y, TILE_SIZE, TILE_SIZE )            
+        }
         if ( this.ID === "E" || this.ID === null) {
             return;
         }

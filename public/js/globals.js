@@ -10,6 +10,7 @@ const MAP_ROADS_CANVAS = document.getElementById('map-roads-canvas');
 const MAP_SPAWN_POINTS_CANVAS = document.getElementById('map-spawn-points-canvas');
 const MAP_FOREGROUND_CANVAS = document.getElementById('map-foreground-canvas');
 const PREVIEW_MAP_CANVAS = document.getElementById('preview-map-canvas');
+const FRONT_PREVIEW_MAP_CANVAS = document.getElementById('front-preview-map-canvas');
 
 const SHEET_CTX = SHEET_CANVAS.getContext("2d");
 const SELECTED_TILE_CTX = SELECTED_TILE_CANVAS.getContext("2d");
@@ -19,6 +20,7 @@ const MAP_ROADS_CTX = MAP_ROADS_CANVAS.getContext("2d");
 const MAP_SPAWN_POINTS_CTX = MAP_SPAWN_POINTS_CANVAS.getContext("2d");
 const MAP_FOREGROUND_CTX = MAP_FOREGROUND_CANVAS.getContext("2d")
 const PREVIEW_MAP_CTX = PREVIEW_MAP_CANVAS.getContext("2d");
+const FRONT_PREVIEW_MAP_CTX = FRONT_PREVIEW_MAP_CANVAS.getContext("2d");
 
 const OVERVIEW_CANVAS_WRAPPER =  document.querySelector('.map-overview-canvas-wrapper');
 
@@ -33,12 +35,14 @@ let MAP;
 let MAP_ROADS;
 let MAP_SPAWN_POINTS;
 let PREVIEW_MAP;
+let FRONT_PREVIEW_MAP;
 let MAP_FOREGROUND;
 
 let TILESHEET_TO_LOAD;
 let COLUMNS_TO_LOAD;
 let ROWS_TO_LOAD;
 let GRID_TO_LOAD;
+let FRONT_GRID_TO_LOAD;
 let MAPNAME_TO_LOAD;
 let NEIGHBOURHOOD_TO_LOAD;
 let NEIGHBOURS_TO_LOAD;

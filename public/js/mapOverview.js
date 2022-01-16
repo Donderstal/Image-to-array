@@ -79,11 +79,17 @@ class CanvasSlot {
         this.map.setTileGrid( this.grid );
         this.map.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[this.tileSet].src, (() => {
             this.map.drawMapFromGridData( )
-            this.spriteGrid = new ObjectsGrid( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
-            this.spriteGrid.initGrid( this.rows, this.columns, false );
-            this.spriteGrid.setCharacters( this.characters );
-            this.spriteGrid.setObjects( this.objects );
-            this.spriteGrid.drawSpritesInGrid( false );        
+            this.frontMap = new Map( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
+            this.frontMap.initGrid( this.rows, this.columns );
+            this.frontMap.setTileGrid( this.frontGrid );
+            this.frontMap.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[this.tileSet].src, (() => {
+                this.frontMap.drawMapFromGridData( false )
+                this.spriteGrid = new ObjectsGrid( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
+                this.spriteGrid.initGrid( this.rows, this.columns, false );
+                this.spriteGrid.setCharacters( this.characters );
+                this.spriteGrid.setObjects( this.objects );
+                this.spriteGrid.drawSpritesInGrid( false );        
+            }).bind(this) );   
         }).bind(this) );
 
     }
@@ -103,6 +109,7 @@ class CanvasSlot {
             this.rows = map.rows;
             this.columns = map.columns;
             this.grid = map.grid.flat(1);
+            this.frontGrid = map.hasOwnProperty("frontGrid") ? map.frontGrid.flat(1) : [];
             this.tileSet = map.tileSet;
             this.characters = map.characters;
             this.objects = map.mapObjects;

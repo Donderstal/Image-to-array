@@ -47,10 +47,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const mapFrontGridY = MAP_FRONT_GRID_CANVAS.getBoundingClientRect( ).y;
     const previewMapX = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
     const previewMapY = PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
+    const frontPreviewMapX = FRONT_PREVIEW_MAP_CANVAS.getBoundingClientRect( ).x;
+    const frontpreviewMapY = FRONT_PREVIEW_MAP_CANVAS.getBoundingClientRect( ).y;
     const mapForegroundY = MAP_FOREGROUND_CANVAS.getBoundingClientRect( ).y;;
     const mapForegroundX = MAP_FOREGROUND_CANVAS.getBoundingClientRect( ).x;;
 
     PREVIEW_MAP = new Map( previewMapX, previewMapY, PREVIEW_MAP_CTX );
+    FRONT_PREVIEW_MAP = new Map( frontPreviewMapX, frontpreviewMapY, FRONT_PREVIEW_MAP_CTX );
     SHEET = new Sheet( sheetX, sheetY, SHEET_CTX );
     MAP = new Map( mapFrontGridX, mapFrontGridY, MAP_CTX );
     MAP_FRONT_GRID = new Map( mapX, mapY, MAP_FRONT_GRID_CTX );

@@ -110,13 +110,20 @@ const setMapJSON = ( JSON ) => {
 
     ROWS_TO_LOAD = parseInt(JSON.rows);
     COLUMNS_TO_LOAD = parseInt(JSON.columns);
-    GRID_TO_LOAD = ( typeof JSON.grid[0] == 'string' || JSON.grid[0] == 'number' ) ? JSON.grid : JSON.grid.flat()
+    GRID_TO_LOAD = JSON.grid.flat();
+    FRONT_GRID_TO_LOAD = JSON.hasOwnProperty("frontGrid") ? JSON.frontGrid.flat() : JSON.grid.map((e) => {return "E"});
 
     PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
     PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
     PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
     PREVIEW_MAP.setTileGrid( GRID_TO_LOAD );
     PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, PREVIEW_MAP.drawMapFromGridData );
+
+    FRONT_PREVIEW_MAP_CANVAS.width = COLUMNS_TO_LOAD * TILE_SIZE
+    FRONT_PREVIEW_MAP_CANVAS.height = ROWS_TO_LOAD * TILE_SIZE
+    FRONT_PREVIEW_MAP.initGrid( ROWS_TO_LOAD, COLUMNS_TO_LOAD );
+    FRONT_PREVIEW_MAP.setTileGrid( FRONT_GRID_TO_LOAD );
+    FRONT_PREVIEW_MAP.loadImageWithCallback( '/png-files/tilesheets/' + TILESHEETS[TILESHEET_TO_LOAD].src, FRONT_PREVIEW_MAP.drawMapFromGridData );
 }
 
 const drawSpriteFromCanvasToSelectedSpriteCanvas = ( ) => {
