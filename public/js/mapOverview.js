@@ -109,7 +109,7 @@ class CanvasSlot {
             this.rows = map.rows;
             this.columns = map.columns;
             this.grid = map.grid.flat(1);
-            this.frontGrid = map.hasOwnProperty("frontGrid") ? map.frontGrid.flat(1) : [];
+            this.frontGrid = map.hasOwnProperty("frontGrid") ? map.frontGrid.flat(1) : this.grid.map((e) => {return "E";});
             this.tileSet = map.tileSet;
             this.characters = map.characters;
             this.objects = map.mapObjects;
