@@ -542,6 +542,16 @@ const spriteData = {
         "src": "single_bed.png",
         ...getTwoHighSprite( false )
     },
+    "single_bed_north" : { 
+        "src": "single_bed_north.png",
+        ...getTwoHighSprite( false )
+    },
+    "single_bed_side" : { 
+        "src": "single_bed_side.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1.5, 
+        "height_blocks": 1.3125 
+    },
     "Sink" : { 
         "src": "sink.png",
         ...THREE_HIGH_SPRITE
@@ -585,7 +595,19 @@ const spriteData = {
     "tree_plus_base" : {
         "src": "tree_plus_base.png",
         ...getGroundedAtBottom(2, 3 )
-    },  
+    }, 
+    "tv" : {
+        "src": "tv.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1.34375, 
+        "height_blocks": 1.5625
+    }, 
+    "tv_side" : {
+        "src": "tv_side.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 0.625, 
+        "height_blocks": 1.84375
+    },   
     "vent_1" : {
         "src": "Vent_Z1.png",
         ...getBackgroundItem( 0.65625, 0.40625 )

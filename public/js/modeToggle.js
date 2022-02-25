@@ -163,3 +163,15 @@ const showElementWithId = ( id ) => {
     document.getElementById(id).style.visibility = "visible";
     document.getElementById(id).style.display = "block";
 }
+
+const setFrontEditMode = () => {
+    showElementWithId("grid-edit-mode-label");
+    document.getElementById("show-front-tile-grid").disabled = false;
+    document.getElementById("grid-edit-mode-label").innerText = "BACK"
+}
+
+const unsetFrontEditMode = () => {
+    document.getElementById("show-front-tile-grid").disabled = true;
+    document.getElementById("show-front-tile-grid").checked = false;
+    hideElementWithId("grid-edit-mode-label")
+}

@@ -300,11 +300,13 @@ document.getElementById("show-front-tile-grid").addEventListener( 'click', ( ) =
         showElementWithId("map-grid-front-canvas" );
         MAP_CANVAS.style.pointerEvents = "none"
         FRONT_TILES_GRID_IS_HIDDEN = false;
+        document.getElementById("grid-edit-mode-label").innerText = "FRONT"
     }
     else {
         hideElementWithId( "map-grid-front-canvas" );
         MAP_CANVAS.style.pointerEvents = "auto"
         FRONT_TILES_GRID_IS_HIDDEN = true;
+        document.getElementById("grid-edit-mode-label").innerText = "BACK"
     }
 }, true)
 
