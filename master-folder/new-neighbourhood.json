@@ -1,4 +1,5 @@
 {
+    "name": "leonard_heights",
     "horizontal_slots": ["A", "B", "C", "D", "E"], 
     "vertical_slots": ["1", "2", "3", "4"],
     "A1" : "A1",

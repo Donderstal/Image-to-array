@@ -1,4 +1,5 @@
-/// Scrolling listeners;
+let canvasGrid = false;
+
 const stopMapOverviewScroll = ( ) => {
     IS_OVERVIEW_SCROLL_ACTIVE = false;
 }
@@ -61,7 +62,14 @@ const handleShowSubMapsButtonClick = ( event ) => {
 
 const initializeMapOverviewCanvases = ( ) => {
     console.log(MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD);
-    new CanvasGrid(MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD)
+    canvasGrid = new CanvasGrid(MAP_OVERVIEW_CURRENT_NEIGHBOURHOOD);
+    document.getElementById("export-neighbourhood").style.visibility = "visible";
+}
+
+const exportAsZip = ( ) => {
+    if ( canvasGrid != false ) {
+        canvasGrid.exportAsZip();
+    }
 }
 
 class CanvasSlot {
@@ -87,7 +95,7 @@ class CanvasSlot {
                 this.spriteGrid = new ObjectsGrid( this.canvas.x, this.canvas.y, this.canvas.getContext( "2d" ) );
                 this.spriteGrid.initGrid( this.rows, this.columns, false );
                 this.spriteGrid.setCharacters( this.characters );
-                this.spriteGrid.setObjects( this.objects );
+                this.spriteGrid.setObjects( this.mapObjects );
                 this.spriteGrid.drawSpritesInGrid( false );        
             }).bind(this) );   
         }).bind(this) );
@@ -106,27 +114,70 @@ class CanvasSlot {
     loadMapToCanvas( data ) {
         if ( data != undefined ) {
             let map = MAP_STORAGE.maps[data];
+            this.rawJSON = map;
+            this.mapName = map.mapName;
             this.rows = map.rows;
             this.columns = map.columns;
             this.grid = map.grid.flat(1);
             this.frontGrid = map.hasOwnProperty("frontGrid") ? map.frontGrid.flat(1) : this.grid.map((e) => {return "E";});
             this.tileSet = map.tileSet;
             this.characters = map.characters;
-            this.objects = map.mapObjects;
+            this.mapObjects = map.mapObjects;
+            this.actions = map.actions;
+            this.spawnPoints = map.spawnPoints;
+            this.roads = map.roads;
             this.drawMap( );
+            this.isSet = true;
+        }
+    }
+
+    getMapDataForExport( neighbourhoodName, mapKey ) {
+        return {
+            frontGrid: "FRONT_GRID",
+            grid: "GRID",
+            outdoors: this.rows == 16 && this.columns == 24,
+            mapName: neighbourhoodName +"/"+ mapKey,
+            rows: this.rows,
+            columns: this.columns,
+            tileSet: this.tileSet,
+            characters: this.characters,
+            mapObjects: this.mapObjects,
+            spawnPoints: this.spawnPoints,
+            roads: this.roads,
+            actions: this.actions
         }
     }
 }
 
 class CanvasGrid {
     constructor( data ){
+        this.maps = [];
+        this.name = data.name;
         data.horizontal_slots.forEach((slotChar, index) => { 
             let horiChar = slotChar;
             let horiIndex = index;
             data.vertical_slots.forEach((e, vertIndex) => {
                 this[horiChar+e] = new CanvasSlot(horiChar+e, horiIndex + 1, vertIndex + 1);
                 this[horiChar+e].loadMapToCanvas(data[horiChar+e]);
+                this.maps.push(this[horiChar+e]);
             });
         })
+    }
+
+    exportAsZip( ) {
+        var zip = new JSZip();
+        this.maps.forEach((map) => {
+            if ( map.isSet ) {
+                const mapFolder = zip.folder(map.key);
+                mapFolder.file([map.key]+".js", JSON.stringify(map.getMapDataForExport( this.name, map.key )));
+                mapFolder.file("grid.js", JSON.stringify(map.grid));
+                mapFolder.file("frontgrid.js", JSON.stringify(map.frontGrid));          
+            }
+        })
+        zip.generateAsync({
+            type: "base64"
+        }).then(function(content) {
+            window.location.href = "data:application/zip;base64," + content;
+        });    
     }
 }
