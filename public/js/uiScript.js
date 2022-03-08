@@ -6,6 +6,18 @@ const showTilesheetPreview = ( ) => {
         : alert( 'Tilsheet ' + selectedValue + ' not found' );
 }
 
+const clearAllGrids = ( ) =>{
+    MAP_FOREGROUND.doors.forEach((e)=>{ e.removeDoorDiv( )})
+    PREVIEW_MAP.clearGrid( );
+    FRONT_PREVIEW_MAP.clearGrid( );
+    SHEET.clearGrid( );
+    MAP.clearGrid( );
+    MAP_FRONT_GRID.clearGrid( );
+    MAP_ROADS.clearGrid( );
+    MAP_SPAWN_POINTS.clearGrid( );
+    MAP_FOREGROUND.clearGrid( );
+}
+
 const switchView = ( event ) => {
    let nextScreen;
    let className;
@@ -13,6 +25,7 @@ const switchView = ( event ) => {
    switch ( event.target.id ) {
         case "go-back-button" :
         case "log-in-button" : 
+            clearAllGrids( );
             nextScreen = "welcome-div";
             className = "col-sm-12 window-active";
             break;

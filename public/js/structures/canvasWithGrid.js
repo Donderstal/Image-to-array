@@ -428,6 +428,13 @@ class ObjectsGrid extends CanvasWithGrid {
         this.doors = [];
         console.log("initializing objectsGrid!")
     };
+    clearObjectsGrid( ) {
+        this.characters = false;
+        this.objects = false;
+        this.doors = [];
+        super.clearGrid( );
+    }
+
     setCharacters( characters ) {
         characters.forEach( ( character ) => {
             const col = character.type == 'walking' ? character.lastPosition.col : character.col; 
@@ -444,7 +451,7 @@ class ObjectsGrid extends CanvasWithGrid {
             this.grid.array.forEach( ( tile ) => {
                 if ( tile.row == object.row && tile.col == object.col ) {
                     tile.setSpriteData( "object", object )
-                    if ( object.hasDoor ) {
+                    if ( tile.hasDoor ) {
                         this.doors.push( new Door( tile, object.type, this.doors.length, object.destination, object.directionIn ) )
                     }
                 }
@@ -498,7 +505,7 @@ class ObjectsGrid extends CanvasWithGrid {
                             element.image,
                             0, 0,
                             element.width * 2, element.height * 2,
-                            tile.x, element.dataObject.height_blocks > 1 ? tile.y -  ( (element.dataObject.height_blocks - 1) * TILE_SIZE ) : tile.y,
+                            element.dataObject.tile_alignment == "W" ? tile.x + (TILE_SIZE - element.width) : tile.x, element.dataObject.height_blocks > 1 ? tile.y -  ( (element.dataObject.height_blocks - 1) * TILE_SIZE ) : tile.y,
                             element.width, element.height
                         )
                     }
@@ -541,16 +548,13 @@ class ObjectsGrid extends CanvasWithGrid {
             catch( ex ){
                 console.log(ex.message);
             }
-
         })
     }
     drawDoorsInGrid( ) {
-        this.ctx.clearRect(0, 0, MAP_FOREGROUND_CANVAS.width, MAP_FOREGROUND_CANVAS.height);
         this.grid.array.forEach( ( tile ) => {
             tile.drawTileBorders( )
         })
         this.doors.forEach( ( e ) => {
-            console.log(e)
             e.draw( );
         } );
     }
@@ -595,7 +599,7 @@ class ObjectsGrid extends CanvasWithGrid {
         let spriteTop = door.y -  ( (door.dataObject.height_blocks - 1) * TILE_SIZE );
         this.ctx.strokeStyle = 'white'
         this.ctx.lineWidth = 1.5
-        this.ctx.strokeRect( door.x, spriteTop, door.width, door.height )
+        this.ctx.strokeRect( door.dataObject.tile_alignment == "W" ? door.x + (TILE_SIZE - door.width): door.x, spriteTop, door.width, door.height )
     }
     exportAllSprites( ) {
         let allSprites = {

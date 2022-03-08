@@ -185,10 +185,9 @@ MAP_SPAWN_POINTS_CANVAS.addEventListener('click', (event) => {
         : MAP_SPAWN_POINTS.setSpawnPointToTileAtXY(event.offsetX, event.offsetY)
 });
 MAP_FOREGROUND_CANVAS.addEventListener('mousemove', (event) => {
-    if ( MAPMAKER_IN_DOORS_MODE ) {
-        MAP_FOREGROUND.drawDoorsInGrid( )
-        MAP_FOREGROUND.highlightDoorAtXy( event.offsetX, event.offsetY );
-    }
+    MAP_FOREGROUND.drawSpritesInGrid( );
+    MAP_FOREGROUND.drawDoorsInGrid( );
+    MAP_FOREGROUND.highlightDoorAtXy( event.offsetX, event.offsetY );
 })
 document.getElementById('arrow-flip-left').addEventListener( 'click', ( ) => { flipTile("Counter-clockwise") }, true )
 document.getElementById('arrow-flip-right').addEventListener( 'click', ( ) => { flipTile("Clockwise") }, true )
@@ -286,7 +285,8 @@ document.getElementById("show-sprite-grid").addEventListener( 'click', ( ) => {
     }
     else {
         if ( MAPMAKER_IN_DOORS_MODE ) {
-            MAP_FOREGROUND.drawDoorsInGrid( )
+            MAP_FOREGROUND.drawSpritesInGrid( );
+            MAP_FOREGROUND.drawDoorsInGrid( );
         }
         else {
             hideElementWithId( "map-foreground-canvas" );

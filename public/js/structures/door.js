@@ -27,12 +27,12 @@ class Door {
             this.image,
             0, 0,
             this.width * 2, this.height * 2,
-            this.x, this.y -  ((this.dataObject.height_blocks - 1) * TILE_SIZE),
+            this.dataObject.tile_alignment == "W" ? this.x + (TILE_SIZE - this.width): this.x, this.y -  ((this.dataObject.height_blocks - 1) * TILE_SIZE),
             this.width, this.height
         )
         MAP_FOREGROUND_CTX.fillStyle = "white";
         MAP_FOREGROUND_CTX.font = '32px serif';
-        MAP_FOREGROUND_CTX.fillText( this.index, this.x, this.y )
+        MAP_FOREGROUND_CTX.fillText( this.index, this.dataObject.tile_alignment == "W" ? this.x + (TILE_SIZE - this.width): this.x, this.y )
     }
 
     addDoorDiv( ) {
@@ -50,16 +50,19 @@ class Door {
 
     setListeners( doorDiv ) {
         doorDiv.onmouseenter = ( ) => {
-            MAP_FOREGROUND.drawDoorsInGrid( )
+            MAP_FOREGROUND.drawSpritesInGrid( );
+            MAP_FOREGROUND.drawDoorsInGrid( );
             MAP_FOREGROUND.highlightDoor( this );
          };
         doorDiv.onmouseleave = ( ) => { 
+            MAP_FOREGROUND.drawSpritesInGrid( );
             MAP_FOREGROUND.drawDoorsInGrid( )
         };
         
         let button = doorDiv.getElementsByTagName("button");
         button[0].onclick = ( ) => {
             this.removeDoorDiv( );
+            MAP_FOREGROUND.drawSpritesInGrid( );
             MAP_FOREGROUND.doors.splice(this.index, 1);
             MAP_FOREGROUND.drawDoorsInGrid( );
         }

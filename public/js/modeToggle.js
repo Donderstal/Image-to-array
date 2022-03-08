@@ -40,6 +40,7 @@ const clearCurrentEditMode = ( ) => {
 
     IN_SHOW_CHARACTER_SPRITES_MODE = false;
     IN_SHOW_MAP_OBJECTS_MODE = false;
+    FRONT_TILES_GRID_IS_HIDDEN = true;
 
     HAS_SELECTED_TILE = false;
     HAS_SELECTED_SPRITE = false;
@@ -48,12 +49,15 @@ const clearCurrentEditMode = ( ) => {
     SELECTED_TILE_CTX.clearRect( 0, 0, SELECTED_TILE_CANVAS.width, SELECTED_TILE_CANVAS.height );
     [ 
         "map-foreground-canvas", "map-objects-options-div", "selected-sprite-div", "tile-storage-div",
-        "tilesheet-div", "selected-tile-div", "map-roads-canvas", "map-spawn-points-canvas"
+        "tilesheet-div", "selected-tile-div", "map-roads-canvas", "map-spawn-points-canvas", "map-grid-front-canvas"
     ].forEach( 
         ( e ) => { hideElementWithId( e) }
     );
     showElementWithId("middle-mapmaker-div")
     document.getElementById("show-sprite-grid").disabled = false;
+    document.getElementById("show-sprite-grid").checked = false;
+    document.getElementById("show-front-tile-grid").disabled = false;
+    document.getElementById("show-front-tile-grid").checked = false;
 }
 
 const initTilesMode = ( ) => {
@@ -125,6 +129,8 @@ const initSpawnPointsMode = ( ) => {
 const initDoorsMode = ( ) => {
     document.getElementById("show-front-tile-grid").disabled = true;
     document.getElementById("show-front-tile-grid").checked = false;
+    document.getElementById("show-sprite-grid").disabled = true;
+    document.getElementById("show-sprite-grid").checked = true;
     MAPMAKER_IN_DOORS_MODE = true;
 
     [ "map-foreground-canvas", "doors-options-div" ].forEach( 
@@ -132,8 +138,7 @@ const initDoorsMode = ( ) => {
     );
     
     turnOnForeground( );
-    MAP_FOREGROUND.drawDoorsInGrid( )
-    hideListContainersAndShowGiven( "doors-options-div" )
+    hideListContainersAndShowGiven( "doors-options-div" );
 }
 
 const initBlockedTilesMode = ( ) => {
@@ -165,6 +170,7 @@ const showElementWithId = ( id ) => {
 }
 
 const setFrontEditMode = () => {
+    hideElementWithId("map-grid-front-canvas");
     showElementWithId("grid-edit-mode-label");
     document.getElementById("show-front-tile-grid").disabled = false;
     document.getElementById("grid-edit-mode-label").innerText = "BACK"
@@ -173,5 +179,6 @@ const setFrontEditMode = () => {
 const unsetFrontEditMode = () => {
     document.getElementById("show-front-tile-grid").disabled = true;
     document.getElementById("show-front-tile-grid").checked = false;
-    hideElementWithId("grid-edit-mode-label")
+    hideElementWithId("grid-edit-mode-label");
+    showElementWithId("map-grid-front-canvas");
 }
