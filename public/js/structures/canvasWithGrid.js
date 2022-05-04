@@ -33,7 +33,9 @@ class CanvasWithGrid {
     }
 
     clearGrid( ) {
-        this.grid.clearGrid( );
+        if ( this.grid != undefined ) {
+            this.grid.clearGrid( );            
+        }
     };
 
     getTileAtXY( x, y ) {
@@ -59,9 +61,11 @@ class Sheet extends CanvasWithGrid {
     };
 
     clearGrid( ) {
-        super.clearGrid( );
-        SHEET_CTX.clearRect( 0, 0, SHEET_CANVAS.WIDTH, SHEET_CANVAS.HEIGHT );
-        this.grid.initializeGrid( );
+        if ( this.grid != undefined ) {
+            super.clearGrid( );
+            SHEET_CTX.clearRect( 0, 0, SHEET_CANVAS.WIDTH, SHEET_CANVAS.HEIGHT );
+            this.grid.initializeGrid( );            
+        }
     }
 
     captureTileAtXY( x, y ) {
@@ -153,9 +157,11 @@ class Map extends CanvasWithGrid {
     }
 
     clearGrid( ) {
-        super.clearGrid( );
-        this.ctx.clearRect( 0, 0, MAP_CANVAS.width, MAP_CANVAS.height )
-        this.grid.initializeGrid( );
+        if ( this.grid != undefined ) {
+            super.clearGrid( );
+            this.ctx.clearRect( 0, 0, MAP_CANVAS.width, MAP_CANVAS.height )
+            this.grid.initializeGrid( );         
+        }
     }
 
     setNeighbourhood( neighbourhood ) {
@@ -406,7 +412,7 @@ class Map extends CanvasWithGrid {
             'grid' : exportArray,
             'frontGrid' : frontArray,
             'mapObjects' : sprites.mapObjects,            
-            'characters' : sprites.characters,
+            'characters' : sprites.characters.map((e)=>{ e.className = getProfileName( e.sprite ); return e; }),
             'actions' : [],
             'doors' : []
          };

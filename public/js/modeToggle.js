@@ -77,7 +77,7 @@ const initMapObjectsMode = ( ) => {
     document.getElementById("show-sprite-grid").checked = false;
     document.getElementById("show-front-tile-grid").disabled = true;
     document.getElementById("show-front-tile-grid").checked = false;
-    SPRITE_GRID_IS_HIDDEN = true;
+    SPRITE_GRID_IS_HIDDEN = false;
     
     MAPMAKER_IN_OBJECT_MODE = true;
     IN_SHOW_CHARACTER_SPRITES_MODE = true;

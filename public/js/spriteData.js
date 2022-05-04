@@ -166,6 +166,26 @@ const spriteData = {
         "src": "Banana.png",
         ...getBackgroundItem( .5, .40625 )
     },
+    "bar": {
+        "src": "bar.png",
+        ...getGroundedAtBottom( 9, 9 )
+    },
+    "bar_versionB": {
+        "src": "bar_versionB.png",
+        ...getGroundedAtBottom( 9, 4 )
+    },
+    "bar_lights_off": {
+        "src": "bar_lights_off.png",
+        ...getGroundedAtBottom( 4, 1 )
+    },
+    "bar_lights_on": {
+        "src": "bar_lights_on.png",
+        ...getGroundedAtBottom( 4, 1 )
+    },
+    "bar_sign_on": {
+        "src": "bar_sign_on.png",
+        ...getGroundedAtBottom( 3, 2 )
+    },
     "bar_sign": {
         "dimensional_alignment": "STANDARD",
         "src": "bar_sign.png",

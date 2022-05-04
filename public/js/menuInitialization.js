@@ -19,6 +19,7 @@ const initCharactersDiv = ( ) => {
             ctx.drawImage( image, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, 0, 0, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT)
             canvas.addEventListener( 'click', ( e ) => { characterListener( e, false ) });
             canvas.addEventListener( 'dragstart', ( e ) => { characterListener( e, true ) });
+            canvas.classProfile = getProfileName( e )
             charactersWrapper.append(canvas)            
         };
     });
