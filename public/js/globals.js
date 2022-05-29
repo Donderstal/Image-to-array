@@ -180,6 +180,10 @@ const TILESHEETS = {
     "battle_downtown" : {
         "src": "battle_tiles.png",
         "tiles": 150
+    },
+    "Yum_Mart": {
+        "src": "Yum_mart.png",
+        "tiles": 40
     }
 };
 

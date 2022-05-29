@@ -176,15 +176,24 @@ const spriteData = {
     },
     "bar_lights_off": {
         "src": "bar_lights_off.png",
-        ...getGroundedAtBottom( 4, 1 )
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 4,
+        "not_grounded": true
     },
     "bar_lights_on": {
         "src": "bar_lights_on.png",
-        ...getGroundedAtBottom( 4, 1 )
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 4,
+        "not_grounded": true
     },
     "bar_sign_on": {
         "src": "bar_sign_on.png",
-        ...getGroundedAtBottom( 3, 2 )
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 2,
+        "width_blocks": 3,
+        "not_grounded": true
     },
     "bar_sign": {
         "dimensional_alignment": "STANDARD",
@@ -245,7 +254,7 @@ const spriteData = {
         "src": "blue_lamp_right.png",
         ...getTwoHighSprite( true )
     },
-    "blue_lamp_right" : {
+    "blue_single_bed" : {
         "src": "blue_single_bed.png",
         ...getTwoHighSprite( false )
     },
@@ -270,26 +279,26 @@ const spriteData = {
     },
     "brown_chair" :{
         "src": "brown_chair.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_east" :{
         "src": "brown_chair_east.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_south" :{
         "src": "brown_chair_south.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_west" :{
         "src": "brown_chair_west.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
         "dimensional_alignment": "STANDARD",
         "grounded_at_bottom": true,
         "height_blocks": 4,
-        "width_blocks": 1
+        "width_blocks": 1,
     },   
     "can_red_1" : {
         "src": "Can_Z1.png",
@@ -299,13 +308,29 @@ const spriteData = {
         "src": "Can_Z2.png",
         ...getBackgroundItem( 0.28125, 0.3125 )
     },
+    "cashier_desk_a": {
+        "src": "cashier_desk_a.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1,
+        "height_blocks": 2.5625,
+    },
+    "cashier_desk_b": {
+        "src": "cashier_desk_b.png",
+        ...getGroundedAtBottom( 3, 1.75 ),
+    },
+    "cashier_desk_c": {
+        "src": "cashier_desk_c.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1,
+        "height_blocks": 2.5625,
+    },
     "chair_red_cushion" :{
         "src": "chair_red_cushion.png",
         ...ONE_BLOCK_SPRITE
     },
     "computer_table" : {
         "src": "computer_table.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "Couch_Blue" : {
         "src": "couch.png",
@@ -383,13 +408,17 @@ const spriteData = {
         "src": "Door_Z7.png",
         ...getDoorOrWindow( 1.875, 2.09375 )
     },
+    "flowers_a": {
+        "src": "flowers_a.png",
+        ...getGroundedAtBottom( 1.9375, 1.96875 ),
+    },
     "Fire_Hydrant" :{
         "src": "fire_hydrant.png",
         ...ONE_BLOCK_SPRITE
     },
     "Fridge" : {
         "src": "Fridge.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "funz": { 
         "src": "funz.png",
@@ -409,72 +438,157 @@ const spriteData = {
     },
     "gate_stuk1" : { 
         "src": "gate_stuk1.png",
-        ...ONE_BLOCK_SPRITE
-        // border - bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.6875,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - bottom = h20px w100%
     },
     "gate_stuk2" : { 
         "src": "gate_stuk2.png",
-        ...TWO_WIDE_SPRITE
-        // border - bottom
+        ...TWO_WIDE_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.6875,
+            "right": 2,
+            "bottom": 1
+        }
+        // border - bottom = h20px w100%
     },
     "gate_stuk3" : { 
         "src": "gate_stuk3.png",
-        ...ONE_BLOCK_SPRITE
-        // border - bottom/right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - bottom/right = h100% w20px
     },
     "gate_stuk4" : { 
         "src": "gate_stuk4.png",
-        ...ONE_BLOCK_SPRITE
-        // border - bottom/right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right = h100% w20px
     },
     "gate_stuk5" : {
         "src": "gate_stuk5.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( false ),
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0,
+            "right": 1,
+            "bottom": 2
+        }
+        // border - right = h100% w20px
     },
     "gate_stuk6" : { 
         "src": "gate_stuk6.png",
-        ...ONE_BLOCK_SPRITE
-        // border - right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0.875,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right/bottom = h8px w20px
     },
     "gate_stuk7" : { 
         "src": "gate_stuk7.png",
-        ...ONE_BLOCK_SPRITE
-        // border - right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0.375,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right/bottom = h40px w20px
     },
     "gate_stuk8" : { 
         "src": "gate_stuk8.png",
-        ...ONE_BLOCK_SPRITE
-        // border - right/bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0.6875,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right/bottom = h20px w20px
     },
     "gate_stuk9" : { 
         "src": "gate_stuk9.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left/bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left/bottom = h100% w20px
     },
     "gate_stuk10" : { 
         "src": "gate_stuk10.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left = h100% w20px
     },
     "gate_stuk11" : {
         "src": "gate_stuk11.png",
-        ...getTwoHighSprite( false )
-        // border - left
+        ...getTwoHighSprite( false ),
+        "blockedArea": {
+            "left": 0,
+            "top": 0,
+            "right": 0.3125,
+            "bottom": 2
+        }
+        // border - left = h100% w20px
     },
     "gate_stuk12" : { 
         "src": "gate_stuk12.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.875,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left = h8px w20px
     },
     "gate_stuk13" : { 
         "src": "gate_stuk13.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.375,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left = h40px w20px
     },
     "gate_stuk14" : { 
         "src": "gate_stuk14.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left/bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.6875,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left/top = h20px w20px
     },
     "graff_z1": { 
         "src": "graff_z1.png",
@@ -490,7 +604,7 @@ const spriteData = {
     },
     "inside_bin" : {
         "src": "inside_bin.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "lamp_red" : {
         "src": "lamp_red.png",
@@ -502,6 +616,14 @@ const spriteData = {
         "grounded_at_bottom": true,
         "height_blocks": 5,
         "width_blocks": 1,
+    },
+    "magazine_rack_a": {
+        "src": "magazine_rack_a.png",
+        ...getGroundedAtBottom( 2, 1.75 ),
+    },
+    "magazine_rack_b": {
+        "src": "magazine_rack_b.png",
+        ...getGroundedAtBottom( 1.78125, 1.15625 ),
     },
     "newspaper_trash": { 
         "src": "newspaper.png",
@@ -516,10 +638,7 @@ const spriteData = {
     },
     "office_chair" : {
         "src": "office_chair.png",
-        "dimensional_alignment": "STANDARD",
-        "grounded_at_bottom": true,
-        "height_blocks": 1.21875,
-        "width_blocks": 0.96875
+        ...getTwoHighSprite( true )
     },
     "office_chair_south" : {
         "src": "office_chair_south.png",
@@ -566,7 +685,7 @@ const spriteData = {
     },
     "plant_yo" : {
         "src": "plant_yo.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "plants" : {
         "src": "plants.png",
@@ -606,6 +725,46 @@ const spriteData = {
         "src": "rug_g2.png",
         ...getBackgroundItem( 2, 2 )
     },
+    "shelves_a": {
+        "src": "shelves_a.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_b": {
+        "src": "shelves_b.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_c": {
+        "src": "shelves_c.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_d": {
+        "src": "shelves_d.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_e": {
+        "src": "shelves_e.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_f": {
+        "src": "shelves_f.png",
+        ...getGroundedAtBottom( 2, 2.40625 ),
+    },
+    "shelves_side_a": {
+        "src": "shelves_side_a.png",
+        ...getGroundedAtBottom( 0.84375, 3 ),
+    },
+    "shelves_side_b": {
+        "src": "shelves_side_b.png",
+        ...getGroundedAtBottom( 0.5, 3 ),
+    },
+    "shelves_side_c": {
+        "src": "shelves_side_c.png",
+        ...getGroundedAtBottom( 0.5, 5 ),
+    },
+    "shelves_side_d": {
+        "src": "shelves_side_d.png",
+        ...getGroundedAtBottom( 0.84375, 3 ),
+    },
     "shop_cupboard_a" : {
         "src": "shop_cupboard_a.png",
         ...STANDARD_SHELVE
@@ -616,11 +775,11 @@ const spriteData = {
     },
     "shop_shelves_a" : {
         "src": "shop_shelves_a.png",
-        ...STANDARD_SHELVE
+        ...STANDARD_SHELVE,
     },
     "shop_shelves_b" : {
         "src": "shop_shelves_b.png",
-        ...STANDARD_SHELVE
+        ...STANDARD_SHELVE,
     },
     "shop_window": { 
         "src": "shop_window.png",
@@ -665,7 +824,7 @@ const spriteData = {
     },
     "Small_Table" : {
         "src": "small_table.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "tires_1" : {
         "src": "Tires_Z1.png",
@@ -678,6 +837,14 @@ const spriteData = {
         "dimensional_alignment": "STANDARD",
         "width_blocks": 0.78125, 
         "height_blocks": 0.6875
+    },
+    "thing_a": {
+        "src": "thing_a.png",
+        ...getGroundedAtBottom( 1, 3 ),
+    },
+    "thing_b": {
+        "src": "thing_b.png",
+        ...getGroundedAtBottom( 1, 2.015625 ),
     },
     "trash_1" : {
         "src": "Trash_Z1.png",
@@ -694,15 +861,15 @@ const spriteData = {
     "trash_4" : {
         "src": "Trash_Z4.png",
         ...getBackgroundItem( 0.5625, 0.53125 )
-    },  
+    },
     "tree" : {
         "src": "tree.png",
         ...getGroundedAtBottom( 2, 3 )
     },    
     "tree_plus_base" : {
         "src": "tree_plus_base.png",
-        ...getGroundedAtBottom(2, 3 )
-    }, 
+        ...getGroundedAtBottom( 2, 3 )
+    },  
     "tv" : {
         "src": "tv.png",
         "dimensional_alignment": "STANDARD",
@@ -714,7 +881,23 @@ const spriteData = {
         "dimensional_alignment": "STANDARD",
         "width_blocks": 0.625, 
         "height_blocks": 1.84375
-    },   
+    },
+    "vegetables_a": {
+        "src": "vegetables_a.png",
+        ...getGroundedAtBottom( 1, 3 ),
+    },
+    "vegetables_b": {
+        "src": "vegetables_b.png",
+        ...getGroundedAtBottom( 1, 3 ),
+    },
+    "vegetables_c": {
+        "src": "vegetables_c.png",
+        ...getGroundedAtBottom( 1, 1.125 ),
+    },
+    "vegetables_d": {
+        "src": "vegetables_d.png",
+        ...getGroundedAtBottom( 1, 1.125 ),
+    },
     "vent_1" : {
         "src": "Vent_Z1.png",
         ...getBackgroundItem( 0.65625, 0.40625 )
@@ -734,7 +917,19 @@ const spriteData = {
     "vent_5" : {
         "src": "Vent_Z5.png",
         ...getBackgroundItem( 0.65625, 0.5625 )
-    },    
+    },
+    "wall_thing": {
+        "src": "wall_thing.png",
+        ...getGroundedAtBottom( 2, 1.625 ),
+    },
+    "wall_thing_b": {
+        "src": "wall_thing_b.png",
+        ...getGroundedAtBottom( 1, 1.625 ),
+    },
+    "wall_thing_c": {
+        "src": "wall_thing_c.png",
+        ...getGroundedAtBottom( 0.5, 1.625 ),
+    },
     "water_puddle": {
         "src": "water_puddle.png",
         ...getBackgroundItem( 1, 1 )
@@ -803,8 +998,8 @@ const spriteData = {
         "src": "yellow_rug_a.png",
         ...getBackgroundItem( 4, 3 )
     },
-    "yellow_rug_a" : { 
-        "src": "yellow_rug_a.png",
+    "yellow_rug_b" : { 
+        "src": "yellow_rug_b.png",
         ...getBackgroundItem( 3, 2 )
     },
     "yellow_stand" : { 
@@ -815,6 +1010,7 @@ const spriteData = {
         "src": "yum_mart.png",
         ...getBackgroundItem( 3.46875, 0.65625 )
     },
+
     // cars
     "car_a" : {
         "src": "car_a.png",
@@ -836,11 +1032,11 @@ const spriteData = {
         "src": "bus.png",
         ...BUS
     },
-    
+
     // collectible
     "collectable_coin" : {
         "src": "coin.png",
-        ...getCollectible( 0.75, 0.75, 4, "COLL_COIN" )
+        ...getCollectible( 0.75, 0.75, 4, "COLL_COIN")
     },
     "collectable_juice_can" : {
         "src": "juice_can.png",
@@ -874,7 +1070,7 @@ const spriteData = {
     "door_interior_east_blue" : {
         ...getStandardDoorEast("Door_interior_east_blue.png")
     },
-    "Door_interior_east_green" : {
+    "door_interior_east_green" : {
         ...getStandardDoorEast("Door_interior_east_green.png")
     },
     "door_interior_east_light" : {
